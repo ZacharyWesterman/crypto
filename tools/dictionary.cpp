@@ -9,7 +9,7 @@ z::util::dictionary dict;
 
 void loadDictionary()
 {
-  std::ifstream file("words.txt");
+  std::ifstream file("tools/words.txt");
 
   z::core::timeout time(1000000); // 1 second timeout
 
@@ -38,8 +38,9 @@ zstring stripNonChars(zstring text)
 
 float checkSpelling(zstring text)
 {
-  z::core::array<zstring> words = z::core::split(text, zstring(" "));
   float successes;
+
+  z::core::array<zstring> words = z::core::split(text, zstring(" "));
 
   for (int i = 0; i < words.length(); i++)
   {

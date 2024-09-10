@@ -1,6 +1,7 @@
 #include "caesar.h"
+#include "../tools/dictionary.h"
+
 #include <iostream>
-#include "../dictionary.h"
 
 zstring alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -11,17 +12,19 @@ zstring shiftAlphabet(int offset)
 
 zstring caesarEncode(zstring input, int offset)
 {
-  return input.cipher(alphabet, shiftAlphabet(offset));
+  input = input.cipher(alphabet, shiftAlphabet(offset));
+  return input.cipher(alphabet.upper(), shiftAlphabet(offset).upper());
 }
 
 zstring caesarDecode(zstring input, int offset)
 {
-  return input.cipher(shiftAlphabet(offset), alphabet);
+  input = input.cipher(shiftAlphabet(offset), alphabet);
+  return input.cipher(shiftAlphabet(offset).upper(), alphabet.upper());
 }
 
 codeBreakResult caesarCrack(zstring input)
 {
-  codeBreakResult result = {" ", 0, 1};
+  codeBreakResult result;
 
   loadDictionary();
 
@@ -30,8 +33,8 @@ codeBreakResult caesarCrack(zstring input)
   bool verbose = false;
   if (verbose)
   {
-    std::cout
-        << std::endl;
+    std::cout << "...\n"
+              << std::endl;
   }
 
   for (int i = 1; i <= 25; i++)
@@ -41,7 +44,7 @@ codeBreakResult caesarCrack(zstring input)
 
     if (verbose)
     {
-      std::cout << guess << " " << score
+      std::cout << guess << " " << score << "%"
                 << std::endl;
     }
     else
@@ -57,7 +60,18 @@ codeBreakResult caesarCrack(zstring input)
     }
   }
 
-  std::cout << " Done!\n"
+  if (verbose)
+  {
+    std::cout << "\n"
+              << std::flush;
+  }
+  else
+  {
+    std::cout << " "
+              << std::flush;
+  }
+
+  std::cout << "Done!\n"
             << std::endl;
 
   return result;
@@ -119,7 +133,17 @@ void runCaesar(int argc, char **argv)
     zstring input = getInput(argc, argv, 3);
     codeBreakResult result = caesarCrack(input);
 
-    std::cout << "The best solution is:\n"
-              << result.text << "(" << result.score << "%) with a key of " << result.key << std::endl;
+    if (result.score == 0)
+    {
+      std::cout << "No solution found." << std::endl;
+    }
+    else
+    {
+      std::cout << "The best solution is:\n"
+                << result.text
+                << "(" << result.score << "%) "
+                << "with a key of " << result.key
+                << std::endl;
+    }
   }
 }

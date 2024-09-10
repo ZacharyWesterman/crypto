@@ -3,8 +3,8 @@ STATICLIB = ../cpp_libs/libzed/libzed.a
 STD = c++17
 CC = g++
 
-make: main.exe
-main.exe: main.o dictionary.o ciphers/caesar.o $(STATICLIB)
+make: crypto.exe
+crypto.exe: crypto.o tools/dictionary.o ciphers/caesar.o $(STATICLIB)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
@@ -12,6 +12,8 @@ main.exe: main.o dictionary.o ciphers/caesar.o $(STATICLIB)
 
 clean:
 	rm -f *.exe *.o
+	cd ciphers && rm -f *.exe *.o
+	cd tools &&  rm -f *.exe *.o
 
 remake: clean make
 
