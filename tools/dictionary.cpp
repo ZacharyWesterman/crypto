@@ -1,9 +1,11 @@
 #include "dictionary.h"
 
-#include <iostream>
-#include <cmath>
 #include <z/core/split.hpp>
 #include <z/core/array.hpp>
+
+#include <fstream>
+#include <iostream>
+#include <cmath>
 
 z::util::dictionary dict;
 
@@ -13,27 +15,14 @@ void loadDictionary()
 
   z::core::timeout time(1000000); // 1 second timeout
 
-  std::cout << "Loading dictionary..." << std::flush;
+  "Loading dictionary..."_u8.write(std::cout);
   while (!dict.read(file, time))
   {
-    std::cout << '.' << std::flush;
+    '.'_u8.write(std::cout);
     time.reset();
   }
 
-  std::cout << " Done! Loaded " << dict.length() << " words." << std::endl;
-}
-
-zstring stripNonChars(zstring text)
-{
-  zstring output;
-
-  for (int i = 0; i < text.chars(); i++)
-  {
-    if (std::isalpha(text[i]))
-      output.append(text[i]);
-  }
-
-  return output;
+  (" Done! Loaded "_u8 + dict.length() + " words.").writeln(std::cout);
 }
 
 float checkSpelling(zstring text)
@@ -44,7 +33,7 @@ float checkSpelling(zstring text)
 
   for (int i = 0; i < words.length(); i++)
   {
-    zstring word = stripNonChars(words[i]).lower();
+    zstring word = words[i].filter({{'a', 'z'}, {'A', 'Z'}}).lower();
 
     if (dict.isWord(word))
       successes++;

@@ -4,7 +4,7 @@ STD = c++17
 CC = g++
 
 make: crypto.exe
-crypto.exe: crypto.o tools/dictionary.o ciphers/caesar.o $(STATICLIB)
+crypto.exe: crypto.o tools/dictionary.o tools/helper.o ciphers/caesar.o $(STATICLIB)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
@@ -17,4 +17,7 @@ clean:
 
 remake: clean make
 
-.PHONY: clean
+count:
+	find . -type f \( -name \*.cpp -o -name \*.h \) ! -name pugixml.cpp -exec wc -l {} +
+
+.PHONY: clean count

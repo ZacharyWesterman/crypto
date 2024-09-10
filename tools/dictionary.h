@@ -5,8 +5,6 @@
 
 void loadDictionary();
 
-zstring stripNonChars(zstring text);
-
 float checkSpelling(zstring text);
 
 #endif

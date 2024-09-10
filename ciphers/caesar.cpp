@@ -1,56 +1,43 @@
 #include "caesar.h"
 #include "../tools/dictionary.h"
+#include "../tools/helper.h"
+
+#include <z/core/timer.hpp>
 
 #include <iostream>
 
-zstring alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-zstring shiftAlphabet(int offset)
-{
-  return alphabet.substr(offset, 26) + alphabet.substr(0, offset);
-}
-
 zstring caesarEncode(zstring input, int offset)
 {
-  input = input.cipher(alphabet, shiftAlphabet(offset));
-  return input.cipher(alphabet.upper(), shiftAlphabet(offset).upper());
+  zstring alphabet = getAlphabet();
+
+  return input.cipher(alphabet, shiftAlphabet(offset))
+      .cipher(alphabet.upper(), shiftAlphabet(offset).upper());
 }
 
 zstring caesarDecode(zstring input, int offset)
 {
-  input = input.cipher(shiftAlphabet(offset), alphabet);
-  return input.cipher(shiftAlphabet(offset).upper(), alphabet.upper());
+  zstring alphabet = getAlphabet();
+
+  return input.cipher(shiftAlphabet(offset), alphabet)
+      .cipher(shiftAlphabet(offset).upper(), alphabet.upper());
 }
 
-codeBreakResult caesarCrack(zstring input)
+caesarCrackResult caesarCrack(zstring input)
 {
-  codeBreakResult result;
+  z::core::timer timer;
+  caesarCrackResult result;
+  bool verbose = false;
 
   loadDictionary();
 
-  std::cout << "Cracking cipher" << std::flush;
-
-  bool verbose = false;
-  if (verbose)
-  {
-    std::cout << "...\n"
-              << std::endl;
-  }
+  ("Cracking cipher"_u8 + (verbose ? "...\n\n" : "")).write(std::cout);
 
   for (int i = 1; i <= 25; i++)
   {
     zstring guess = caesarDecode(input, i);
     float score = checkSpelling(guess);
 
-    if (verbose)
-    {
-      std::cout << guess << " " << score << "%"
-                << std::endl;
-    }
-    else
-    {
-      std::cout << "." << std::flush;
-    }
+    (verbose ? zstring(guess) + " " + score + "%\n" : "."_u8).write(std::cout);
 
     if (score > result.score)
     {
@@ -60,90 +47,50 @@ codeBreakResult caesarCrack(zstring input)
     }
   }
 
-  if (verbose)
-  {
-    std::cout << "\n"
-              << std::flush;
-  }
-  else
-  {
-    std::cout << " "
-              << std::flush;
-  }
+  ((verbose ? "\n"_u8 : " "_u8) + "Done!\n"_u8).writeln(std::cout);
 
-  std::cout << "Done!\n"
-            << std::endl;
+  result.summary = (result.score ? "The best solution ("_u8 + result.score + "% confidence with a key of " + result.key + ", in " + timer.micros() / 1000.0 + "ms) is:\n  " + result.text : "No solution found!");
 
   return result;
 }
 
-zstring getInput(int argc, char **argv, int index)
-{
-  zstring input;
-
-  for (int i = index; i < argc; i++)
-    input += zstring(argv[i]) + " ";
-
-  return input;
-}
-
-void runCaesar(int argc, char **argv)
+int runCaesar(int argc, char **argv)
 {
   if (argc == 2)
-  {
-    std::cout << "No command given!" << std::flush;
-    return;
-  }
+    return basicError("No command given!");
 
   zstring command = argv[2];
   if (command == "encode")
   {
     if (argc < 5)
-    {
-      std::cout << "Needs both a key and an input!" << std::flush;
-      return;
-    }
+      return basicError("Needs both a key and an input!");
 
     int key = std::stoi(argv[3]);
     zstring input = getInput(argc, argv, 4);
 
-    std::cout << caesarEncode(input, key) << std::flush;
+    caesarEncode(input, key).writeln(std::cout);
   }
   else if (command == "decode")
   {
     if (argc < 5)
-    {
-      std::cout << "Needs both a key and an input!" << std::flush;
-      return;
-    }
+      return basicError("Needs both a key and an input!");
 
     int key = std::stoi(argv[3]);
     zstring input = getInput(argc, argv, 4);
 
-    std::cout << caesarDecode(input, key) << std::flush;
+    caesarDecode(input, key).writeln(std::cout);
   }
   else if (command == "crack")
   {
     if (argc < 4)
-    {
-      std::cout << "Needs something to crack!" << std::flush;
-      return;
-    }
+      return basicError("Needs something to crack!");
 
     zstring input = getInput(argc, argv, 3);
-    codeBreakResult result = caesarCrack(input);
 
-    if (result.score == 0)
-    {
-      std::cout << "No solution found." << std::endl;
-    }
-    else
-    {
-      std::cout << "The best solution is:\n"
-                << result.text
-                << "(" << result.score << "%) "
-                << "with a key of " << result.key
-                << std::endl;
-    }
+    caesarCrack(input).summary.writeln(std::cout);
   }
+  else
+    return basicError("Unknown command!");
+
+  return 0;
 }

@@ -1,30 +1,23 @@
 #include "ciphers/caesar.h"
+#include "tools/helper.h"
 
 #include <z/core/string.hpp>
-#include <z/system/stdout.hpp>
 
-z::system::stdout console;
+#include <iostream>
 
 int main(int argc, char **argv)
 {
-  zstring().writeln(console);
+  zstring().writeln(std::cout);
 
   if (argc == 1)
-  {
-    "No command given!"_u8.writeln(console);
-    return 1;
-  }
+    return basicError("No command given!");
 
   zstring cipher = argv[1];
+
   if (cipher == "caesar")
-  {
     runCaesar(argc, argv);
-  }
   else
-  {
-    "Invalid command!"_u8.writeln(console);
-    return 1;
-  }
+    return basicError("Invalid command!");
 
   return 0;
 }
