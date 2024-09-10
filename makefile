@@ -4,7 +4,7 @@ STD = c++17
 CC = g++
 
 make: main.exe
-main.exe: main.o ciphers/caesar.o $(STATICLIB)
+main.exe: main.o dictionary.o ciphers/caesar.o $(STATICLIB)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
