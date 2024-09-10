@@ -26,11 +26,10 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
 {
   caesarCrackResult bestResult;
   z::core::array<caesarCrackResult> results;
-  bool verbose = true;
 
   loadDictionary();
 
-  ("Cracking cipher"_u8 + (verbose ? "...\n\n" : "")).write(std::cout);
+  "Cracking cipher"_u8.write(std::cout);
 
   for (int i = 1; i <= 25; i++)
   {
@@ -44,7 +43,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
     newResult.key = i;
     newResult.summary = zstring(i) + ": " + zstring(guess).substr(0, 30) + "... " + score + "%\n";
 
-    (verbose ? zstring(newResult.summary) : "."_u8).write(std::cout);
+    "."_u8.write(std::cout);
 
     if (score > bestResult.score || i == 1)
     {
@@ -54,7 +53,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
     results.append(newResult);
   }
 
-  ((verbose ? "\n"_u8 : " "_u8) + "Done!\n"_u8).writeln(std::cout);
+  "Done!\n"_u8.writeln(std::cout);
 
   if (bestResult.key != 1)
   {
