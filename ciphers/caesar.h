@@ -2,6 +2,7 @@
 #define CAESAR_H
 
 #include <z/core/string.hpp>
+#include <z/core/array.hpp>
 
 struct caesarCrackResult
 {
@@ -15,7 +16,7 @@ zstring caesarEncode(zstring input, int offset);
 
 zstring caesarDecode(zstring input, int offset);
 
-caesarCrackResult caesarCrack(zstring input);
+z::core::array<caesarCrackResult> caesarCrack(zstring input);
 
 int runCaesar(int argc, char **argv);
 

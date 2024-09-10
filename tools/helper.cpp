@@ -17,7 +17,9 @@ zstring getInput(int argc, char **argv, int index)
   zstring input;
 
   for (int i = index; i < argc; i++)
+  {
     input += zstring(argv[i]) + " ";
+  }
 
   return input;
 }

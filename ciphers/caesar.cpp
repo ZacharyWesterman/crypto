@@ -22,11 +22,11 @@ zstring caesarDecode(zstring input, int offset)
       .cipher(shiftAlphabet(offset).upper(), alphabet.upper());
 }
 
-caesarCrackResult caesarCrack(zstring input)
+z::core::array<caesarCrackResult> caesarCrack(zstring input)
 {
-  z::core::timer timer;
-  caesarCrackResult result;
-  bool verbose = false;
+  caesarCrackResult bestResult;
+  z::core::array<caesarCrackResult> results;
+  bool verbose = true;
 
   loadDictionary();
 
@@ -37,33 +37,49 @@ caesarCrackResult caesarCrack(zstring input)
     zstring guess = caesarDecode(input, i);
     float score = checkSpelling(guess);
 
-    (verbose ? zstring(guess) + " " + score + "%\n" : "."_u8).write(std::cout);
+    caesarCrackResult newResult;
 
-    if (score > result.score)
+    newResult.score = score;
+    newResult.text = guess;
+    newResult.key = i;
+    newResult.summary = zstring(i) + ": " + zstring(guess).substr(0, 30) + "... " + score + "%\n";
+
+    (verbose ? zstring(newResult.summary) : "."_u8).write(std::cout);
+
+    if (score > bestResult.score || i == 1)
     {
-      result.score = score;
-      result.text = guess;
-      result.key = i;
+      bestResult = newResult;
     }
+
+    results.append(newResult);
   }
 
   ((verbose ? "\n"_u8 : " "_u8) + "Done!\n"_u8).writeln(std::cout);
 
-  result.summary = (result.score ? "The best solution ("_u8 + result.score + "% confidence with a key of " + result.key + ", in " + timer.micros() / 1000.0 + "ms) is:\n  " + result.text : "No solution found!");
+  if (bestResult.key != 1)
+  {
+    caesarCrackResult swap = results[0];
+    results.replace(0, 1, bestResult);
+    results.replace(bestResult.key - 1, 1, swap);
+  }
 
-  return result;
+  return results;
 }
 
 int runCaesar(int argc, char **argv)
 {
   if (argc == 2)
+  {
     return basicError("No command given!");
+  }
 
   zstring command = argv[2];
   if (command == "encode")
   {
     if (argc < 5)
+    {
       return basicError("Needs both a key and an input!");
+    }
 
     int key = std::stoi(argv[3]);
     zstring input = getInput(argc, argv, 4);
@@ -73,7 +89,9 @@ int runCaesar(int argc, char **argv)
   else if (command == "decode")
   {
     if (argc < 5)
+    {
       return basicError("Needs both a key and an input!");
+    }
 
     int key = std::stoi(argv[3]);
     zstring input = getInput(argc, argv, 4);
@@ -83,14 +101,30 @@ int runCaesar(int argc, char **argv)
   else if (command == "crack")
   {
     if (argc < 4)
+    {
       return basicError("Needs something to crack!");
+    }
 
     zstring input = getInput(argc, argv, 3);
 
-    caesarCrack(input).summary.writeln(std::cout);
+    z::core::array<caesarCrackResult> results = caesarCrack(input);
+
+    ("The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text).writeln(std::cout);
+
+    if (results[0].score < 50)
+    {
+      "\nLow Confidence! Presenting alternatives...\n"_u8.writeln(std::cout);
+
+      for (int i = 1; i < results.length(); i++)
+      {
+        results[i].summary.write(std::cout);
+      }
+    }
   }
   else
+  {
     return basicError("Unknown command!");
+  }
 
   return 0;
 }

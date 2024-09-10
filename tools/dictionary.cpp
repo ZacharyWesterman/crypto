@@ -36,7 +36,9 @@ float checkSpelling(zstring text)
     zstring word = words[i].filter({{'a', 'z'}, {'A', 'Z'}}).lower();
 
     if (dict.isWord(word))
+    {
       successes++;
+    }
   }
 
   return round(10000 * (successes / float(words.length() - 1))) / 100; // todo: confirm the -1
