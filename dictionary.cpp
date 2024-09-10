@@ -13,7 +13,7 @@ void loadDictionary()
 
   z::core::timeout time(1000000); // 1 second timeout
 
-  std::cout << "Loading..." << std::flush;
+  std::cout << "Loading dictionary..." << std::flush;
   while (!dict.read(file, time))
   {
     std::cout << '.' << std::flush;

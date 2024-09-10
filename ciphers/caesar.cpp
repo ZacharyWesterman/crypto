@@ -19,33 +19,48 @@ zstring caesarDecode(zstring input, int offset)
   return input.cipher(shiftAlphabet(offset), alphabet);
 }
 
-zstring caesarCrack(zstring input)
+codeBreakResult caesarCrack(zstring input)
 {
-  zstring bestGuess;
-  float bestScore = 0;
+  codeBreakResult result = {" ", 0, 1};
 
   loadDictionary();
 
-  std::cout << "Testing" << std::flush;
+  std::cout << "Cracking cipher" << std::flush;
+
+  bool verbose = false;
+  if (verbose)
+  {
+    std::cout
+        << std::endl;
+  }
 
   for (int i = 1; i <= 25; i++)
   {
-    std::cout << "." << std::flush;
-
     zstring guess = caesarDecode(input, i);
     float score = checkSpelling(guess);
 
-    if (score > bestScore)
+    if (verbose)
     {
-      bestScore = score;
-      bestGuess = guess;
+      std::cout << guess << " " << score
+                << std::endl;
+    }
+    else
+    {
+      std::cout << "." << std::flush;
+    }
+
+    if (score > result.score)
+    {
+      result.score = score;
+      result.text = guess;
+      result.key = i;
     }
   }
 
-  std::cout << " Done!\n\n"
-            << std::flush;
+  std::cout << " Done!\n"
+            << std::endl;
 
-  return bestGuess;
+  return result;
 }
 
 zstring getInput(int argc, char **argv, int index)
@@ -75,8 +90,8 @@ void runCaesar(int argc, char **argv)
       return;
     }
 
-    zstring input = getInput(argc, argv, 4);
     int key = std::stoi(argv[3]);
+    zstring input = getInput(argc, argv, 4);
 
     std::cout << caesarEncode(input, key) << std::flush;
   }
@@ -88,8 +103,8 @@ void runCaesar(int argc, char **argv)
       return;
     }
 
-    zstring input = getInput(argc, argv, 4);
     int key = std::stoi(argv[3]);
+    zstring input = getInput(argc, argv, 4);
 
     std::cout << caesarDecode(input, key) << std::flush;
   }
@@ -102,9 +117,9 @@ void runCaesar(int argc, char **argv)
     }
 
     zstring input = getInput(argc, argv, 3);
-    zstring result = caesarCrack(input);
+    codeBreakResult result = caesarCrack(input);
 
     std::cout << "The best solution is:\n"
-              << result << std::flush;
+              << result.text << "(" << result.score << "%) with a key of " << result.key << std::endl;
   }
 }
