@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-zstring caesarEncode(zstring input, int offset)
+zstring caesarEncode(zstring input, int offset) // TODO: guard on offset?
 {
   zstring alphabet = getAlphabet(); // TODO: this kinda sucks...
 
