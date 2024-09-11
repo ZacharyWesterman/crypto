@@ -27,7 +27,7 @@ void loadDictionary()
 
 float checkSpelling(zstring text)
 {
-  float successes;
+  float successes = 0;
 
   z::core::array<zstring> words = z::core::split(text, zstring(" "));
 
