@@ -8,7 +8,7 @@
 
 zstring caesarEncode(zstring input, int offset)
 {
-  zstring alphabet = getAlphabet();
+  zstring alphabet = getAlphabet(); // TODO: this kinda sucks...
 
   return input.cipher(alphabet, shiftAlphabet(offset))
       .cipher(alphabet.upper(), shiftAlphabet(offset).upper());
@@ -33,19 +33,16 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
 
   for (int i = 1; i <= 25; i++)
   {
-    zstring guess = caesarDecode(input, i);
-    float score = checkSpelling(guess);
-
     caesarCrackResult newResult;
 
-    newResult.score = score;
-    newResult.text = guess;
     newResult.key = i;
-    newResult.summary = zstring(i) + ": " + zstring(guess).substr(0, 30) + "... " + score + "%\n";
+    newResult.text = caesarDecode(input, i);
+    newResult.score = checkSpelling(newResult.text);
+    newResult.summary = zstring(i) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
 
     "."_u8.write(std::cout);
 
-    if (score > bestResult.score || i == 1)
+    if (newResult.score > bestResult.score || i == 1)
     {
       bestResult = newResult;
     }
@@ -81,6 +78,11 @@ int runCaesar(int argc, char **argv)
     }
 
     int key = std::stoi(argv[3]);
+    if (key == -1)
+    {
+      key = rand() % 25 + 1;
+    }
+
     zstring input = getInput(argc, argv, 4);
 
     caesarEncode(input, key).writeln(std::cout);
