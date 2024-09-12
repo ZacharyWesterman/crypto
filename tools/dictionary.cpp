@@ -1,6 +1,7 @@
 #include "dictionary.h"
 
 #include <z/core/split.hpp>
+#include <z/core/join.hpp>
 #include <z/core/array.hpp>
 
 #include <fstream>
@@ -112,13 +113,5 @@ zstring wordSearch(zstring text)
     }
   }
 
-  // Join the array back with spaces
-  output = "";
-
-  for (int i = 0; i < words.length(); i++)
-  {
-    output.append(words[i] + (i == words.length() - 1 ? "" : " "));
-  }
-
-  return output.substr(0, output.length()).replace("  ", " "); // TODO: why do I need to do this replace...?
+  return z::core::join(words, " ").replace("  ", " "); // TODO: why do I need to do this replace...?
 }

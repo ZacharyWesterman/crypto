@@ -1,6 +1,7 @@
 #include "ciphers/caesar.h"
 #include "tools/helper.h"
 #include "tools/dictionary.h"
+#include "tools/argparse.h"
 
 #include <z/core/string.hpp>
 
