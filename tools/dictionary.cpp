@@ -30,6 +30,27 @@ void loadDictionary()
   (" Done! Loaded "_u8 + dict.length() + " words.").writeln(std::cout);
 }
 
+float checkSpelling(zstring text)
+{
+  loadDictionary();
+
+  float successes = 0;
+
+  z::core::array<zstring> words = z::core::split(text, zstring(" "));
+
+  for (int i = 0; i < words.length(); i++)
+  {
+    zstring word = words[i].filter({{'a', 'z'}, {'A', 'Z'}}).lower();
+
+    if (dict.isWord(word))
+    {
+      successes++;
+    }
+  }
+
+  return round(10000 * (successes / float(words.length() - 1))) / 100; // todo: confirm the -1
+}
+
 zstring wordSearch(zstring text)
 {
   loadDictionary();
@@ -67,7 +88,6 @@ zstring wordSearch(zstring text)
   }
 
   // Second pass, correct for the greed errors
-  // Split the text into an array of words
   z::core::array<zstring> words = z::core::split(output, " "_u8);
 
   // Scan the array for greed errors
@@ -100,26 +120,5 @@ zstring wordSearch(zstring text)
     output.append(words[i] + (i == words.length() - 1 ? "" : " "));
   }
 
-  return output.substr(0, output.length()).replace("  ", " ");
-}
-
-float checkSpelling(zstring text)
-{
-  loadDictionary();
-
-  float successes = 0;
-
-  z::core::array<zstring> words = z::core::split(text, zstring(" "));
-
-  for (int i = 0; i < words.length(); i++)
-  {
-    zstring word = words[i].filter({{'a', 'z'}, {'A', 'Z'}}).lower();
-
-    if (dict.isWord(word))
-    {
-      successes++;
-    }
-  }
-
-  return round(10000 * (successes / float(words.length() - 1))) / 100; // todo: confirm the -1
+  return output.substr(0, output.length()).replace("  ", " "); // TODO: why do I need to do this replace...?
 }
