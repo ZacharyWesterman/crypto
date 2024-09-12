@@ -68,24 +68,7 @@ zstring wordSearch(zstring text)
 
   // Second pass, correct for the greed errors
   // Split the text into an array of words
-  z::core::array<zstring> words = {};
-
-  for (int i = 0; i < output.length(); i++)
-  {
-    for (int k = 1; k + i < output.length(); k++)
-    {
-      if ((i == 0 || output[i] == ' ') && output[i + k] == ' ')
-      {
-        int off = i == 0 ? 0 : 1;
-        zstring word = output.substr(i == 0 ? i : i + off, i == 0 ? k : k - off);
-
-        words.append(word);
-
-        i += k - 1;
-        break;
-      }
-    }
-  }
+  z::core::array<zstring> words = z::core::split(output, " "_u8);
 
   // Scan the array for greed errors
   for (int i = 0; i < words.length() - 1; i++)
