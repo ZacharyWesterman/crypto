@@ -20,4 +20,7 @@ remake: clean make
 count:
 	find . -type f \( -name \*.cpp -o -name \*.h \) ! -name pugixml.cpp -exec wc -l {} +
 
-.PHONY: clean count
+libzed:
+	cd ../cpp_libs/libzed && git pull && make -j32 static
+
+.PHONY: clean count libzed

@@ -7,4 +7,6 @@ void loadDictionary();
 
 float checkSpelling(zstring text);
 
+zstring wordSearch(zstring text);
+
 #endif

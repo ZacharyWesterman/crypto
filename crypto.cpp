@@ -1,5 +1,6 @@
 #include "ciphers/caesar.h"
 #include "tools/helper.h"
+#include "tools/dictionary.h"
 
 #include <z/core/string.hpp>
 
@@ -87,6 +88,10 @@ int main(int argc, char **argv)
   if (cipher == "caesar")
   {
     runCaesar(argc, argv);
+  }
+  else if (cipher == "test")
+  {
+    ("\n  "_u8 + wordSearch(argv[2])).writeln(std::cout);
   }
   else
   {

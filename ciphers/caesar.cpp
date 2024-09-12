@@ -27,8 +27,6 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
   caesarCrackResult bestResult;
   z::core::array<caesarCrackResult> results;
 
-  loadDictionary();
-
   "Cracking cipher"_u8.write(std::cout);
 
   for (int i = 1; i <= 25; i++)
