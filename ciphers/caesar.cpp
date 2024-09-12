@@ -27,6 +27,8 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
   caesarCrackResult bestResult;
   z::core::array<caesarCrackResult> results;
 
+  loadDictionary();
+
   "Cracking cipher"_u8.write(std::cout);
 
   for (int i = 1; i <= 25; i++)
@@ -34,7 +36,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
     caesarCrackResult newResult;
 
     newResult.key = i;
-    newResult.text = caesarDecode(input, i);
+    newResult.text = wordSearch(caesarDecode(input, i));
     newResult.score = checkSpelling(newResult.text);
     newResult.summary = zstring(i) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
 

@@ -33,7 +33,6 @@ void loadDictionary()
 zstring wordSearch(zstring text)
 {
   loadDictionary();
-  "Seperating text into words... "_u8.write(std::cout);
 
   int maxWordLength = 10;
 
@@ -66,8 +65,6 @@ zstring wordSearch(zstring text)
       output.append(text.substr(i++, 1));
     }
   }
-
-  "Done!"_u8.writeln(std::cout);
 
   // Second pass, correct for the greed errors
   // Split the text into an array of words
