@@ -109,6 +109,7 @@ zstring wordSearch(zstring text)
     }
   }
 
+  // Join the array back with spaces
   output = "";
 
   for (int i = 0; i < words.length(); i++)
@@ -116,7 +117,7 @@ zstring wordSearch(zstring text)
     output.append(words[i] + (i == words.length() - 1 ? "" : " "));
   }
 
-  return output.substr(0, output.length());
+  return output.substr(0, output.length()).replace("  ", " ");
 }
 
 float checkSpelling(zstring text)
