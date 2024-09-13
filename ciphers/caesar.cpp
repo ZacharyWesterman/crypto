@@ -18,8 +18,10 @@ zstring caesarDecode(zstring input, int offset)
 {
   zstring alphabet = getAlphabet();
 
-  return input.cipher(shiftAlphabet(offset), alphabet)
-      .cipher(shiftAlphabet(offset).upper(), alphabet.upper());
+  zstring plainText = input.cipher(shiftAlphabet(offset), alphabet)
+                          .cipher(shiftAlphabet(offset).upper(), alphabet.upper());
+
+  return wordSearch(plainText);
 }
 
 z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly crack only the first K terms instead of the whole thing, then apply thr transformation and (maybe) reconfirm
