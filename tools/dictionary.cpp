@@ -35,9 +35,16 @@ float checkSpelling(zstring text)
 {
   loadDictionary();
 
+  if (text[text.length() - 1] == ' ') // TODO: another spot where something isn't the length I think it is
+  {
+    text = text.substr(0, text.length() - 1);
+  }
+
   float successes = 0;
 
   z::core::array<zstring> words = z::core::split(text, zstring(" "));
+
+  float total = float(words.length());
 
   for (int i = 0; i < words.length(); i++)
   {
@@ -49,7 +56,7 @@ float checkSpelling(zstring text)
     }
   }
 
-  return round(10000 * (successes / float(words.length() - 1))) / 100; // todo: confirm the -1
+  return round(10000 * (successes / total)) / 100;
 }
 
 zstring wordSearch(zstring text)
@@ -87,6 +94,8 @@ zstring wordSearch(zstring text)
       output.append(text.substr(i++, 1));
     }
   }
+
+  output = output.replace("  ", " "); // TODO: Why did this show up again?? Lol
 
   // Second pass, correct for the greed errors
   z::core::array<zstring> words = z::core::split(output, " "_u8);

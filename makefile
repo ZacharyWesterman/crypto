@@ -18,7 +18,7 @@ clean:
 remake: clean make
 
 count:
-	find . -type f \( -name \*.cpp -o -name \*.h \) ! -name pugixml.cpp -exec wc -l {} +
+	find . -type f \( -name \*.cpp -o -name \*.h \) ! -path "./libs/*" ! -name pugixml.cpp -exec wc -l {} +
 
 libzed:
 	cd ../cpp_libs/libzed && git pull && make -j32 static
