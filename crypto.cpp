@@ -8,13 +8,10 @@
 #include <iostream>
 #include <time.h>
 
-zstring getInput(argparse::ArgumentParser parser)
-{
-  return zstring((parser.present("--inputfile") ? parser.get("--inputfile") : joinString(parser.get<std::vector<std::string>>("input"), " ")).c_str());
-}
-
 int main(int argc, char **argv)
 {
+  srand(time(0));
+
   argparse::ArgumentParser program("crypto");
 
   // TODO: This is super reptitive
@@ -33,7 +30,7 @@ int main(int argc, char **argv)
   encodeKeyGroup.add_argument("-k", "--key")
       .help("the key to use for the encoding");
   encodeKeyGroup.add_argument("-K", "--keyfile")
-      .help("the key filepath to use for the encoding");
+      .help("the key file path to use for the encoding");
 
   auto &encodeInputGroup = encode_command.add_mutually_exclusive_group(true);
   encodeInputGroup.add_argument("-I", "--inputfile")
@@ -57,7 +54,7 @@ int main(int argc, char **argv)
   decodeKeyGroup.add_argument("-k", "--key")
       .help("the key to use for the decoding");
   decodeKeyGroup.add_argument("-K", "--keyfile")
-      .help("the key filepath to use for the decoding");
+      .help("the key file path to use for the decoding");
 
   auto &decodeInputGroup = decode_command.add_mutually_exclusive_group(true);
   decodeInputGroup.add_argument("-I", "--inputfile")
@@ -99,49 +96,47 @@ int main(int argc, char **argv)
     return 1;
   }
 
+  zstring().writeln(std::cout);
+
+  // TODO: This is also pretty repetitive
   if (program.is_subcommand_used("encode"))
   {
-    zstring cipher = zstring(encode_command.get("cipher").c_str());
-    zstring key = zstring((encode_command.present("--key") ? encode_command.get("--key") : encode_command.get("--keyfile")).c_str());
-    zstring input = zstring((encode_command.present("--inputfile") ? encode_command.get("--inputfile") : joinString(encode_command.get<std::vector<std::string>>("input"), " ")).c_str());
+    auto cipher = encode_command.get("cipher");
+    auto key = encode_command.present("--key") ? encode_command.get("--key") : encode_command.get("--keyfile");
+    zstring input = encode_command.present("--inputfile") ? loadFile(encode_command.get("--inputfile")) : zstring(joinString(encode_command.get<std::vector<std::string>>("input"), " ").c_str());
+    zstring output = "";
 
     if (cipher == "caesar")
     {
-      int offset = int(key);
-      if (offset == -1)
-      {
-        srand(time(0));
-        offset = (rand() % 25) + 1;
-      }
+      int offset = std::stoi(key) == -1 ? (rand() % 25) + 1 : std::stoi(key);
 
-      ("\n"_u8 + caesarEncode(input, offset)).writeln(std::cout);
+      output = caesarEncode(input, offset);
+      ("\n"_u8 + output).writeln(std::cout);
     }
 
     if (encode_command.present("--outputfile"))
-    {
       "File output not yet implemented"_u8.writeln(std::cout);
-    }
   }
   else if (program.is_subcommand_used("decode"))
   {
-    zstring cipher = zstring(decode_command.get("cipher").c_str());
-    zstring key = zstring((decode_command.present("--key") ? decode_command.get("--key") : decode_command.get("--keyfile")).c_str());
-    zstring input = zstring((decode_command.present("--inputfile") ? decode_command.get("--inputfile") : joinString(decode_command.get<std::vector<std::string>>("input"), " ")).c_str());
+    auto cipher = decode_command.get("cipher");
+    auto key = decode_command.present("--key") ? decode_command.get("--key") : decode_command.get("--keyfile");
+    zstring input = decode_command.present("--inputfile") ? loadFile(decode_command.get("--inputfile")) : zstring(joinString(decode_command.get<std::vector<std::string>>("input"), " ").c_str());
+    zstring output = "";
 
     if (cipher == "caesar")
     {
-      ("\n"_u8 + caesarDecode(input, int(key))).writeln(std::cout);
+      output = caesarDecode(input, std::stoi(key));
+      ("\n"_u8 + output).writeln(std::cout);
     }
 
-    if (encode_command.present("--outputfile"))
-    {
+    if (decode_command.present("--outputfile"))
       "File output not yet implemented"_u8.writeln(std::cout);
-    }
   }
   else if (program.is_subcommand_used("crack"))
   {
-    zstring cipher = zstring(crack_command.get("cipher").c_str());
-    zstring input = zstring((crack_command.present("--inputfile") ? crack_command.get("--inputfile") : joinString(crack_command.get<std::vector<std::string>>("input"), " ")).c_str());
+    auto cipher = crack_command.get("cipher");
+    zstring input = crack_command.present("--inputfile") ? loadFile(crack_command.get("--inputfile")) : zstring(joinString(crack_command.get<std::vector<std::string>>("input"), " ").c_str());
 
     if (cipher == "caesar")
     {
@@ -149,21 +144,17 @@ int main(int argc, char **argv)
 
       ("The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text).writeln(std::cout);
 
-      if (results[0].score < 50)
+      if (results[0].score < 90)
       {
         "\nLow Confidence! Presenting alternatives...\n"_u8.writeln(std::cout);
 
         for (int i = 1; i < results.length(); i++)
-        {
           results[i].summary.write(std::cout);
-        }
       }
     }
 
     if (crack_command.present("--outputfile"))
-    {
       "File output not yet implemented"_u8.writeln(std::cout);
-    }
   }
   else
   {
