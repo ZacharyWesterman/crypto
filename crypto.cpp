@@ -8,6 +8,16 @@
 #include <iostream>
 #include <time.h>
 
+zstring getParserInput(argparse::ArgumentParser &parser)
+{
+  return parser.present("--inputfile") ? loadFile(parser.get("--inputfile")) : zstring(joinString(parser.get<std::vector<std::string>>("input"), " ").c_str());
+}
+
+zstring getParserKey(argparse::ArgumentParser &parser)
+{
+  return parser.present("--keyfile") ? loadFile(parser.get("--keyfile")) : zstring(parser.get("--key").c_str());
+}
+
 int main(int argc, char **argv)
 {
   srand(time(0));
@@ -98,12 +108,13 @@ int main(int argc, char **argv)
 
   zstring().writeln(std::cout);
 
+  // Main logic control
   // TODO: This is also pretty repetitive
   if (program.is_subcommand_used("encode"))
   {
     auto cipher = encode_command.get("cipher");
-    auto key = encode_command.present("--key") ? encode_command.get("--key") : encode_command.get("--keyfile");
-    zstring input = encode_command.present("--inputfile") ? loadFile(encode_command.get("--inputfile")) : zstring(joinString(encode_command.get<std::vector<std::string>>("input"), " ").c_str());
+    std::string key = getParserKey(encode_command).cstring();
+    zstring input = getParserInput(encode_command);
     zstring output = "";
 
     if (cipher == "caesar")
@@ -121,7 +132,7 @@ int main(int argc, char **argv)
   {
     auto cipher = decode_command.get("cipher");
     auto key = decode_command.present("--key") ? decode_command.get("--key") : decode_command.get("--keyfile");
-    zstring input = decode_command.present("--inputfile") ? loadFile(decode_command.get("--inputfile")) : zstring(joinString(decode_command.get<std::vector<std::string>>("input"), " ").c_str());
+    zstring input = getParserInput(decode_command);
     zstring output = "";
 
     if (cipher == "caesar")
@@ -136,7 +147,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("crack"))
   {
     auto cipher = crack_command.get("cipher");
-    zstring input = crack_command.present("--inputfile") ? loadFile(crack_command.get("--inputfile")) : zstring(joinString(crack_command.get<std::vector<std::string>>("input"), " ").c_str());
+    zstring input = getParserInput(crack_command);
 
     if (cipher == "caesar")
     {
@@ -144,7 +155,7 @@ int main(int argc, char **argv)
 
       ("The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text).writeln(std::cout);
 
-      if (results[0].score < 90)
+      if (results[0].score < 80)
       {
         "\nLow Confidence! Presenting alternatives...\n"_u8.writeln(std::cout);
 

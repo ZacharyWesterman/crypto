@@ -23,11 +23,7 @@ zstring loadFile(std::string filepath)
   }
 
   while (file >> buffer)
-  {
     contents.append(zstring(buffer.c_str()));
-  }
-
-  ("."_u8 + contents + ".").writeln(std::cout);
 
   return contents;
 }
@@ -39,9 +35,7 @@ std::string joinString(const std::vector<std::string> &lst, const std::string &d
   for (const auto &s : lst)
   {
     if (!ret.empty())
-    {
       ret += delim;
-    }
 
     ret += s;
   }

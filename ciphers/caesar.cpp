@@ -45,9 +45,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
     "."_u8.write(std::cout);
 
     if (newResult.score > bestResult.score || i == 1)
-    {
       bestResult = newResult;
-    }
 
     results.append(newResult);
   }
