@@ -8,6 +8,23 @@ zstring getAlphabet()
   return "abcdefghijklmnopqrstuvwxyz";
 }
 
+void writeFile(zstring contents, std::string filepath)
+{
+  std::ofstream file(filepath);
+
+  if (file.is_open())
+  {
+    file << contents << std::endl;
+
+    file.close();
+    ("Written to output file: "_u8 + zstring(filepath.c_str())).writeln(std::cout);
+  }
+  else
+  {
+    "Unable to open file for writing."_u8.writeln(std::cout);
+  }
+}
+
 zstring loadFile(std::string filepath)
 {
   std::ifstream file;

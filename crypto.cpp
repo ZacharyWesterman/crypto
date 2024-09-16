@@ -122,11 +122,16 @@ int main(int argc, char **argv)
       int offset = std::stoi(key) == -1 ? (rand() % 25) + 1 : std::stoi(key);
 
       output = caesarEncode(input, offset);
-      ("\n"_u8 + output).writeln(std::cout);
     }
 
     if (encode_command.present("--outputfile"))
-      "File output not yet implemented"_u8.writeln(std::cout);
+    {
+      writeFile(output, encode_command.get("--outputfile"));
+    }
+    else
+    {
+      ("\n"_u8 + output).writeln(std::cout);
+    }
   }
   else if (program.is_subcommand_used("decode"))
   {
@@ -138,11 +143,16 @@ int main(int argc, char **argv)
     if (cipher == "caesar")
     {
       output = caesarDecode(input, std::stoi(key));
-      ("\n"_u8 + output).writeln(std::cout);
     }
 
     if (decode_command.present("--outputfile"))
-      "File output not yet implemented"_u8.writeln(std::cout);
+    {
+      writeFile(output, decode_command.get("--outputfile"));
+    }
+    else
+    {
+      ("\n"_u8 + output).writeln(std::cout);
+    }
   }
   else if (program.is_subcommand_used("crack"))
   {
@@ -153,19 +163,27 @@ int main(int argc, char **argv)
     {
       z::core::array<caesarCrackResult> results = caesarCrack(input);
 
-      ("The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text).writeln(std::cout);
+      zstring output = zstring();
+
+      output += "The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text + "\n";
 
       if (results[0].score < 80)
       {
-        "\nLow Confidence! Presenting alternatives...\n"_u8.writeln(std::cout);
+        output += "\nLow Confidence! Presenting alternatives...\n\n";
 
         for (int i = 1; i < results.length(); i++)
-          results[i].summary.write(std::cout);
+          output += results[i].summary;
+      }
+
+      if (crack_command.present("--outputfile"))
+      {
+        writeFile(output, crack_command.get("--outputfile"));
+      }
+      else
+      {
+        ("\n"_u8 + output).writeln(std::cout);
       }
     }
-
-    if (crack_command.present("--outputfile"))
-      "File output not yet implemented"_u8.writeln(std::cout);
   }
   else
   {
