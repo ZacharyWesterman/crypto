@@ -136,7 +136,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     auto cipher = decode_command.get("cipher");
-    auto key = decode_command.present("--key") ? decode_command.get("--key") : decode_command.get("--keyfile");
+    std::string key = getParserKey(decode_command).cstring();
     zstring input = getParserInput(decode_command);
     zstring output = "";
 
