@@ -18,6 +18,11 @@ zstring getParserKey(argparse::ArgumentParser &parser)
   return parser.present("--keyfile") ? loadFile(parser.get("--keyfile")) : zstring(parser.get("--key").c_str());
 }
 
+void handleOutput(zstring output, argparse::ArgumentParser &parser)
+{
+  parser.present("--outputfile") ? writeFile(output, parser.get("--outputfile")) : ("\n"_u8 + output).writeln(std::cout);
+}
+
 int main(int argc, char **argv)
 {
   srand(time(0));
@@ -27,7 +32,7 @@ int main(int argc, char **argv)
   // TODO: This is super reptitive
   // crypto encode subparser
   argparse::ArgumentParser encode_command("encode");
-  encode_command.add_description("encode the input given a certain cipher and key");
+  encode_command.add_description("Encode the input given a certain cipher and key");
 
   encode_command.add_argument("cipher")
       .help("the cipher to use for the encoding")
@@ -41,6 +46,9 @@ int main(int argc, char **argv)
       .help("the key to use for the encoding");
   encodeKeyGroup.add_argument("-K", "--keyfile")
       .help("the key file path to use for the encoding");
+  encodeKeyGroup.add_argument("-?", "--randomkey")
+      .flag()
+      .help("a random key will be used for the encoding");
 
   auto &encodeInputGroup = encode_command.add_mutually_exclusive_group(true);
   encodeInputGroup.add_argument("-I", "--inputfile")
@@ -113,25 +121,18 @@ int main(int argc, char **argv)
   if (program.is_subcommand_used("encode"))
   {
     auto cipher = encode_command.get("cipher");
-    std::string key = getParserKey(encode_command).cstring();
+    std::string key = encode_command["--randomkey"] == true ? "" : getParserKey(encode_command).cstring();
     zstring input = getParserInput(encode_command);
     zstring output = "";
 
     if (cipher == "caesar")
     {
-      int offset = std::stoi(key) == -1 ? (rand() % 25) + 1 : std::stoi(key);
+      int offset = encode_command["--randomkey"] == true ? (rand() % 25) + 1 : std::stoi(key);
 
       output = caesarEncode(input, offset);
     }
 
-    if (encode_command.present("--outputfile"))
-    {
-      writeFile(output, encode_command.get("--outputfile"));
-    }
-    else
-    {
-      ("\n"_u8 + output).writeln(std::cout);
-    }
+    handleOutput(output, encode_command);
   }
   else if (program.is_subcommand_used("decode"))
   {
@@ -145,25 +146,17 @@ int main(int argc, char **argv)
       output = caesarDecode(input, std::stoi(key));
     }
 
-    if (decode_command.present("--outputfile"))
-    {
-      writeFile(output, decode_command.get("--outputfile"));
-    }
-    else
-    {
-      ("\n"_u8 + output).writeln(std::cout);
-    }
+    handleOutput(output, decode_command);
   }
   else if (program.is_subcommand_used("crack"))
   {
     auto cipher = crack_command.get("cipher");
     zstring input = getParserInput(crack_command);
+    zstring output = "";
 
     if (cipher == "caesar")
     {
       z::core::array<caesarCrackResult> results = caesarCrack(input);
-
-      zstring output = zstring();
 
       output += "The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text + "\n";
 
@@ -175,14 +168,7 @@ int main(int argc, char **argv)
           output += results[i].summary;
       }
 
-      if (crack_command.present("--outputfile"))
-      {
-        writeFile(output, crack_command.get("--outputfile"));
-      }
-      else
-      {
-        ("\n"_u8 + output).writeln(std::cout);
-      }
+      handleOutput(output, crack_command);
     }
   }
   else
