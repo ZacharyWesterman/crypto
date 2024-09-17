@@ -17,7 +17,7 @@ zstring caesarDecode(zstring input, int offset)
   zstring plainText = input.cipher(shiftAlphabet(offset), getAlphabet())
                           .cipher(shiftAlphabet(offset).upper(), getAlphabet().upper());
 
-  return wordSearch(plainText);
+  return plainText.contains(" ") ? plainText : wordSearch(plainText);
 }
 
 z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly crack only the first K terms instead of the whole thing, then apply thr transformation and (maybe) reconfirm
@@ -34,7 +34,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
     caesarCrackResult newResult;
 
     newResult.key = i;
-    newResult.text = wordSearch(caesarDecode(input, i));
+    newResult.text = caesarDecode(input, i);
     newResult.score = checkSpelling(newResult.text);
     newResult.summary = zstring(newResult.key) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
 
@@ -46,7 +46,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
     results.append(newResult);
   }
 
-  "Done!\n"_u8.writeln(std::cout);
+  "Done!"_u8.writeln(std::cout);
 
   if (bestResult.key != 1)
     results.swap(0, bestResult.key - 1);
