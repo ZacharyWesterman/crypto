@@ -58,16 +58,14 @@ zstring wordSearch(zstring text)
 {
   loadDictionary();
 
-  int maxWordLength = 10;
-
+  // First pass, greedy longest-first search for word options
   zstring output = "";
 
-  // First pass, greedy longest-first search for word options
   for (int i = 0; i < text.length();)
   {
     bool wordFound = false;
 
-    for (int k = maxWordLength; k > 0; k--)
+    for (int k = dict.maxWordLength(); k > 0; k--)
     {
       zstring word = text.substr(i, k);
 

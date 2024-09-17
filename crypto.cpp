@@ -1,5 +1,6 @@
 #include "ciphers/caesar.h"
 #include "libs/helper.h"
+#include "libs/file.h"
 #include "libs/dictionary.h"
 #include "ext/argparse.h"
 #include "parser/commands.h"
@@ -55,13 +56,13 @@ int main(int argc, char **argv)
 
   zstring().writeln(std::cout);
 
+  zstring output = "";
   // Main logic control
   if (program.is_subcommand_used("encode"))
   {
     auto cipher = encode_command.get("cipher");
     std::string key = encode_command["--randomkey"] == true ? "" : getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(encode_command);
-    zstring output = "";
 
     if (cipher == "caesar")
     {
@@ -77,7 +78,6 @@ int main(int argc, char **argv)
     auto cipher = decode_command.get("cipher");
     std::string key = getParserKey(decode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(decode_command);
-    zstring output = "";
 
     if (cipher == "caesar")
     {
@@ -90,7 +90,6 @@ int main(int argc, char **argv)
   {
     auto cipher = crack_command.get("cipher");
     zstring input = getParserInput(crack_command);
-    zstring output = "";
 
     if (cipher == "caesar")
     {
