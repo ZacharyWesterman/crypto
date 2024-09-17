@@ -58,7 +58,9 @@ int main(int argc, char **argv)
     zstring input = getParserInput(decode_command);
 
     if (cipher == "caesar")
+    {
       output = caesarDecode(input, std::stoi(key));
+    }
 
     handleOutput(output, decode_command);
   }

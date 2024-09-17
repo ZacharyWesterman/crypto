@@ -20,7 +20,7 @@ zstring caesarDecode(zstring input, int offset)
   return plainText.contains(" ") ? plainText : wordSearch(plainText);
 }
 
-z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly crack only the first K terms instead of the whole thing, then apply thr transformation and (maybe) reconfirm
+z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: crack only the first K terms instead of the whole thing, then apply thr transformation and (maybe) reconfirm
 {
   caesarCrackResult bestResult;
   z::core::array<caesarCrackResult> results;
