@@ -1,6 +1,6 @@
 #include "caesar.h"
-#include "../tools/dictionary.h"
-#include "../tools/helper.h"
+#include "../libs/dictionary.h"
+#include "../libs/helper.h"
 
 #include <z/core/timer.hpp>
 

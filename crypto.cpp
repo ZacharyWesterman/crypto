@@ -1,7 +1,8 @@
 #include "ciphers/caesar.h"
-#include "tools/helper.h"
-#include "tools/dictionary.h"
-#include "libs/argparse.h"
+#include "libs/helper.h"
+#include "libs/dictionary.h"
+#include "ext/argparse.h"
+#include "parser/commands.h"
 
 #include <z/core/string.hpp>
 
@@ -29,75 +30,13 @@ int main(int argc, char **argv)
 
   argparse::ArgumentParser program("crypto");
 
-  // TODO: This is super reptitive
-  // crypto encode subparser
   argparse::ArgumentParser encode_command("encode");
-  encode_command.add_description("Encode the input given a certain cipher and key");
-
-  encode_command.add_argument("cipher")
-      .help("the cipher to use for the encoding")
-      .choices("caesar");
-
-  encode_command.add_argument("-O", "--outputfile")
-      .help("the output file name for the result");
-
-  auto &encodeKeyGroup = encode_command.add_mutually_exclusive_group(true);
-  encodeKeyGroup.add_argument("-k", "--key")
-      .help("the key to use for the encoding");
-  encodeKeyGroup.add_argument("-K", "--keyfile")
-      .help("the key file path to use for the encoding");
-  encodeKeyGroup.add_argument("-?", "--randomkey")
-      .flag()
-      .help("a random key will be used for the encoding");
-
-  auto &encodeInputGroup = encode_command.add_mutually_exclusive_group(true);
-  encodeInputGroup.add_argument("-I", "--inputfile")
-      .help("specify the input file to be encoded");
-  encodeInputGroup.add_argument("input")
-      .help("the input to be encoded")
-      .remaining();
-
-  // crypto decode subparser
   argparse::ArgumentParser decode_command("decode");
-  decode_command.add_description("Decode the input given a certain cipher and key");
-
-  decode_command.add_argument("cipher")
-      .help("the cipher to use for the decoding")
-      .choices("caesar");
-
-  decode_command.add_argument("-O", "--outputfile")
-      .help("the output file name for the result");
-
-  auto &decodeKeyGroup = decode_command.add_mutually_exclusive_group(true);
-  decodeKeyGroup.add_argument("-k", "--key")
-      .help("the key to use for the decoding");
-  decodeKeyGroup.add_argument("-K", "--keyfile")
-      .help("the key file path to use for the decoding");
-
-  auto &decodeInputGroup = decode_command.add_mutually_exclusive_group(true);
-  decodeInputGroup.add_argument("-I", "--inputfile")
-      .help("specify the input file to be decoded");
-  decodeInputGroup.add_argument("input")
-      .help("the input to be decoded")
-      .remaining();
-
-  // crypto crack subparser
   argparse::ArgumentParser crack_command("crack");
-  crack_command.add_description("Crack the input given a certain cipher");
 
-  crack_command.add_argument("cipher")
-      .help("the cipher to use for the decoding")
-      .choices("caesar");
-
-  crack_command.add_argument("-O", "--outputfile")
-      .help("the output file name for the result");
-
-  auto &crackInputGroup = crack_command.add_mutually_exclusive_group(true);
-  crackInputGroup.add_argument("-I", "--inputfile")
-      .help("specify the input file to be decoded");
-  crackInputGroup.add_argument("input")
-      .help("the input to be decoded")
-      .remaining();
+  generateEncodeCommand(encode_command);
+  generateDecodeCommand(decode_command);
+  generateCrackCommand(crack_command);
 
   program.add_subparser(encode_command);
   program.add_subparser(decode_command);
@@ -117,7 +56,6 @@ int main(int argc, char **argv)
   zstring().writeln(std::cout);
 
   // Main logic control
-  // TODO: This is also pretty repetitive
   if (program.is_subcommand_used("encode"))
   {
     auto cipher = encode_command.get("cipher");

@@ -85,6 +85,8 @@
     "xlocmon": "cpp",
     "xlocnum": "cpp",
     "xloctime": "cpp",
-    "any": "cpp"
+    "any": "cpp",
+    "coroutine": "cpp",
+    "resumable": "cpp"
   }
 }

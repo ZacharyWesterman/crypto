@@ -3,8 +3,13 @@ STATICLIB = ../cpp_libs/libzed/libzed.a
 STD = c++17
 CC = g++
 
-make: crypto.exe
-crypto.exe: crypto.o tools/dictionary.o tools/helper.o ciphers/caesar.o $(STATICLIB)
+BINARY = crypto.exe
+
+DIRS = ciphers/ ext/ libs/ parser/
+SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
+OBJS = $(patsubst %.cpp,%.o,$(SRCS))
+
+$(BINARY): crypto.o $(OBJS) $(STATICLIB)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
@@ -13,7 +18,9 @@ crypto.exe: crypto.o tools/dictionary.o tools/helper.o ciphers/caesar.o $(STATIC
 clean:
 	rm -f *.exe *.o
 	cd ciphers && rm -f *.exe *.o
-	cd tools &&  rm -f *.exe *.o
+	cd ext &&  rm -f *.exe *.o
+	cd libs &&  rm -f *.exe *.o
+	cd parser &&  rm -f *.exe *.o
 
 remake: clean make
 
@@ -22,5 +29,9 @@ count:
 
 libzed:
 	cd ../cpp_libs/libzed && git pull && make -j32 static
+
+tests: $(BINARY)
+	$(MAKE) -C tests/
+	./tests/bin/run_tests
 
 .PHONY: clean count remake libzed
