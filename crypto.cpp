@@ -59,7 +59,7 @@ int main(int argc, char **argv)
   if (program.is_subcommand_used("encode"))
   {
     auto cipher = encode_command.get("cipher");
-    std::string key = encode_command["--randomkey"] == true ? "" : getParserKey(encode_command).cstring();
+    std::string key = encode_command["--randomkey"] == true ? "" : getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(encode_command);
     zstring output = "";
 
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     auto cipher = decode_command.get("cipher");
-    std::string key = getParserKey(decode_command).cstring();
+    std::string key = getParserKey(decode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(decode_command);
     zstring output = "";
 

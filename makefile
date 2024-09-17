@@ -32,6 +32,6 @@ libzed:
 
 tests: $(BINARY)
 	$(MAKE) -C tests/
-	./tests/bin/run_tests
+	./tests/bin/run_tests.exe
 
 .PHONY: clean count remake libzed
