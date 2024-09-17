@@ -2,11 +2,18 @@
 #define COMMANDS_H
 
 #include "../ext/argparse.h"
+#include <z/core/string.hpp>
 
-void generateEncodeCommand(argparse::ArgumentParser &command);
+void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
 
-void generateDecodeCommand(argparse::ArgumentParser &command);
+void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
 
-void generateCrackCommand(argparse::ArgumentParser &command);
+void addCrackCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
+
+zstring getParserInput(argparse::ArgumentParser &parser);
+
+zstring getParserKey(argparse::ArgumentParser &parser);
+
+void handleOutput(zstring output, argparse::ArgumentParser &parser);
 
 #endif

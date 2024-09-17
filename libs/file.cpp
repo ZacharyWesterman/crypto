@@ -12,6 +12,7 @@ void writeFile(zstring contents, std::string filepath)
     file << contents << std::endl;
 
     file.close();
+
     ("Written to output file: "_u8 + zstring(filepath.c_str())).writeln(std::cout);
   }
   else
@@ -24,7 +25,7 @@ zstring loadFile(std::string filepath)
 {
   std::ifstream file;
   zstring contents = "";
-  std::string buffer;
+  std::string buffer = "";
 
   file.open(filepath);
 

@@ -1,5 +1,4 @@
 #include "ciphers/caesar.h"
-#include "libs/file.h"
 #include "libs/dictionary.h"
 #include "ext/argparse.h"
 #include "parser/commands.h"
@@ -8,36 +7,6 @@
 
 #include <iostream>
 #include <time.h>
-
-std::string joinString(const std::vector<std::string> &lst, const std::string &delim)
-{
-  std::string ret;
-
-  for (const auto &s : lst)
-  {
-    if (!ret.empty())
-      ret += delim;
-
-    ret += s;
-  }
-
-  return ret;
-}
-
-zstring getParserInput(argparse::ArgumentParser &parser)
-{
-  return parser.present("--inputfile") ? loadFile(parser.get("--inputfile")) : zstring(joinString(parser.get<std::vector<std::string>>("input"), " ").c_str());
-}
-
-zstring getParserKey(argparse::ArgumentParser &parser)
-{
-  return parser.present("--keyfile") ? loadFile(parser.get("--keyfile")) : zstring(parser.get("--key").c_str());
-}
-
-void handleOutput(zstring output, argparse::ArgumentParser &parser)
-{
-  parser.present("--outputfile") ? writeFile(output, parser.get("--outputfile")) : ("\n"_u8 + output).writeln(std::cout);
-}
 
 int main(int argc, char **argv)
 {
@@ -49,13 +18,9 @@ int main(int argc, char **argv)
   argparse::ArgumentParser decode_command("decode");
   argparse::ArgumentParser crack_command("crack");
 
-  generateEncodeCommand(encode_command);
-  generateDecodeCommand(decode_command);
-  generateCrackCommand(crack_command);
-
-  program.add_subparser(encode_command);
-  program.add_subparser(decode_command);
-  program.add_subparser(crack_command);
+  addEncodeCommand(program, encode_command);
+  addDecodeCommand(program, decode_command);
+  addCrackCommand(program, crack_command);
 
   try
   {
@@ -68,19 +33,18 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  // Main logic control
   zstring().writeln(std::cout);
-
   zstring output = "";
+
   if (program.is_subcommand_used("encode"))
   {
-    auto cipher = encode_command.get("cipher");
+    std::string cipher = encode_command.get("cipher");
     std::string key = encode_command["--randomkey"] == true ? "" : getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(encode_command);
 
     if (cipher == "caesar")
     {
-      int offset = encode_command["--randomkey"] == true ? (rand() % 25) + 1 : std::stoi(key);
+      int offset = key == "" ? (rand() % 25) + 1 : std::stoi(key);
 
       output = caesarEncode(input, offset);
     }
@@ -89,7 +53,7 @@ int main(int argc, char **argv)
   }
   else if (program.is_subcommand_used("decode"))
   {
-    auto cipher = decode_command.get("cipher");
+    std::string cipher = decode_command.get("cipher");
     std::string key = getParserKey(decode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(decode_command);
 
@@ -102,7 +66,7 @@ int main(int argc, char **argv)
   }
   else if (program.is_subcommand_used("crack"))
   {
-    auto cipher = crack_command.get("cipher");
+    std::string cipher = crack_command.get("cipher");
     zstring input = getParserInput(crack_command);
 
     if (cipher == "caesar")
