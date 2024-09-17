@@ -9,4 +9,8 @@ float checkSpelling(zstring text);
 
 zstring wordSearch(zstring text);
 
+zstring getAlphabet();
+
+zstring shiftAlphabet(int offset);
+
 #endif

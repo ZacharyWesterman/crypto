@@ -1,5 +1,4 @@
 #include "ciphers/caesar.h"
-#include "libs/helper.h"
 #include "libs/file.h"
 #include "libs/dictionary.h"
 #include "ext/argparse.h"
@@ -9,6 +8,21 @@
 
 #include <iostream>
 #include <time.h>
+
+std::string joinString(const std::vector<std::string> &lst, const std::string &delim)
+{
+  std::string ret;
+
+  for (const auto &s : lst)
+  {
+    if (!ret.empty())
+      ret += delim;
+
+    ret += s;
+  }
+
+  return ret;
+}
 
 zstring getParserInput(argparse::ArgumentParser &parser)
 {
@@ -54,10 +68,10 @@ int main(int argc, char **argv)
     return 1;
   }
 
+  // Main logic control
   zstring().writeln(std::cout);
 
   zstring output = "";
-  // Main logic control
   if (program.is_subcommand_used("encode"))
   {
     auto cipher = encode_command.get("cipher");

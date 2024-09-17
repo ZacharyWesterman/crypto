@@ -114,3 +114,15 @@ zstring wordSearch(zstring text)
 
   return z::core::join(words, " ").replace("  ", " "); // TODO: why do I need to do this replace...?
 }
+
+zstring getAlphabet()
+{
+  return "abcdefghijklmnopqrstuvwxyz";
+}
+
+zstring shiftAlphabet(int offset)
+{
+  zstring alphabet = getAlphabet();
+
+  return alphabet.substr(offset, 26) + alphabet.substr(0, offset);
+}
