@@ -18,6 +18,4 @@ zstring caesarDecode(zstring input, int offset);
 
 z::core::array<caesarCrackResult> caesarCrack(zstring input);
 
-int runCaesar(int argc, char **argv);
-
 #endif

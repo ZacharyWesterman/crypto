@@ -6,7 +6,7 @@ void addCipher(argparse::ArgumentParser &command)
 {
     command.add_argument("cipher")
         .help("the cipher to use")
-        .choices("caesar");
+        .choices("caesar", "substitution", "sub");
 }
 
 void addOutput(argparse::ArgumentParser &command)

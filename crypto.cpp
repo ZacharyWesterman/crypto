@@ -1,4 +1,5 @@
 #include "ciphers/caesar.h"
+#include "ciphers/substitution.h"
 #include "libs/dictionary.h"
 #include "ext/argparse.h"
 #include "parser/commands.h"
@@ -48,6 +49,10 @@ int main(int argc, char **argv)
 
       output = caesarEncode(input, offset);
     }
+    else if (cipher == "substitution" || cipher == "sub")
+    {
+      output = substitutionEncode(input, key);
+    }
 
     handleOutput(output, encode_command);
   }
@@ -60,6 +65,10 @@ int main(int argc, char **argv)
     if (cipher == "caesar")
     {
       output = caesarDecode(input, std::stoi(key));
+    }
+    else if (cipher == "substitution" || cipher == "sub")
+    {
+      output = substitutionDecode(input, key);
     }
 
     handleOutput(output, decode_command);
@@ -84,6 +93,10 @@ int main(int argc, char **argv)
       }
 
       handleOutput(output, crack_command);
+    }
+    else if (cipher == "substitution" || cipher == "sub")
+    {
+      // TODO: implement
     }
   }
   else
