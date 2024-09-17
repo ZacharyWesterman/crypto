@@ -10,13 +10,24 @@
 
 z::util::dictionary dict;
 
+zstring getAlphabet()
+{
+  return "abcdefghijklmnopqrstuvwxyz";
+}
+
+zstring shiftAlphabet(int offset)
+{
+  zstring alphabet = getAlphabet();
+
+  return alphabet.substr(offset, 26) + alphabet.substr(0, offset);
+}
+
 void loadDictionary()
 {
   if (dict.length() > 0)
     return;
 
   std::ifstream file("libs/words.txt");
-
   z::core::timeout time(1000000); // 1 second timeout
 
   "Loading dictionary..."_u8.write(std::cout);
@@ -38,9 +49,7 @@ float checkSpelling(zstring text)
     text = text.substr(0, text.length() - 1);
 
   float successes = 0;
-
   z::core::array<zstring> words = z::core::split(text, zstring(" "));
-
   float total = float(words.length());
 
   for (int i = 0; i < words.length(); i++)
@@ -113,16 +122,4 @@ zstring wordSearch(zstring text)
   }
 
   return z::core::join(words, " ").replace("  ", " "); // TODO: why do I need to do this replace...?
-}
-
-zstring getAlphabet()
-{
-  return "abcdefghijklmnopqrstuvwxyz";
-}
-
-zstring shiftAlphabet(int offset)
-{
-  zstring alphabet = getAlphabet();
-
-  return alphabet.substr(offset, 26) + alphabet.substr(0, offset);
 }

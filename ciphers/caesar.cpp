@@ -8,18 +8,14 @@
 
 zstring caesarEncode(zstring input, int offset) // TODO: guard on offset?
 {
-  zstring alphabet = getAlphabet(); // TODO: this kinda sucks...
-
-  return input.cipher(alphabet, shiftAlphabet(offset))
-      .cipher(alphabet.upper(), shiftAlphabet(offset).upper());
+  return input.cipher(getAlphabet(), shiftAlphabet(offset))
+      .cipher(getAlphabet().upper(), shiftAlphabet(offset).upper());
 }
 
 zstring caesarDecode(zstring input, int offset)
 {
-  zstring alphabet = getAlphabet();
-
-  zstring plainText = input.cipher(shiftAlphabet(offset), alphabet)
-                          .cipher(shiftAlphabet(offset).upper(), alphabet.upper());
+  zstring plainText = input.cipher(shiftAlphabet(offset), getAlphabet())
+                          .cipher(shiftAlphabet(offset).upper(), getAlphabet().upper());
 
   return wordSearch(plainText);
 }
@@ -40,7 +36,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
     newResult.key = i;
     newResult.text = wordSearch(caesarDecode(input, i));
     newResult.score = checkSpelling(newResult.text);
-    newResult.summary = zstring(i) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
+    newResult.summary = zstring(newResult.key) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
 
     "."_u8.write(std::cout);
 
@@ -53,11 +49,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: possibly c
   "Done!\n"_u8.writeln(std::cout);
 
   if (bestResult.key != 1)
-  {
-    caesarCrackResult swap = results[0];
-    results.replace(0, 1, bestResult);
-    results.replace(bestResult.key - 1, 1, swap);
-  }
+    results.swap(0, bestResult.key - 1);
 
   return results;
 }

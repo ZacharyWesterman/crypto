@@ -3,14 +3,14 @@
 
 #include <z/util/dictionary.hpp>
 
+zstring getAlphabet();
+
+zstring shiftAlphabet(int offset);
+
 void loadDictionary();
 
 float checkSpelling(zstring text);
 
 zstring wordSearch(zstring text);
-
-zstring getAlphabet();
-
-zstring shiftAlphabet(int offset);
 
 #endif
