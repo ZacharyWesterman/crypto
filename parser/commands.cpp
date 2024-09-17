@@ -15,18 +15,16 @@ void addOutput(argparse::ArgumentParser &command)
         .help("the output file name for the result");
 }
 
-void addKey(argparse::ArgumentParser &command, bool random = false)
+void addKey(argparse::ArgumentParser &command)
 {
     auto &group = command.add_mutually_exclusive_group(true);
     group.add_argument("-k", "--key")
         .help("the key to use");
     group.add_argument("-K", "--keyfile")
         .help("the key file path");
-
-    if (random)
-        group.add_argument("-?", "--randomkey")
-            .flag()
-            .help("a random key will be used");
+    group.add_argument("-?", "--randomkey") // TODO: Not always random
+        .flag()
+        .help("a random key will be used");
 }
 
 void addInput(argparse::ArgumentParser &command)
@@ -61,7 +59,7 @@ void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
     addCipher(command);
     addOutput(command);
-    addKey(command, true);
+    addKey(command);
     addInput(command);
 
     program.add_subparser(command);
@@ -73,18 +71,7 @@ void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
     addCipher(command);
     addOutput(command);
-    addKey(command, false);
-    addInput(command);
-
-    program.add_subparser(command);
-}
-
-void addCrackCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command)
-{
-    command.add_description("Crack the input given a certain cipher");
-
-    addCipher(command);
-    addOutput(command);
+    addKey(command);
     addInput(command);
 
     program.add_subparser(command);

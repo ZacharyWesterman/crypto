@@ -5,6 +5,8 @@
 
 zstring getAlphabet();
 
+zstring randomAlphabet();
+
 zstring shiftAlphabet(int offset);
 
 void loadDictionary();

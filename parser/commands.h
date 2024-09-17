@@ -8,8 +8,6 @@ void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
 void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
 
-void addCrackCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
-
 zstring getParserInput(argparse::ArgumentParser &parser);
 
 zstring getParserKey(argparse::ArgumentParser &parser);

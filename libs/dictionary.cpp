@@ -10,6 +10,18 @@
 
 z::util::dictionary dict;
 
+zstring randomAlphabet()
+{
+  auto output = z::core::split(getAlphabet(), zstring());
+
+  for (int i = 0; i < 26; i++)
+  {
+    output.swap(rand() % 26, rand() % 26);
+  }
+
+  return z::core::join(output, "");
+}
+
 zstring getAlphabet()
 {
   return "abcdefghijklmnopqrstuvwxyz";

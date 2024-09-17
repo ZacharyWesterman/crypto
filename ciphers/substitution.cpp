@@ -1,15 +1,18 @@
 #include "substitution.h"
+#include "../libs/dictionary.h"
+
+#include <iostream>
 
 zstring substitutionEncode(zstring input, zstring key)
 {
-  // TODO: Implement
-  return zstring();
+  return input.cipher(getAlphabet(), key.toLower())
+      .cipher(getAlphabet().upper(), key.upper());
 }
 
 zstring substitutionDecode(zstring input, zstring key)
 {
-  // TODO: Implement
-  return zstring();
+  return input.cipher(key.toLower(), getAlphabet())
+      .cipher(key.upper(), getAlphabet().upper());
 }
 
 z::core::array<substitutionCrackResult> substitutionCrack(zstring input)
