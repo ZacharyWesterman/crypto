@@ -77,7 +77,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     std::string cipher = decode_command.get("cipher");
-    std::string key = decode_command["--randomkey"] == true ? "" : getParserKey(decode_command).cstring(); // TODO: ADD FURTHER VALIDATION
+    std::string key = decode_command["--unknownkey"] == true ? "" : getParserKey(decode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(decode_command);
 
     if (cipher == "caesar")

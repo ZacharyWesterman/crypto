@@ -40,7 +40,7 @@ void loadDictionary()
   "Loading dictionary..."_u8.write(std::cout);
 
   std::ifstream file("libs/words.txt");
-  z::core::timeout time(1000000); // 1 second timeout
+  z::core::timeout time(1'000'000); // 1 second timeout
 
   while (!dict.read(file, time))
   {
@@ -105,13 +105,8 @@ zstring wordSearch(zstring input)
     }
   }
 
-  if (output[output.length() - 1] == ' ')
-    output = output.substr(0, output.length() - 1);
-  if (output[0] == ' ')
-    output = output.substr(1, output.length() - 1);
-
   // Second pass, correct for the greed errors
-  z::core::array<zstring> words = z::core::split(output, " "_u8);
+  z::core::array<zstring> words = z::core::split(output.trim(), " "_u8);
 
   for (int i = 0; i < words.length() - 1; i++)
   {

@@ -15,16 +15,28 @@ void addOutput(argparse::ArgumentParser &command)
         .help("the output file name for the result");
 }
 
-void addKey(argparse::ArgumentParser &command)
+void addEncodeKey(argparse::ArgumentParser &command)
 {
     auto &group = command.add_mutually_exclusive_group(true);
     group.add_argument("-k", "--key")
         .help("the key to use");
     group.add_argument("-K", "--keyfile")
         .help("the key file path");
-    group.add_argument("-?", "--randomkey") // TODO: Not always random
+    group.add_argument("-?", "--randomkey")
         .flag()
         .help("a random key will be used");
+}
+
+void addDecodeKey(argparse::ArgumentParser &command)
+{
+    auto &group = command.add_mutually_exclusive_group(true);
+    group.add_argument("-k", "--key")
+        .help("the key to use");
+    group.add_argument("-K", "--keyfile")
+        .help("the key file path");
+    group.add_argument("-?", "--unknownkey")
+        .flag()
+        .help("the cipher will be cracked");
 }
 
 void addInput(argparse::ArgumentParser &command)
@@ -59,7 +71,7 @@ void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
     addCipher(command);
     addOutput(command);
-    addKey(command);
+    addEncodeKey(command);
     addInput(command);
 
     program.add_subparser(command);
@@ -71,7 +83,7 @@ void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
     addCipher(command);
     addOutput(command);
-    addKey(command);
+    addDecodeKey(command);
     addInput(command);
 
     program.add_subparser(command);
