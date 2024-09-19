@@ -30,7 +30,7 @@ zstring getAlphabet()
 
 zstring shiftAlphabet(int offset)
 {
-  // TODO: Whi isn't this catching negatives?
+  // TODO: Why isn't this catching negatives?
   offset = offset % 26;
 
   if (offset <= 0)

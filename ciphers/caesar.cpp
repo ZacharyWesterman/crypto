@@ -19,10 +19,8 @@ zstring caesarEncode(zstring input)
 
 zstring caesarDecode(zstring input, int offset)
 {
-  zstring plainText = input.cipher(shiftAlphabet(offset), getAlphabet())
-                          .cipher(shiftAlphabet(offset).upper(), getAlphabet().upper());
-
-  return plainText.contains(" ") ? plainText : wordSearch(plainText);
+  return input.cipher(shiftAlphabet(offset), getAlphabet())
+      .cipher(shiftAlphabet(offset).upper(), getAlphabet().upper());
 }
 
 z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: crack only the first K terms instead of the whole thing, then apply thr transformation and (maybe) reconfirm
@@ -39,7 +37,8 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: crack only
     caesarCrackResult newResult;
 
     newResult.key = i;
-    newResult.text = caesarDecode(input, i);
+    zstring output = caesarDecode(input, i);
+    newResult.text = output.contains(" ") ? output : wordSearch(output);
     newResult.score = checkSpelling(newResult.text);
     newResult.summary = zstring(newResult.key) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
 

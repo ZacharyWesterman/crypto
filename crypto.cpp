@@ -65,9 +65,7 @@ int main(int argc, char **argv)
     }
     else if (cipher == "substitution" || cipher == "sub")
     {
-      key = key == "" ? randomAlphabet().cstring() : key;
-
-      output = substitutionEncode(input, zstring(key.c_str())); // TODO: .c_str() Needed to avoid random segfault
+      "sub encode called"_u8.writeln(std::cout);
     }
 
     handleOutput(output, encode_command);
@@ -80,11 +78,19 @@ int main(int argc, char **argv)
 
     if (cipher == "caesar")
     {
-      output = key == "" ? processResults(caesarCrack(input)) : caesarDecode(input, std::stoi(key));
+      if (key == "")
+      {
+        output = processResults(caesarCrack(input));
+      }
+      else
+      {
+        zstring plaintext = caesarDecode(input, std::stoi(key));
+        output = plaintext.contains(" ") ? plaintext : wordSearch(plaintext);
+      }
     }
     else if (cipher == "substitution" || cipher == "sub")
     {
-      output = key == "" ? processResults(substitutionCrack(input)) : substitutionDecode(input, zstring(key.c_str())); // TODO: .c_str() Needed to avoid random segfault
+      "sub decode called"_u8.writeln(std::cout);
     }
 
     handleOutput(output, decode_command);

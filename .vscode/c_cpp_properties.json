@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "~/coding/cpp_libs/libzed"
+                "~/coding/libs/libzed"
             ],
             "defines": [
                 "_DEBUG",
