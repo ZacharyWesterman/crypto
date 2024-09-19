@@ -61,9 +61,7 @@ int main(int argc, char **argv)
 
     if (cipher == "caesar")
     {
-      int offset = key == "" ? (rand() % 25) + 1 : std::stoi(key);
-
-      output = caesarEncode(input, offset);
+      output = key == "" ? caesarEncode(input) : caesarEncode(input, std::stoi(key));
     }
     else if (cipher == "substitution" || cipher == "sub")
     {

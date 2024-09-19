@@ -6,10 +6,15 @@
 
 #include <iostream>
 
-zstring caesarEncode(zstring input, int offset) // TODO: guard on offset?
+zstring caesarEncode(zstring input, int offset)
 {
   return input.cipher(getAlphabet(), shiftAlphabet(offset))
       .cipher(getAlphabet().upper(), shiftAlphabet(offset).upper());
+}
+
+zstring caesarEncode(zstring input)
+{
+  return caesarEncode(input, (rand() % 25) + 1);
 }
 
 zstring caesarDecode(zstring input, int offset)

@@ -13,6 +13,7 @@ struct caesarCrackResult
 };
 
 zstring caesarEncode(zstring input, int offset);
+zstring caesarEncode(zstring input);
 
 zstring caesarDecode(zstring input, int offset);
 
