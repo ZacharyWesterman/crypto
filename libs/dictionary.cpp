@@ -10,7 +10,7 @@
 
 z::util::dictionary dict;
 
-zstring randomAlphabet()
+zstring randomAlphabet() // TODO: Figure out how to implement array shuffle
 {
   auto output = z::core::split(getAlphabet(), zstring());
 
@@ -24,11 +24,18 @@ zstring randomAlphabet()
 
 zstring getAlphabet()
 {
+
   return "abcdefghijklmnopqrstuvwxyz";
 }
 
 zstring shiftAlphabet(int offset)
 {
+  // TODO: Whi isn't this catching negatives?
+  offset = offset % 26;
+
+  if (offset <= 0)
+    offset = offset + 26;
+
   return getAlphabet().substr(offset, 26) + getAlphabet().substr(0, offset);
 }
 

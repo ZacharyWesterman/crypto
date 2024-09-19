@@ -1,5 +1,5 @@
-INCLUDEPATH = ../cpp_libs/libzed
-STATICLIB = ../cpp_libs/libzed/libzed.a
+INCLUDEPATH = ../../libs/libzed
+STATICLIB = ../../libs/libzed/libzed.a
 STD = c++17
 CC = g++
 
@@ -25,7 +25,7 @@ clean:
 remake: clean make
 
 count:
-	find . -type f \( -name \*.cpp -o -name \*.h \) ! -path "./libs/*" ! -name pugixml.cpp -exec wc -l {} +
+	find . -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "./ext/*" ! -path "./tests/*" ! -name pugixml.cpp -exec wc -l {} +
 
 libzed:
 	cd ../cpp_libs/libzed && git pull && make -j32 static

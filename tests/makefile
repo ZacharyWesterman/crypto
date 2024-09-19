@@ -1,5 +1,5 @@
-INCLUDEPATH = ../../cpp_libs/libzed
-STATICLIB = ../../cpp_libs/libzed/libzed.a
+INCLUDEPATH = ../../../libs/libzed
+STATICLIB = ../../../libs/libzed/libzed.a
 
 CC = g++
 LN = g++

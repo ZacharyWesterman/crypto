@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 {
   srand(time(0));
 
-  argparse::ArgumentParser program("crypto", "0.0.0");
+  argparse::ArgumentParser program("crypto", "0.0.1");
 
   argparse::ArgumentParser encode_command("encode");
   argparse::ArgumentParser decode_command("decode");
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
   }
   else
   {
-    std::cout << program;
+    std::cout << program << std::endl;
   }
 
   return 0;
