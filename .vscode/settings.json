@@ -87,6 +87,14 @@
     "xloctime": "cpp",
     "any": "cpp",
     "coroutine": "cpp",
-    "resumable": "cpp"
+    "resumable": "cpp",
+    "*.tcc": "cpp",
+    "bitset": "cpp",
+    "codecvt": "cpp",
+    "cstdarg": "cpp",
+    "cwctype": "cpp",
+    "memory_resource": "cpp",
+    "numbers": "cpp",
+    "semaphore": "cpp"
   }
 }

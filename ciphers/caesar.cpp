@@ -60,9 +60,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
   else
   {
     results = caesarCrack(input.substr(0, CHARACTER_LIMIT));
-
-    results[0].text = caesarDecode(input, results[0].key);
-    results[0].score = checkSpelling(results[0].text);
+    results[0].update(caesarDecode(input, results[0].key));
 
     return results;
   }

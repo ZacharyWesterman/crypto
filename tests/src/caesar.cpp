@@ -26,7 +26,7 @@ TEST_CASE("Testing Caesar Reciprocity")
   REQUIRE(caesarDecode(caesarEncode(caesarInputCharsOnly, 10), 10) == caesarInputCharsOnly);
 }
 
-TEST_CASE("Testing Caesar Crack")
+TEST_CASE("Testing Caesar Crack", "[!throws]")
 {
   REQUIRE(caesarCrack(caesarOutput)[0].text == caesarInput);
 }

@@ -3,21 +3,18 @@
 #include <fstream>
 #include <iostream>
 
-void writeFile(zstring contents, std::string filepath)
+bool writeFile(zstring contents, std::string filepath)
 {
   std::ofstream file(filepath);
 
   if (!file.is_open())
-  {
-    ("Unable to write to output file: "_u8 + filepath).writeln(std::cout);
-    exit(1);
-  }
+    throw FileWriteError();
 
   file << contents << std::endl;
 
   file.close();
 
-  ("Written to output file: "_u8 + filepath).writeln(std::cout);
+  return true;
 }
 
 zstring loadFile(std::string filepath)
@@ -29,10 +26,7 @@ zstring loadFile(std::string filepath)
   file.open(filepath);
 
   if (!file)
-  {
-    ("Unable to open output file: "_u8 + filepath).writeln(std::cout);
-    exit(1);
-  }
+    throw FileWriteError();
 
   while (file >> buffer)
     contents.append(zstring(buffer));

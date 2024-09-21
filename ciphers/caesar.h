@@ -10,13 +10,10 @@
 // TODO: Can this be generalized to the point of there only being one
 //  struct between all the ciphers?
 
-class missingText : public std::exception
+class missingText : public std::runtime_error
 {
 public:
-  std::string what()
-  {
-    return "Need to define the text first!";
-  }
+  missingText() : std::runtime_error("Need to define the text first!") {}
 };
 
 struct caesarCrackResult
@@ -33,13 +30,17 @@ struct caesarCrackResult
   caesarCrackResult(const zstring &text, int key) : text(text), key(key)
   {
     if (!text)
-    {
       throw missingText();
-    }
 
     score = checkSpelling(text);
 
     summary = zstring(key) + ": " + text.substr(0, 30) + "... " + score + "%\n";
+  }
+
+  void update(zstring newText)
+  {
+    text = newText;
+    score = checkSpelling(text);
   }
 };
 

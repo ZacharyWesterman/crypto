@@ -65,7 +65,7 @@ std::string joinString(const std::vector<std::string> &lst, const std::string &d
 }
 
 // Mains
-// Consider adding remove/preserve spacing option
+// TODO: Consider adding remove/preserve spacing option
 void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command)
 {
     command.add_description("Encode the input given a certain cipher and key");
@@ -113,7 +113,14 @@ zstring getParserKey(argparse::ArgumentParser &parser, std::string keyFlagName)
 void handleOutput(zstring output, argparse::ArgumentParser &parser)
 {
     if (parser.present("--outputfile"))
-        writeFile(output, parser.get("--outputfile"));
+    {
+        auto filepath = parser.get("--outputfile");
+
+        writeFile(output, filepath);
+        ("Written to output file: "_u8 + filepath).writeln(std::cout);
+    }
     else
+    {
         ("\n"_u8 + output).writeln(std::cout);
+    }
 }
