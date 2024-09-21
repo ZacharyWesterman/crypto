@@ -65,6 +65,7 @@ std::string joinString(const std::vector<std::string> &lst, const std::string &d
 }
 
 // Mains
+// Consider adding remove/preserve spacing option
 void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command)
 {
     command.add_description("Encode the input given a certain cipher and key");
@@ -77,6 +78,7 @@ void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
     program.add_subparser(command);
 }
 
+// Consider adding remove/preserve spacing option
 void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command)
 {
     command.add_description("Decode the input given a certain cipher and key");

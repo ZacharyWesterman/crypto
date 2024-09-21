@@ -12,17 +12,24 @@ z::util::dictionary dict;
 
 zstring randomAlphabet() // TODO: Figure out how to implement array shuffle
 {
-  auto output = z::core::split(getAlphabet(), zstring());
+  auto output = z::core::split(getAlphabet(), ""_u8);
+
+  std::cout << "Length: " << output.length() << std::endl;
 
   for (int i = 0; i < 26; i++)
   {
-    output.swap(rand() % 26, rand() % 26);
+    int i1 = rand() % 26;
+    int i2 = rand() % 26;
+    // std::cout << "AAAAAA " << i1 << ',' << i2 << std::endl;
+    // output.swap(i1, i2);
   }
 
-  return z::core::join(output, "");
+  auto k = z::core::join(output, "");
+
+  return k;
 }
 
-zstring getAlphabet()
+zstring getAlphabet() // TODO: Is this dumb?
 {
 
   return "abcdefghijklmnopqrstuvwxyz";
@@ -77,6 +84,7 @@ float checkSpelling(zstring text)
   return round(10'000 * (successes / total)) / 100;
 }
 
+// TODO: To test this further, we should find a large data set of input texts
 zstring wordSearch(zstring input)
 {
   loadDictionary();

@@ -28,7 +28,7 @@ count:
 	find . -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "./ext/*" ! -path "./tests/*" ! -name pugixml.cpp -exec wc -l {} +
 
 libzed:
-	cd ../cpp_libs/libzed && git pull && make -j32 static
+	cd ../../libs/libzed && git pull && make -j32 static
 
 tests: $(BINARY)
 	$(MAKE) -C tests/

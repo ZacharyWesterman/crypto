@@ -35,9 +35,13 @@ int main(int argc, char **argv)
 
   argparse::ArgumentParser encode_command("encode");
   argparse::ArgumentParser decode_command("decode");
+  argparse::ArgumentParser test("test");
 
   addEncodeCommand(program, encode_command);
   addDecodeCommand(program, decode_command);
+
+  test.add_description("run our sandbox code");
+  program.add_subparser(test);
 
   try
   {
@@ -94,6 +98,10 @@ int main(int argc, char **argv)
     }
 
     handleOutput(output, decode_command);
+  }
+  else if (program.is_subcommand_used("test"))
+  {
+    randomAlphabet().writeln(std::cout);
   }
   else
   {

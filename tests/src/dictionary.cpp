@@ -7,17 +7,20 @@ TEST_CASE("Testing Get Alphabet")
   REQUIRE(getAlphabet() == "abcdefghijklmnopqrstuvwxyz");
 }
 
-// TEST_CASE("Testing Random Alphabet") // TODO: Fix this
-// {
-//   REQUIRE(randomAlphabet() != getAlphabet());
-// }
+TEST_CASE("Testing Random Alphabet") // TODO: Fix this
+{
+  REQUIRE(randomAlphabet() != "abcdefghijklmnopqrstuvwxyz");
+}
 
 TEST_CASE("Testing Shift Alphabet")
 {
   REQUIRE(shiftAlphabet(0) == "abcdefghijklmnopqrstuvwxyz");
-  REQUIRE(shiftAlphabet(5) == "fghijklmnopqrstuvwxyzabcde");
-  REQUIRE(shiftAlphabet(10) == "klmnopqrstuvwxyzabcdefghij");
+  REQUIRE(shiftAlphabet(26) == "abcdefghijklmnopqrstuvwxyz");
+  REQUIRE(shiftAlphabet(-26) == "abcdefghijklmnopqrstuvwxyz");
 
+  REQUIRE(shiftAlphabet(5) == "fghijklmnopqrstuvwxyzabcde");
+
+  REQUIRE(shiftAlphabet(10) == "klmnopqrstuvwxyzabcdefghij");
   REQUIRE(shiftAlphabet(36) == "klmnopqrstuvwxyzabcdefghij");
   // REQUIRE(shiftAlphabet(-16) == "klmnopqrstuvwxyzabcdefghij"); // TODO: Fix for negatives
 }

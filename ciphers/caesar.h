@@ -4,6 +4,9 @@
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 
+// TODO: Can this be generalized to the point of there only being one
+//  struct between all the ciphers?
+
 struct caesarCrackResult
 {
   zstring text;
