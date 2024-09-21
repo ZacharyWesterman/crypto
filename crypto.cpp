@@ -60,7 +60,7 @@ int main(int argc, char **argv)
   if (program.is_subcommand_used("encode"))
   {
     std::string cipher = encode_command.get("cipher");
-    std::string key = encode_command["--randomkey"] == true ? "" : getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
+    std::string key = getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(encode_command);
 
     if (cipher == "caesar")
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     }
     else if (cipher == "substitution" || cipher == "sub")
     {
-      "sub encode called"_u8.writeln(std::cout);
+      "sub encode called"_u8.writeln(std::cout); // TODO: implement and test
     }
 
     handleOutput(output, encode_command);
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     std::string cipher = decode_command.get("cipher");
-    std::string key = decode_command["--unknownkey"] == true ? "" : getParserKey(decode_command).cstring(); // TODO: ADD FURTHER VALIDATION
+    std::string key = getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
     zstring input = getParserInput(decode_command);
 
     if (cipher == "caesar")
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
     }
     else if (cipher == "substitution" || cipher == "sub")
     {
-      "sub decode called"_u8.writeln(std::cout);
+      "sub decode called"_u8.writeln(std::cout); // TODO: implement and test
     }
 
     handleOutput(output, decode_command);

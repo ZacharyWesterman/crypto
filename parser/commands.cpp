@@ -93,15 +93,27 @@ void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
 zstring getParserInput(argparse::ArgumentParser &parser)
 {
-    return parser.present("--inputfile") ? loadFile(parser.get("--inputfile")) : zstring(joinString(parser.get<std::vector<std::string>>("input"), " ").c_str());
+    if (parser.present("--inputfile"))
+        return loadFile(parser.get("--inputfile"));
+
+    return zstring(joinString(parser.get<std::vector<std::string>>("input"), " ").c_str());
 }
 
 zstring getParserKey(argparse::ArgumentParser &parser)
 {
-    return parser.present("--keyfile") ? loadFile(parser.get("--keyfile")) : zstring(parser.get("--key").c_str());
+    if (parser["--randomkey"] == true)
+        return "";
+
+    if (parser.present("--keyfile"))
+        return loadFile(parser.get("--keyfile"));
+
+    return zstring(parser.get("--key").c_str());
 }
 
 void handleOutput(zstring output, argparse::ArgumentParser &parser)
 {
-    parser.present("--outputfile") ? writeFile(output, parser.get("--outputfile")) : ("\n"_u8 + output).writeln(std::cout);
+    if (parser.present("--outputfile"))
+        writeFile(output, parser.get("--outputfile"));
+    else
+        ("\n"_u8 + output).writeln(std::cout);
 }
