@@ -25,10 +25,10 @@ zstring caesarDecode(const zstring &input, int offset)
       .cipher(shiftAlphabet(offset).upper(), ALPHABET.upper());
 }
 
-z::core::array<caesarCrackResult> caesarCrack(zstring input)
+z::core::array<crackResult> caesarCrack(zstring input)
 {
   caesarCrackResult bestResult;
-  z::core::array<caesarCrackResult> results;
+  z::core::array<crackResult> results;
 
   if (input.length() <= CHARACTER_LIMIT)
   {
@@ -60,7 +60,9 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
   else
   {
     results = caesarCrack(input.substr(0, CHARACTER_LIMIT));
-    results[0].update(caesarDecode(input, results[0].key));
+    auto key = reinterpret_cast<caesarCrackResult &>(results[0]).key;
+
+    results[0].update(caesarDecode(input, key));
 
     return results;
   }

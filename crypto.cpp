@@ -16,7 +16,7 @@ zstring processResults(z::core::array<T> results)
 {
   zstring output = "";
 
-  output += "The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text + "\n";
+  output += "The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].getKey() + ") is:\n  " + results[0].text + "\n";
 
   if (results[0].score < 80)
   {

@@ -16,19 +16,32 @@ public:
   missingText() : std::runtime_error("Need to define the text first!") {}
 };
 
-struct caesarCrackResult
+struct crackResult
 {
   zstring text;
-  int key;
   zstring summary;
   float score;
 
-  caesarCrackResult() : text(), key(0), summary(), score(0.f)
+  virtual void update(zstring){};
+
+  virtual zstring getKey() const noexcept;
+};
+
+struct caesarCrackResult : public crackResult
+{
+  int key;
+
+  caesarCrackResult() : key(0)
   {
+    this->text = text;
+    summary = 0;
+    score = 0.f;
   }
 
-  caesarCrackResult(const zstring &text, int key) : text(text), key(key)
+  caesarCrackResult(const zstring &text, int key) : key(key)
   {
+    this->text = text;
+
     if (!text)
       throw missingText();
 
@@ -42,6 +55,11 @@ struct caesarCrackResult
     text = newText;
     score = checkSpelling(text);
   }
+
+  zstring getKey() const noexcept override
+  {
+    return key;
+  }
 };
 
 zstring caesarEncode(zstring input, int offset);
@@ -49,6 +67,6 @@ zstring caesarEncode(zstring input);
 
 zstring caesarDecode(const zstring &input, int offset);
 
-z::core::array<caesarCrackResult> caesarCrack(zstring input);
+z::core::array<crackResult> caesarCrack(zstring input);
 
 #endif
