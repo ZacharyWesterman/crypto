@@ -21,7 +21,7 @@ zstring randomAlphabet() // TODO: Figure out how to implement array shuffle
     int i1 = rand() % 26;
     int i2 = rand() % 26;
     // std::cout << "AAAAAA " << i1 << ',' << i2 << std::endl;
-    // output.swap(i1, i2);
+    output.swap(i1, i2);
   }
 
   auto k = z::core::join(output, "");
