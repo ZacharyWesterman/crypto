@@ -60,7 +60,7 @@ int main(int argc, char **argv)
   if (program.is_subcommand_used("encode"))
   {
     std::string cipher = encode_command.get("cipher");
-    std::string key = getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
+    std::string key = getParserKey(encode_command).cstring();
     zstring input = getParserInput(encode_command);
 
     if (cipher == "caesar")
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     std::string cipher = decode_command.get("cipher");
-    std::string key = getParserKey(encode_command).cstring(); // TODO: ADD FURTHER VALIDATION
+    std::string key = getParserKey(encode_command).cstring();
     zstring input = getParserInput(decode_command);
 
     if (cipher == "caesar")

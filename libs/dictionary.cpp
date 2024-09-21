@@ -10,23 +10,11 @@
 
 z::util::dictionary dict;
 
-zstring randomAlphabet() // TODO: Figure out how to implement array shuffle
+zstring randomAlphabet()
 {
   auto output = z::core::split(getAlphabet(), ""_u8);
 
-  std::cout << "Length: " << output.length() << std::endl;
-
-  for (int i = 0; i < 26; i++)
-  {
-    int i1 = rand() % 26;
-    int i2 = rand() % 26;
-    // std::cout << "AAAAAA " << i1 << ',' << i2 << std::endl;
-    output.swap(i1, i2);
-  }
-
-  auto k = z::core::join(output, "");
-
-  return k;
+  return z::core::join(output.shuffled(), "");
 }
 
 zstring getAlphabet() // TODO: Is this dumb?
@@ -37,7 +25,6 @@ zstring getAlphabet() // TODO: Is this dumb?
 
 zstring shiftAlphabet(int offset)
 {
-  // TODO: Why isn't this catching negatives?
   offset = offset % 26;
 
   if (offset <= 0)

@@ -22,7 +22,7 @@ TEST_CASE("Testing Shift Alphabet")
 
   REQUIRE(shiftAlphabet(10) == "klmnopqrstuvwxyzabcdefghij");
   REQUIRE(shiftAlphabet(36) == "klmnopqrstuvwxyzabcdefghij");
-  // REQUIRE(shiftAlphabet(-16) == "klmnopqrstuvwxyzabcdefghij"); // TODO: Fix for negatives
+  REQUIRE(shiftAlphabet(-16) == "klmnopqrstuvwxyzabcdefghij");
 }
 
 TEST_CASE("Testing Spell Check")
