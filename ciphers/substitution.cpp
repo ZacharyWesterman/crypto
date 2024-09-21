@@ -5,14 +5,14 @@
 
 zstring substitutionEncode(zstring input, zstring key)
 {
-  return input.cipher(getAlphabet(), key.toLower())
-      .cipher(getAlphabet().upper(), key.upper());
+  return input.cipher(ALPHABET, key.toLower())
+      .cipher(ALPHABET.upper(), key.upper());
 }
 
 zstring substitutionDecode(zstring input, zstring key)
 {
-  return input.cipher(key.toLower(), getAlphabet())
-      .cipher(key.upper(), getAlphabet().upper());
+  return input.cipher(key.toLower(), ALPHABET)
+      .cipher(key.upper(), ALPHABET.upper());
 }
 
 z::core::array<substitutionCrackResult> substitutionCrack(zstring input)

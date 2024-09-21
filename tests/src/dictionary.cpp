@@ -2,11 +2,6 @@
 
 #include "../../libs/dictionary.cpp"
 
-TEST_CASE("Testing Get Alphabet")
-{
-  REQUIRE(getAlphabet() == "abcdefghijklmnopqrstuvwxyz");
-}
-
 TEST_CASE("Testing Random Alphabet") // TODO: Fix this
 {
   REQUIRE(randomAlphabet() != "abcdefghijklmnopqrstuvwxyz");

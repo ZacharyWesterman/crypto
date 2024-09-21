@@ -9,6 +9,8 @@
 #include <iostream>
 #include <time.h>
 
+// TODO: crack has a very verbose output and should have a verbose flag
+
 template <typename T>
 zstring processResults(z::core::array<T> results)
 {
@@ -60,7 +62,7 @@ int main(int argc, char **argv)
   if (program.is_subcommand_used("encode"))
   {
     std::string cipher = encode_command.get("cipher");
-    std::string key = getParserKey(encode_command).cstring();
+    std::string key = getParserKey(encode_command, "randomkey").cstring();
     zstring input = getParserInput(encode_command);
 
     if (cipher == "caesar")
@@ -77,7 +79,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     std::string cipher = decode_command.get("cipher");
-    std::string key = getParserKey(encode_command).cstring();
+    std::string key = getParserKey(decode_command, "unknownkey").cstring();
     zstring input = getParserInput(decode_command);
 
     if (cipher == "caesar")

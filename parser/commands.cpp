@@ -99,9 +99,9 @@ zstring getParserInput(argparse::ArgumentParser &parser)
     return zstring(joinString(parser.get<std::vector<std::string>>("input"), " ").c_str());
 }
 
-zstring getParserKey(argparse::ArgumentParser &parser)
+zstring getParserKey(argparse::ArgumentParser &parser, std::string keyFlagName)
 {
-    if (parser["--randomkey"] == true)
+    if (parser["--" + keyFlagName] == true)
         return "";
 
     if (parser.present("--keyfile"))

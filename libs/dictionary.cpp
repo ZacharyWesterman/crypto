@@ -12,15 +12,9 @@ z::util::dictionary dict;
 
 zstring randomAlphabet()
 {
-  auto output = z::core::split(getAlphabet(), ""_u8);
+  auto output = z::core::split(ALPHABET, ""_u8);
 
   return z::core::join(output.shuffled(), "");
-}
-
-zstring getAlphabet() // TODO: Is this dumb?
-{
-
-  return "abcdefghijklmnopqrstuvwxyz";
 }
 
 zstring shiftAlphabet(int offset)
@@ -30,7 +24,7 @@ zstring shiftAlphabet(int offset)
   if (offset <= 0)
     offset = offset + 26;
 
-  return getAlphabet().substr(offset, 26) + getAlphabet().substr(0, offset);
+  return ALPHABET.substr(offset, 26) + ALPHABET.substr(0, offset);
 }
 
 void loadDictionary()

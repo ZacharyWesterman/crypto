@@ -6,10 +6,12 @@
 
 #include <iostream>
 
+#define CHARACTER_LIMIT 100
+
 zstring caesarEncode(zstring input, int offset)
 {
-  return input.cipher(getAlphabet(), shiftAlphabet(offset))
-      .cipher(getAlphabet().upper(), shiftAlphabet(offset).upper());
+  return input.cipher(ALPHABET, shiftAlphabet(offset))
+      .cipher(ALPHABET.upper(), shiftAlphabet(offset).upper());
 }
 
 zstring caesarEncode(zstring input)
@@ -19,16 +21,16 @@ zstring caesarEncode(zstring input)
 
 zstring caesarDecode(const zstring &input, int offset)
 {
-  return input.cipher(shiftAlphabet(offset), getAlphabet())
-      .cipher(shiftAlphabet(offset).upper(), getAlphabet().upper());
+  return input.cipher(shiftAlphabet(offset), ALPHABET)
+      .cipher(shiftAlphabet(offset).upper(), ALPHABET.upper());
 }
 
-z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: Find a 100+ character input to test this
+z::core::array<caesarCrackResult> caesarCrack(zstring input)
 {
   caesarCrackResult bestResult;
   z::core::array<caesarCrackResult> results;
 
-  if (input.length() <= 100)
+  if (input.length() <= CHARACTER_LIMIT)
   {
     loadDictionary();
 
@@ -36,13 +38,9 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: Find a 100
 
     for (int i = 1; i <= 25; i++)
     {
-      caesarCrackResult newResult;
-
-      newResult.key = i;
       zstring output = caesarDecode(input, i);
-      newResult.text = output.contains(" ") ? output : wordSearch(output);
-      newResult.score = checkSpelling(newResult.text);
-      newResult.summary = zstring(newResult.key) + ": " + zstring(newResult.text).substr(0, 30) + "... " + newResult.score + "%\n";
+      output = output.contains(" ") ? output : wordSearch(output);
+      caesarCrackResult newResult(output, i);
 
       "."_u8.write(std::cout);
 
@@ -61,17 +59,10 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input) // TODO: Find a 100
   }
   else
   {
-    results = caesarCrack(input.substr(0, 100));
+    results = caesarCrack(input.substr(0, CHARACTER_LIMIT));
 
-    caesarCrackResult newBest{
-        .text = caesarDecode(input, results[0].key),
-        .score = results[0].score,
-        .key = results[0].key,
-        .summary = results[0].summary,
-    };
-
-    results.replace(0, 1, newBest);
-    // results[0].text = caesarDecode(input, results[0].key);
+    results[0].text = caesarDecode(input, results[0].key);
+    results[0].score = checkSpelling(results[0].text);
 
     return results;
   }

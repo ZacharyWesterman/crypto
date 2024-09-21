@@ -3,7 +3,7 @@
 
 #include <z/util/dictionary.hpp>
 
-zstring getAlphabet();
+#define ALPHABET zstring("abcdefghijklmnopqrstuvwxyz")
 
 zstring randomAlphabet();
 

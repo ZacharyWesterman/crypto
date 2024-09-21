@@ -21,6 +21,8 @@ clean:
 	cd ext &&  rm -f *.exe *.o
 	cd libs &&  rm -f *.exe *.o
 	cd parser &&  rm -f *.exe *.o
+	
+	cd tests && make clean
 
 remake: clean make
 
@@ -28,7 +30,7 @@ count:
 	find . -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "./ext/*" ! -path "./tests/*" ! -name pugixml.cpp -exec wc -l {} +
 
 libzed:
-	cd ../../libs/libzed && git pull && make -j32 static
+	cd ../../libs/libzed && make clean && git pull && make -j32 static
 
 tests: $(BINARY)
 	$(MAKE) -C tests/
