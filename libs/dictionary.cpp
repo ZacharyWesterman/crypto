@@ -131,6 +131,10 @@ zstring wordSearch(zstring input)
   for (char p : punc)
     result.replace(" "_u8 + p, p);
 
+  result.replace(" - ", "-");
+  result.replace("( ", "(");
+  result.replace(" )", ")");
+
   return result;
 }
 

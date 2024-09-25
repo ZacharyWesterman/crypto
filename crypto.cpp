@@ -122,10 +122,14 @@ int main(int argc, char **argv)
       throw FileReadError();
 
     int i = 0;
-    while (std::getline(file, buffer) && i++ < 1)
+    while (std::getline(file, buffer) && i == 0)
     {
       zstring p = zstring(buffer);
-      std::cout << wordSearch(p.replace(" ", ""));
+      auto result = wordSearch(removeSpaces(p));
+      std::cout << '.' << result << '.' << std::endl;
+      std::cout << '.' << p.trim() << '.' << std::endl;
+
+      i++;
     }
   }
   else

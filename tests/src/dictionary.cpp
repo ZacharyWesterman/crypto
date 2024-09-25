@@ -60,12 +60,11 @@ TEST_CASE("Testing Word Search (large sample size)", "[.][dict]")
     throw FileReadError();
 
   int i = 0;
-  while (std::getline(file, buffer) && i++ < 10)
+  while (std::getline(file, buffer))
   {
-    if (i <= 0)
-      continue;
-
-    zstring p = zstring(buffer);
+    zstring p = zstring(buffer).trim();
     REQUIRE(wordSearch(removeSpaces(p)) == p);
+
+    i++;
   }
 }
