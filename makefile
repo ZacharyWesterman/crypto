@@ -33,6 +33,6 @@ libzed:
 
 tests: $(BINARY)
 	$(MAKE) -C tests/
-	./tests/bin/run_tests
+	./tests/bin/run_tests $(TAG)
 
 .PHONY: clean count libzed

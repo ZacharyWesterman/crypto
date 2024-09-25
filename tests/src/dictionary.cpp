@@ -20,13 +20,13 @@ TEST_CASE("Testing Shift Alphabet", "[dictionary]")
   REQUIRE(shiftAlphabet(-16) == "klmnopqrstuvwxyzabcdefghij");
 }
 
-TEST_CASE("Testing Spell Check", "[dictionary]")
+TEST_CASE("Testing Spell Check", "[dict]")
 {
   REQUIRE(checkSpelling("testing one two three") == 100.0);
   REQUIRE(checkSpelling("testingg onee twoo threee") == 0.0);
 }
 
-TEST_CASE("Testing Word Search", "[dictionary]")
+TEST_CASE("Testing Word Search", "[dict]")
 {
   REQUIRE(wordSearch("testingonetwothree") == "testing one two three");
   REQUIRE(wordSearch("myvoiceismypassportverifyme") == "my voice is my passport verify me");

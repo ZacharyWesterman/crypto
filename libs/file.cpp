@@ -34,7 +34,5 @@ zstring loadFile(std::string filepath)
     contents.append("\n");
   }
 
-  contents = contents.substr(0, contents.length() - 1);
-
-  return contents;
+  return contents.substr(0, contents.length() - 1); // remove the last newline
 }
