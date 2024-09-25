@@ -1,39 +1,38 @@
-INCLUDEPATH = ../../libs/libzed
-STATICLIB = ../../libs/libzed/libzed.a
 STD = c++17
 CC = g++
+LFLAGS = -ldl -lzed
 
-BINARY = crypto.exe
+# TODO: Install libzed on first make and include some sort of update command
+
+BINARY = crypto
 
 DIRS = ciphers/ ext/ libs/ parser/
 SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
-$(BINARY): crypto.o $(OBJS) $(STATICLIB)
+$(BINARY): crypto.o $(OBJS)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
-	$(CC) -I$(INCLUDEPATH) -std=$(STD) -Wno-psabi -fPIC -o $@ -c $^
+	$(CC) -std=$(STD) -Wno-psabi -fPIC -o $@ -c $^
 
 clean:
-	rm -f *.exe *.o
-	cd ciphers && rm -f *.exe *.o
-	cd ext &&  rm -f *.exe *.o
-	cd libs &&  rm -f *.exe *.o
-	cd parser &&  rm -f *.exe *.o
+	rm -f $(BINARY) *.o
+	cd ciphers && rm -f *.o
+	cd ext &&  rm -f *.o
+	cd libs &&  rm -f *.o
+	cd parser &&  rm -f *.o
 	
 	cd tests && make clean
-
-remake: clean make
 
 count:
 	find . -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "./ext/*" ! -path "./tests/*" ! -name pugixml.cpp -exec wc -l {} +
 
 libzed:
-	cd ../../libs/libzed && make clean && git pull && make -j32 static
+	cd ../../libs/libzed && make clean && git pull && make -j32 && sudo make install
 
 tests: $(BINARY)
 	$(MAKE) -C tests/
-	./tests/bin/run_tests.exe
+	./tests/bin/run_tests
 
-.PHONY: clean count remake libzed
+.PHONY: clean count libzed

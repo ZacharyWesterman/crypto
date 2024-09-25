@@ -9,7 +9,7 @@ LFLAGS = -lgcov
 SRCS = $(wildcard $(addsuffix *.cpp, src/))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
-bin/run_tests.exe: $(OBJS) $(STATICLIB)
+bin/run_tests: $(OBJS) $(STATICLIB)
 	$(LN) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
