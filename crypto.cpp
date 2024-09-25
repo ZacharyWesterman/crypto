@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <time.h>
+#include <fstream>
 
 // TODO: crack has a very verbose output and should have a verbose flag
 
@@ -104,7 +105,21 @@ int main(int argc, char **argv)
   }
   else if (program.is_subcommand_used("test"))
   {
-    std::cout << loadFile("data/fox.txt");
+    std::ifstream file;
+    zstring contents = "";
+    std::string buffer = "";
+
+    file.open("data/paragraphs.txt");
+
+    if (!file)
+      throw FileReadError();
+
+    int i = 0;
+    while (std::getline(file, buffer) && i++ < 1)
+    {
+      zstring p = zstring(buffer);
+      std::cout << wordSearch(p.replace(" ", ""));
+    }
   }
   else
   {

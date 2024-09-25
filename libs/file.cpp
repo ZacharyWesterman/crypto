@@ -36,3 +36,5 @@ zstring loadFile(std::string filepath)
 
   return contents.substr(0, contents.length() - 1); // remove the last newline
 }
+
+// TODO: Create a generator that allows you to load one line of a file at a time

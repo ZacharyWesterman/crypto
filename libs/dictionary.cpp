@@ -111,10 +111,10 @@ zstring wordSearch(zstring input)
       zstring combo = words[i] + words[i + 1];
 
       // Try every way of putting a space between these two words until they're both real words
-      for (int i = combo.length() - 1; i >= 1; i--)
+      for (int j = combo.length() - 1; j >= 1; j--)
       {
-        zstring subA = combo.substr(0, i);
-        zstring subB = combo.substr(i, combo.length() - i);
+        zstring subA = combo.substr(0, j);
+        zstring subB = combo.substr(j, combo.length() - j);
 
         if (dict.isWord(subA) && dict.isWord(subB))
         {
@@ -125,5 +125,12 @@ zstring wordSearch(zstring input)
     }
   }
 
-  return z::core::join(words, " ");
+  // Fix punctuation
+  zstring result = z::core::join(words, " ");
+
+  z::core::array<char> punc = {'.', ',', '\''};
+  for (char p : punc)
+    result.replace(" "_u8 + p, p);
+
+  return result;
 }
