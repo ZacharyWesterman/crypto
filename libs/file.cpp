@@ -29,7 +29,12 @@ zstring loadFile(std::string filepath)
     throw FileReadError();
 
   while (std::getline(file, buffer))
+  {
     contents.append(zstring(buffer));
+    contents.append("\n");
+  }
+
+  contents = contents.substr(0, contents.length() - 1);
 
   return contents;
 }
