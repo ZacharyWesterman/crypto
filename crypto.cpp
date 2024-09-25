@@ -31,6 +31,9 @@ zstring processResults(z::core::array<T> results)
   return output;
 }
 
+// TODO: carefully check output for multiple commands and make sure
+// we have a consistent output structure
+
 int main(int argc, char **argv)
 {
   srand(time(0));
@@ -68,13 +71,12 @@ int main(int argc, char **argv)
     zstring input = getParserInput(encode_command);
 
     if (cipher == "caesar")
-    {
       output = key == "" ? caesarEncode(input) : caesarEncode(input, std::stoi(key));
-    }
     else if (cipher == "substitution" || cipher == "sub")
-    {
       "sub encode called"_u8.writeln(std::cout); // TODO: implement and test
-    }
+
+    if (encode_command["--removespaces"] == true)
+      output = removeSpaces(output);
 
     handleOutput(output, encode_command);
   }
@@ -83,6 +85,8 @@ int main(int argc, char **argv)
     std::string cipher = decode_command.get("cipher");
     std::string key = getParserKey(decode_command, "unknownkey").cstring();
     zstring input = getParserInput(decode_command);
+
+    bool hadSpaces = input.count(" ") > 0;
 
     if (cipher == "caesar")
     {
@@ -100,6 +104,9 @@ int main(int argc, char **argv)
     {
       "sub decode called"_u8.writeln(std::cout); // TODO: implement and test
     }
+
+    if (!hadSpaces && decode_command["--preservespaces"] == true)
+      output = removeSpaces(output);
 
     handleOutput(output, decode_command);
   }

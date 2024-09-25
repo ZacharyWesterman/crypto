@@ -65,7 +65,6 @@ float checkSpelling(zstring text)
   return round(10'000 * (successes / total)) / 100;
 }
 
-// TODO: To test this further, we should find a large data set of input texts
 zstring wordSearch(zstring input)
 {
   loadDictionary();
@@ -133,4 +132,9 @@ zstring wordSearch(zstring input)
     result.replace(" "_u8 + p, p);
 
   return result;
+}
+
+zstring removeSpaces(zstring text)
+{
+  return text.replace(" ", "");
 }

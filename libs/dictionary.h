@@ -15,4 +15,6 @@ float checkSpelling(zstring text);
 
 zstring wordSearch(zstring text);
 
+zstring removeSpaces(zstring text);
+
 #endif
