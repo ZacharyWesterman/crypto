@@ -1,6 +1,7 @@
 #include "ciphers/caesar.h"
 #include "ciphers/substitution.h"
 #include "libs/dictionary.h"
+#include "libs/file.h"
 #include "ext/argparse.h"
 #include "parser/commands.h"
 
@@ -103,7 +104,7 @@ int main(int argc, char **argv)
   }
   else if (program.is_subcommand_used("test"))
   {
-    randomAlphabet().writeln(std::cout);
+    std::cout << loadFile("data/fox.txt");
   }
   else
   {

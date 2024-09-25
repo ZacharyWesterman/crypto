@@ -26,9 +26,9 @@ zstring loadFile(std::string filepath)
   file.open(filepath);
 
   if (!file)
-    throw FileWriteError();
+    throw FileReadError();
 
-  while (file >> buffer)
+  while (std::getline(file, buffer))
     contents.append(zstring(buffer));
 
   return contents;
