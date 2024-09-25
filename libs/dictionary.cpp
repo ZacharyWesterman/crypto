@@ -127,7 +127,7 @@ zstring wordSearch(zstring input)
   // Fix punctuation
   zstring result = z::core::join(words, " ");
 
-  z::core::array<char> punc = {'.', ',', '\''};
+  z::core::array<char> punc = {'.', ',', '\'', ':'};
   for (char p : punc)
     result.replace(" "_u8 + p, p);
 

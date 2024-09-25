@@ -10,25 +10,25 @@ zstring caesarOutput = "Sp ro rkn kxidrsxq myxpsnoxdskv dy cki, ro gbydo sd sx m
 zstring caesarInputCharsOnly = caesarInput.replace(" ", "");
 zstring caesarOutputCharsOnly = caesarOutput.replace(" ", "");
 
-TEST_CASE("Testing Caesar Encode", "[caesar]")
+TEST_CASE("Caesar Encode", "[caesar]")
 {
   REQUIRE(caesarEncode(caesarInput, 10) == caesarOutput);
   REQUIRE(caesarEncode(caesarInputCharsOnly, 10) == caesarOutputCharsOnly);
 }
 
-TEST_CASE("Testing Caesar Decode", "[caesar]")
+TEST_CASE("Caesar Decode", "[caesar]")
 {
   REQUIRE(caesarDecode(caesarOutput, 10) == caesarInput);
   REQUIRE(caesarDecode(caesarOutputCharsOnly, 10) == caesarInputCharsOnly);
 }
 
-TEST_CASE("Testing Caesar Reciprocity", "[caesar]")
+TEST_CASE("Caesar Reciprocity", "[caesar]")
 {
   REQUIRE(caesarDecode(caesarEncode(caesarInput, 10), 10) == caesarInput);
   REQUIRE(caesarDecode(caesarEncode(caesarInputCharsOnly, 10), 10) == caesarInputCharsOnly);
 }
 
-TEST_CASE("Testing Caesar Crack", "[caesar]")
+TEST_CASE("Caesar Crack", "[caesar]")
 {
   REQUIRE(caesarCrack(caesarOutput)[0].text == caesarInput);
 }
