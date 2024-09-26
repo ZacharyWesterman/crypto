@@ -47,22 +47,25 @@ TEST_CASE("Word Search", "[dict]")
 // and see score distributions for our input text.
 TEST_CASE("Word Search (large sample size)", "[.][dict]")
 {
-  std::ifstream file;
-  zstring contents = "";
-  std::string buffer = "";
-
-  file.open("data/p1.txt");
-
-  if (!file)
-    throw FileReadError();
-
-  int i = 0;
-  while (std::getline(file, buffer))
+  for (std::string ch : {"1", "2", "3"})
   {
-    zstring p = zstring(buffer).trim();
-    // REQUIRE(wordSearch(removeSpaces(p)) == p);
-    REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
+    std::ifstream file;
+    zstring contents = "";
+    std::string buffer = "";
 
-    i++;
+    file.open("data/p" + ch + ".txt");
+
+    if (!file)
+      throw FileReadError();
+
+    int i = 0;
+    while (std::getline(file, buffer))
+    {
+      zstring p = zstring(buffer).trim();
+      // REQUIRE(wordSearch(removeSpaces(p)) == p);
+      REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
+
+      i++;
+    }
   }
 }

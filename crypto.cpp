@@ -11,6 +11,8 @@
 #include <time.h>
 #include <fstream>
 
+// TODO: In general, we need more validation on functions
+
 template <typename T>
 zstring processResults(z::core::array<T> results, bool verbose = false)
 {
