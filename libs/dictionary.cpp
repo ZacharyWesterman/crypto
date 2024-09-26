@@ -32,18 +32,11 @@ void loadDictionary()
   if (dict.length() > 0)
     return;
 
-  "Loading dictionary..."_u8.write(std::cout);
-
   std::ifstream file("libs/words.txt");
   z::core::timeout time(1'000'000); // 1 second timeout
 
   while (!dict.read(file, time))
-  {
-    '.'_u8.write(std::cout);
     time.reset();
-  }
-
-  (" Done! Loaded "_u8 + dict.length() + " words.").writeln(std::cout);
 }
 
 float checkSpelling(zstring text)

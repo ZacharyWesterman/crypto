@@ -11,11 +11,12 @@
 #include <time.h>
 #include <fstream>
 
-// TODO: crack has a very verbose output and should have a verbose flag
-
 template <typename T>
-zstring processResults(z::core::array<T> results)
+zstring processResults(z::core::array<T> results, bool verbose = false)
 {
+  if (!verbose)
+    return results[0].text;
+
   zstring output = "";
 
   output += "The best solution ("_u8 + results[0].score + "% confidence with a key of " + results[0].key + ") is:\n  " + results[0].text + "\n";
@@ -28,11 +29,8 @@ zstring processResults(z::core::array<T> results)
       output += results[i].summary;
   }
 
-  return output;
+  return "\n"_u8 + output.trim() + "\n"; // TODO: This might be lazy
 }
-
-// TODO: carefully check output for multiple commands and make sure
-// we have a consistent output structure
 
 int main(int argc, char **argv)
 {
@@ -61,7 +59,6 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  zstring().writeln(std::cout);
   zstring output = "";
 
   if (program.is_subcommand_used("encode"))
@@ -79,6 +76,8 @@ int main(int argc, char **argv)
       output = removeSpaces(output);
 
     handleOutput(output, encode_command);
+
+    return 0;
   }
   else if (program.is_subcommand_used("decode"))
   {
@@ -87,62 +86,32 @@ int main(int argc, char **argv)
     zstring input = getParserInput(decode_command);
 
     bool hadSpaces = input.count(" ") > 0;
+    bool verbose = decode_command["--verbose"] == true;
 
     if (cipher == "caesar")
-    {
-      if (key == "")
-      {
-        output = processResults(caesarCrack(input));
-      }
-      else
-      {
-        zstring plaintext = caesarDecode(input, std::stoi(key));
-        output = plaintext.contains(" ") ? plaintext : wordSearch(plaintext);
-      }
-    }
+      output = key == "" ? processResults(caesarCrack(input), verbose) : caesarDecode(input, std::stoi(key));
     else if (cipher == "substitution" || cipher == "sub")
-    {
-      if (key == "")
-      {
-        std::cout << "Not yet implemented" << std::endl;
-      }
-      else
-      {
-        zstring plaintext = substitutionDecode(input, key);
-        output = plaintext.contains(" ") ? plaintext : wordSearch(plaintext);
-      }
-    }
+      output = key == "" ? "Not yet implemented" : substitutionDecode(input, key);
+
+    if (!output.contains(" "))
+      output = wordSearch(output);
 
     if (!hadSpaces && decode_command["--preservespaces"] == true)
       output = removeSpaces(output);
 
     handleOutput(output, decode_command);
+
+    return 0;
   }
   else if (program.is_subcommand_used("test"))
   {
-    std::ifstream file;
-    zstring contents = "";
-    std::string buffer = "";
-
-    file.open("data/paragraphs.txt");
-
-    if (!file)
-      throw FileReadError();
-
-    int i = 0;
-    while (std::getline(file, buffer) && i == 0)
-    {
-      zstring p = zstring(buffer);
-      auto result = wordSearch(removeSpaces(p));
-      std::cout << '.' << result << '.' << std::endl;
-      std::cout << '.' << p.trim() << '.' << std::endl;
-
-      i++;
-    }
+    // Test code goes here
   }
   else
   {
     std::cout << program << std::endl;
+
+    return 0;
   }
 
   return 0;

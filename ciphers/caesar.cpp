@@ -34,23 +34,17 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
   {
     loadDictionary();
 
-    "Cracking cipher"_u8.write(std::cout);
-
     for (int i = 1; i <= 25; i++)
     {
       zstring output = caesarDecode(input, i);
       output = output.contains(" ") ? output : wordSearch(output);
       caesarCrackResult newResult(output, i);
 
-      "."_u8.write(std::cout);
-
       if (newResult.score > bestResult.score || i == 1)
         bestResult = newResult;
 
       results.append(newResult);
     }
-
-    "Done!"_u8.writeln(std::cout);
 
     if (bestResult.key != 1)
       results.swap(0, bestResult.key - 1);

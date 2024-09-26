@@ -15,16 +15,16 @@ void addOutput(argparse::ArgumentParser &command)
         .help("the output file name for the result");
 }
 
-void addEncodeKey(argparse::ArgumentParser &command)
+void addKey(argparse::ArgumentParser &command, std::string randName, std::string description)
 {
     auto &group = command.add_mutually_exclusive_group(true);
     group.add_argument("-k", "--key")
         .help("the key to use");
     group.add_argument("-K", "--keyfile")
         .help("the key file path");
-    group.add_argument("-?", "--randomkey")
+    group.add_argument("-?", "--" + randName)
         .flag()
-        .help("a random key will be used");
+        .help(description);
 }
 
 void addDecodeKey(argparse::ArgumentParser &command)
@@ -71,7 +71,7 @@ void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
     addCipher(command);
     addOutput(command);
-    addEncodeKey(command);
+    addKey(command, "randomkey", "a random key will be used");
 
     command.add_argument("-rs", "--removespaces")
         .help("remove spaces from the output")
@@ -88,10 +88,14 @@ void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
 
     addCipher(command);
     addOutput(command);
-    addDecodeKey(command);
+    addKey(command, "unknownkey", "the cipher will be cracked");
 
     command.add_argument("-ps", "--preservespaces")
         .help("does not add spaces to the output if they were not in the input")
+        .flag();
+
+    command.add_argument("-v", "--verbose")
+        .help("shows verbose output, if available (crack, for instance)")
         .flag();
 
     addInput(command);
@@ -129,6 +133,6 @@ void handleOutput(zstring output, argparse::ArgumentParser &parser)
     }
     else
     {
-        ("\n"_u8 + output).writeln(std::cout);
+        output.writeln(std::cout);
     }
 }

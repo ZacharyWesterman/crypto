@@ -41,15 +41,10 @@ TEST_CASE("Word Search", "[dict]")
   REQUIRE(wordSearch(removeSpaces(voicePassport)) == voicePassport);
 }
 
-// TODO: We need a ruleset to filter out arbitrarily difficult inputs
-// For example, the second input contains non-words like InsideAR,
-// metaio and GmbH, which will not (and should not) pass. Therefore,
-// some test data must be excluded as inapplicable. This does not have an
-// overly large effect (I think) on either success or readability.
-
-// TODO: We may want a script that will allow us to do that more easily
-
-// TODO: Find a way to analyze this text for a result score distribution
+// TODO: In general, come up with a toolset that allows us to analyze and manipulate
+// our sample text as well as our dictionary to be able to figure out where our efficiencies,
+// inefficiencies, and flaws occur. We should be able to add and remove words,
+// and see score distributions for our input text.
 TEST_CASE("Word Search (large sample size)", "[.][dict]")
 {
   std::ifstream file;
