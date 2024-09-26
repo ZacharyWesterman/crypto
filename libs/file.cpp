@@ -29,10 +29,9 @@ zstring loadFile(std::string filepath)
     throw FileReadError();
 
   while (std::getline(file, buffer))
-  {
-    contents.append(zstring(buffer));
-    contents.append("\n");
-  }
+    contents.append(zstring(buffer) + "\n");
+
+  file.close();
 
   return contents.substr(0, contents.length() - 1); // remove the last newline
 }

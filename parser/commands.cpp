@@ -49,7 +49,7 @@ void addInput(argparse::ArgumentParser &command)
         .remaining();
 }
 
-std::string joinString(const std::vector<std::string> &lst, const std::string &delim)
+std::string joinString(const std::vector<std::string> &lst, const std::string &delim) // TODO: Can we get this as a libzed function?
 {
     std::string ret;
 
@@ -125,14 +125,7 @@ zstring getParserKey(argparse::ArgumentParser &parser, std::string keyFlagName)
 void handleOutput(zstring output, argparse::ArgumentParser &parser)
 {
     if (parser.present("--outputfile"))
-    {
-        auto filepath = parser.get("--outputfile");
-
-        writeFile(output, filepath);
-        ("Written to output file: "_u8 + filepath).writeln(std::cout);
-    }
+        (writeFile(output, parser.get("--outputfile")) ? "Written to output file"_u8 : "Something went wrong"_u8).writeln(std::cout);
     else
-    {
         output.writeln(std::cout);
-    }
 }
