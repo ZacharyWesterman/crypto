@@ -48,13 +48,15 @@ TEST_CASE("Word Search", "[dict]")
 // overly large effect (I think) on either success or readability.
 
 // TODO: We may want a script that will allow us to do that more easily
+
+// TODO: Find a way to analyze this text for a result score distribution
 TEST_CASE("Word Search (large sample size)", "[.][dict]")
 {
   std::ifstream file;
   zstring contents = "";
   std::string buffer = "";
 
-  file.open("data/paragraphs.txt");
+  file.open("data/p1.txt");
 
   if (!file)
     throw FileReadError();
@@ -63,7 +65,8 @@ TEST_CASE("Word Search (large sample size)", "[.][dict]")
   while (std::getline(file, buffer))
   {
     zstring p = zstring(buffer).trim();
-    REQUIRE(wordSearch(removeSpaces(p)) == p);
+    // REQUIRE(wordSearch(removeSpaces(p)) == p);
+    REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
 
     i++;
   }

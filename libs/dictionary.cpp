@@ -135,6 +135,8 @@ zstring wordSearch(zstring input)
   result.replace("( ", "(");
   result.replace(" )", ")");
 
+  // TODO: Some of these above conditions need to be accounted for in spellcheck
+
   return result;
 }
 
