@@ -9,6 +9,14 @@ zstring substitutionEncode(zstring input, zstring key)
       .cipher(ALPHABET.upper(), key.upper());
 }
 
+zstring substitutionEncode(zstring input)
+{
+  auto key = randomAlphabet();
+
+  return input.cipher(ALPHABET, key.toLower())
+      .cipher(ALPHABET.upper(), key.upper());
+}
+
 zstring substitutionDecode(zstring input, zstring key)
 {
   return input.cipher(key.toLower(), ALPHABET)

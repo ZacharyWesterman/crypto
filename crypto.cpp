@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     if (cipher == "caesar")
       output = key == "" ? caesarEncode(input) : caesarEncode(input, std::stoi(key));
     else if (cipher == "substitution" || cipher == "sub")
-      "sub encode called"_u8.writeln(std::cout); // TODO: implement and test
+      output = key == "" ? substitutionEncode(input) : substitutionEncode(input, key);
 
     if (encode_command["--removespaces"] == true)
       output = removeSpaces(output);
@@ -102,7 +102,15 @@ int main(int argc, char **argv)
     }
     else if (cipher == "substitution" || cipher == "sub")
     {
-      "sub decode called"_u8.writeln(std::cout); // TODO: implement and test
+      if (key == "")
+      {
+        std::cout << "Not yet implemented" << std::endl;
+      }
+      else
+      {
+        zstring plaintext = substitutionDecode(input, key);
+        output = plaintext.contains(" ") ? plaintext : wordSearch(plaintext);
+      }
     }
 
     if (!hadSpaces && decode_command["--preservespaces"] == true)
