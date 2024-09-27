@@ -1,7 +1,7 @@
 #include "commands.h"
 #include "../libs/file.h"
 
-// TODO: Can these even easily be covered by tests?
+// TODO: Can these easily be covered by tests?
 
 // Helpers
 void addCipher(argparse::ArgumentParser &command)

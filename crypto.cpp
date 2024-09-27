@@ -11,6 +11,8 @@
 #include <time.h>
 #include <fstream>
 
+// TODO: Can these be covered by tests?
+
 // TODO: In general, we need more validation on functions
 
 template <typename T>
