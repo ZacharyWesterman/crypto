@@ -1,19 +1,24 @@
 #include "commands.h"
-#include "../libs/file.h"
 
-// TODO: Can these be easily covered by tests?
+#include <z/core/join.hpp>
+#include <z/file/read.hpp>
+#include <z/file/write.hpp>
+
+// TODO: Possibly add all args to both commands and only ignore the irrelevant ones
 
 // Helpers
 void addCipher(argparse::ArgumentParser &command)
 {
-    command.add_argument("cipher")
+    command
+        .add_argument("cipher")
         .help("the cipher to use")
         .choices("caesar", "substitution", "sub");
 }
 
 void addOutput(argparse::ArgumentParser &command)
 {
-    command.add_argument("-O", "--outputfile")
+    command
+        .add_argument("-O", "--outputfile")
         .help("the output file name for the result");
 }
 
@@ -49,21 +54,6 @@ void addInput(argparse::ArgumentParser &command)
     group.add_argument("input")
         .help("the input to be encoded")
         .remaining();
-}
-
-std::string joinString(const std::vector<std::string> &lst, const std::string &delim) // TODO: Can we get this as a libzed function?
-{
-    std::string ret;
-
-    for (const auto &s : lst)
-    {
-        if (!ret.empty())
-            ret += delim;
-
-        ret += s;
-    }
-
-    return ret;
 }
 
 // Mains
@@ -105,21 +95,21 @@ void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
     program.add_subparser(command);
 }
 
-zstring getParserInput(argparse::ArgumentParser &parser)
+zstring getInput(argparse::ArgumentParser &parser)
 {
     if (parser.present("--inputfile"))
-        return loadFile(parser.get("--inputfile"));
+        return z::file::read(parser.get("--inputfile"));
 
-    return zstring(joinString(parser.get<std::vector<std::string>>("input"), " ").c_str());
+    return z::core::join(parser.get<std::vector<std::string>>("input"), " ");
 }
 
-zstring getParserKey(argparse::ArgumentParser &parser, std::string keyFlagName)
+zstring getKey(argparse::ArgumentParser &parser, std::string keyFlagName)
 {
     if (parser["--" + keyFlagName] == true)
         return "";
 
     if (parser.present("--keyfile"))
-        return loadFile(parser.get("--keyfile"));
+        return z::file::read(parser.get("--keyfile"));
 
     return zstring(parser.get("--key").c_str());
 }
@@ -127,7 +117,10 @@ zstring getParserKey(argparse::ArgumentParser &parser, std::string keyFlagName)
 void handleOutput(zstring output, argparse::ArgumentParser &parser)
 {
     if (parser.present("--outputfile"))
-        (writeFile(output, parser.get("--outputfile")) ? "Written to output file"_u8 : "Something went wrong"_u8).writeln(std::cout);
+    {
+        z::file::write(output, parser.get("--outputfile"));
+        "Written to output file"_u8.writeln(std::cout);
+    }
     else
         output.writeln(std::cout);
 }

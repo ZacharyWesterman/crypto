@@ -1,7 +1,6 @@
 #include "ciphers/caesar.h"
 #include "ciphers/substitution.h"
 #include "libs/dictionary.h"
-#include "libs/file.h"
 #include "ext/argparse.h"
 #include "parser/commands.h"
 
@@ -33,7 +32,7 @@ zstring processResults(z::core::array<T> results, bool verbose = false)
       output += results[i].summary;
   }
 
-  return "\n"_u8 + output.trim() + "\n"; // TODO: This might be lazy
+  return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
 }
 
 int main(int argc, char **argv)
@@ -68,8 +67,8 @@ int main(int argc, char **argv)
   if (program.is_subcommand_used("encode"))
   {
     std::string cipher = encode_command.get("cipher");
-    std::string key = getParserKey(encode_command, "randomkey").cstring();
-    zstring input = getParserInput(encode_command);
+    std::string key = getKey(encode_command, "randomkey").cstring();
+    zstring input = getInput(encode_command);
 
     if (cipher == "caesar")
       output = key == "" ? caesarEncode(input) : caesarEncode(input, std::stoi(key));
@@ -86,8 +85,8 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("decode"))
   {
     std::string cipher = decode_command.get("cipher");
-    std::string key = getParserKey(decode_command, "unknownkey").cstring();
-    zstring input = getParserInput(decode_command);
+    std::string key = getKey(decode_command, "unknownkey").cstring();
+    zstring input = getInput(decode_command);
 
     bool hadSpaces = input.count(" ") > 0;
     bool verbose = decode_command["--verbose"] == true;

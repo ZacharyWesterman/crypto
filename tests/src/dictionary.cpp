@@ -1,12 +1,12 @@
 #include "catch.hpp"
 
 #include "../../libs/dictionary.h"
-#include "../../libs/file.h"
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 #include <z/core/split.hpp>
+#include <z/file/exceptions.hpp>
 
-#include <fstream> // TODO: Might not be necessary
+#include <fstream>
 
 zstring alphabet = "abcdefghijklmnopqrstuvwxyz";
 zstring alphabet10 = "klmnopqrstuvwxyzabcdefghij";
@@ -49,46 +49,26 @@ TEST_CASE("Word Search", "[dict]")
 // and see score distributions for our input text.
 TEST_CASE("Word Search (large sample size)", "[.][dict]")
 {
-  std::ifstream file;
-  zstring contents = "";
-  std::string buffer = "";
-
-  file.open("data/paragraphs.txt");
-
-  if (!file)
-    throw FileReadError();
-
-  int i = 0;
-  while (std::getline(file, buffer))
+  for (std::string ch : {"1", "2", "3"})
   {
-    zstring p = zstring(buffer).trim();
-    REQUIRE(wordSearch(removeSpaces(p)) == p);
-    // REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
+    std::ifstream file;
+    zstring contents = "";
+    std::string buffer = "";
+    zstring filename = "data/p" + ch + ".txt";
 
-    i++;
+    file.open(filename.str());
+
+    if (!file)
+      throw z::file::unreadable(filename);
+
+    int i = 0;
+    while (std::getline(file, buffer))
+    {
+      zstring p = zstring(buffer).trim();
+      // REQUIRE(wordSearch(removeSpaces(p)) == p);
+      REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
+
+      i++;
+    }
   }
 }
-// TEST_CASE("Word Search (large sample size)", "[.][dict]")
-// {
-//   for (std::string ch : {"1", "2", "3"})
-//   {
-//     std::ifstream file;
-//     zstring contents = "";
-//     std::string buffer = "";
-
-//     file.open("data/p" + ch + ".txt");
-
-//     if (!file)
-//       throw FileReadError();
-
-//     int i = 0;
-//     while (std::getline(file, buffer))
-//     {
-//       zstring p = zstring(buffer).trim();
-//       // REQUIRE(wordSearch(removeSpaces(p)) == p);
-//       REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
-
-//       i++;
-//     }
-//   }
-// }
