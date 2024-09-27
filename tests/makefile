@@ -1,19 +1,20 @@
-INCLUDEPATH = ../../../libs/libzed
-STATICLIB = ../../../libs/libzed/libzed.a
-
 CC = g++
 LN = g++
 CFLAGS = --std=c++17 -fprofile-arcs -ftest-coverage
-LFLAGS = -lgcov
+LFLAGS = -lgcov -ldl -lzed
 
 SRCS = $(wildcard $(addsuffix *.cpp, src/))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
-bin/run_tests: $(OBJS) $(STATICLIB)
+PARENT_DIRS = ../ciphers/ ../ext/ ../libs/ ../parser/
+PARENT_SRCS = $(wildcard $(addsuffix *.cpp, $(PARENT_DIRS)))
+PARENT_OBJS = $(patsubst %.cpp,%.o,$(PARENT_SRCS))
+
+bin/run_tests: $(OBJS) $(PARENT_OBJS)
 	$(LN) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
-	$(CC) -I $(INCLUDEPATH) -o $@ -c $< $(CFLAGS)
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
 	rm -f bin/* src/*.o src/*.gcda src/*.gcno *.gcov

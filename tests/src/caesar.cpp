@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "../../ciphers/caesar.cpp"
+#include "../../ciphers/caesar.h"
 
 // TODO: can tests be generalized between caesar and sub?
 

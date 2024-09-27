@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "../../ciphers/substitution.cpp"
+#include "../../ciphers/substitution.h"
 
 zstring key1 = "zyxwvutsrqponmlkjihgfedcba";
 zstring subInput = "If he had anything confidential to say, he wrote it in cipher, that is, by so changing the order of the letters of the alphabet, that not a word could be made out.";

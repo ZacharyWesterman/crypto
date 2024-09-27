@@ -1,10 +1,12 @@
 #include "catch.hpp"
 
-#include "../../libs/dictionary.cpp"
-#include "../../libs/file.cpp"
+#include "../../libs/dictionary.h"
+#include "../../libs/file.h"
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 #include <z/core/split.hpp>
+
+#include <fstream> // TODO: Might not be necessary
 
 zstring alphabet = "abcdefghijklmnopqrstuvwxyz";
 zstring alphabet10 = "klmnopqrstuvwxyzabcdefghij";
