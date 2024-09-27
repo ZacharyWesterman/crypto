@@ -49,25 +49,46 @@ TEST_CASE("Word Search", "[dict]")
 // and see score distributions for our input text.
 TEST_CASE("Word Search (large sample size)", "[.][dict]")
 {
-  for (std::string ch : {"1", "2", "3"})
+  std::ifstream file;
+  zstring contents = "";
+  std::string buffer = "";
+
+  file.open("data/paragraphs.txt");
+
+  if (!file)
+    throw FileReadError();
+
+  int i = 0;
+  while (std::getline(file, buffer))
   {
-    std::ifstream file;
-    zstring contents = "";
-    std::string buffer = "";
+    zstring p = zstring(buffer).trim();
+    REQUIRE(wordSearch(removeSpaces(p)) == p);
+    // REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
 
-    file.open("data/p" + ch + ".txt");
-
-    if (!file)
-      throw FileReadError();
-
-    int i = 0;
-    while (std::getline(file, buffer))
-    {
-      zstring p = zstring(buffer).trim();
-      // REQUIRE(wordSearch(removeSpaces(p)) == p);
-      REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
-
-      i++;
-    }
+    i++;
   }
 }
+// TEST_CASE("Word Search (large sample size)", "[.][dict]")
+// {
+//   for (std::string ch : {"1", "2", "3"})
+//   {
+//     std::ifstream file;
+//     zstring contents = "";
+//     std::string buffer = "";
+
+//     file.open("data/p" + ch + ".txt");
+
+//     if (!file)
+//       throw FileReadError();
+
+//     int i = 0;
+//     while (std::getline(file, buffer))
+//     {
+//       zstring p = zstring(buffer).trim();
+//       // REQUIRE(wordSearch(removeSpaces(p)) == p);
+//       REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
+
+//       i++;
+//     }
+//   }
+// }
