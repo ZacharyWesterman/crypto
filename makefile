@@ -35,4 +35,7 @@ tests: $(BINARY)
 	$(MAKE) -C tests/
 	./tests/bin/run_tests $(FILTER)
 
-.PHONY: clean count libzed
+tools: $(BINARY)
+	$(MAKE) -C tools
+
+.PHONY: clean count libzed tests tools

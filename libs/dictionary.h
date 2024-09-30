@@ -11,7 +11,7 @@ zstring shiftAlphabet(int offset);
 
 void loadDictionary();
 
-float checkSpelling(zstring text);
+float spellCheck(zstring text);
 
 zstring wordSearch(zstring text);
 

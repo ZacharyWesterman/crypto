@@ -39,7 +39,7 @@ struct caesarCrackResult
     if (!text)
       throw missingText();
 
-    score = checkSpelling(text);
+    score = spellCheck(text);
 
     summary = zstring(key) + ": " + text.substr(0, 30) + "... " + score + "%\n";
   }
@@ -47,7 +47,7 @@ struct caesarCrackResult
   void update(zstring newText)
   {
     text = newText;
-    score = checkSpelling(text);
+    score = spellCheck(text);
   }
 };
 

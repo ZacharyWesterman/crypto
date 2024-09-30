@@ -39,7 +39,7 @@ void loadDictionary()
     time.reset();
 }
 
-float checkSpelling(zstring text)
+float spellCheck(zstring text)
 {
   loadDictionary();
 

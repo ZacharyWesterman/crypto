@@ -33,8 +33,8 @@ TEST_CASE("Shift Alphabet", "[dict]")
 
 TEST_CASE("Spell Check", "[dict]")
 {
-  REQUIRE(checkSpelling(testingText) == 100.0);
-  REQUIRE(checkSpelling(testingWrongText) == 0.0);
+  REQUIRE(spellCheck(testingText) == 100.0);
+  REQUIRE(spellCheck(testingWrongText) == 0.0);
 }
 
 TEST_CASE("Word Search", "[dict]")
@@ -50,17 +50,22 @@ TEST_CASE("Word Search", "[dict]")
 TEST_CASE("Word Search 1 (large sample size)", "[.][.p1][dict]")
 {
   for (auto line : z::file::lines("data/p1.txt"))
-    REQUIRE(checkSpelling(wordSearch(removeSpaces(line.trim()))) > 50);
+    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
 }
 
 TEST_CASE("Word Search 2 (large sample size)", "[.][.p2][dict]")
 {
   for (auto line : z::file::lines("data/p2.txt"))
-    REQUIRE(checkSpelling(wordSearch(removeSpaces(line.trim()))) > 50);
+    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
 }
 
 TEST_CASE("Word Search 3 (large sample size)", "[.][.p3][dict]")
 {
   for (auto line : z::file::lines("data/p3.txt"))
-    REQUIRE(checkSpelling(wordSearch(removeSpaces(line.trim()))) > 50);
+    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
+}
+TEST_CASE("Word Search 4 (large sample size)", "[.][.p4][dict]")
+{
+  for (auto line : z::file::lines("data/p4.txt"))
+    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
 }
