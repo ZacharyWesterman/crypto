@@ -86,7 +86,7 @@ void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParse
         .help("does not add spaces to the output if they were not in the input")
         .flag();
 
-    command.add_argument("-v", "--verbose")
+    command.add_argument("-V", "--verbose")
         .help("shows verbose output, if available (crack, for instance)")
         .flag();
 

@@ -1,20 +1,20 @@
 #include "dictionary.h"
 
-#include <z/core/split.hpp>
-#include <z/core/join.hpp>
-#include <z/core/array.hpp>
+#include <z/core.hpp>
 
 #include <fstream>
 #include <iostream>
 #include <cmath>
 
+using namespace z::core;
+
 z::util::dictionary dict;
 
 zstring randomAlphabet()
 {
-  auto output = z::core::split(ALPHABET, ""_u8);
+  auto output = split(ALPHABET, ""_u8);
 
-  return z::core::join(output.shuffled(), "");
+  return join(output.shuffled(), "");
 }
 
 zstring shiftAlphabet(int offset)
@@ -33,7 +33,7 @@ void loadDictionary()
     return;
 
   std::ifstream file("libs/words.txt");
-  z::core::timeout time(1'000'000); // 1 second timeout
+  timeout time(1'000'000); // 1 second timeout
 
   while (!dict.read(file, time))
     time.reset();
@@ -44,7 +44,7 @@ float checkSpelling(zstring text)
   loadDictionary();
 
   float successes = 0;
-  z::core::array<zstring> words = z::core::split(text, zstring(" "));
+  array<zstring> words = split(text, zstring(" "));
   float total = float(words.length());
 
   for (int i = 0; i < words.length(); i++)
@@ -71,7 +71,7 @@ zstring wordSearch(zstring input)
   {
     bool wordFound = false;
 
-    for (int k = dict.maxWordLength(); k > 0; k--)
+    for (auto k : range(dict.maxWordLength(), 0, -1))
     {
       zstring word = input.substr(i, k);
 
@@ -94,7 +94,7 @@ zstring wordSearch(zstring input)
   }
 
   // Second pass, correct for the greed errors
-  z::core::array<zstring> words = z::core::split(output.trim(), " "_u8);
+  array<zstring> words = split(output.trim(), " "_u8);
 
   for (int i = 0; i < words.length() - 1; i++)
   {
@@ -118,9 +118,9 @@ zstring wordSearch(zstring input)
   }
 
   // Fix punctuation
-  zstring result = z::core::join(words, " ");
+  zstring result = join(words, " ");
 
-  z::core::array<char> punc = {'.', ',', '\'', ':'};
+  array<char> punc = {'.', ',', '\'', ':'};
   for (char p : punc)
     result.replace(" "_u8 + p, p);
 

@@ -4,7 +4,7 @@
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 #include <z/core/split.hpp>
-#include <z/file/exceptions.hpp>
+#include <z/file/lines.hpp>
 
 #include <fstream>
 
@@ -47,28 +47,20 @@ TEST_CASE("Word Search", "[dict]")
 // our sample text as well as our dictionary to be able to figure out where our efficiencies,
 // inefficiencies, and flaws occur. We should be able to add and remove words,
 // and see score distributions for our input text.
-TEST_CASE("Word Search (large sample size)", "[.][dict]")
+TEST_CASE("Word Search 1 (large sample size)", "[.][.p1][dict]")
 {
-  for (std::string ch : {"1", "2", "3"})
-  {
-    std::ifstream file;
-    zstring contents = "";
-    std::string buffer = "";
-    zstring filename = "data/p" + ch + ".txt";
+  for (auto line : z::file::lines("data/p1.txt"))
+    REQUIRE(checkSpelling(wordSearch(removeSpaces(line.trim()))) > 50);
+}
 
-    file.open(filename.str());
+TEST_CASE("Word Search 2 (large sample size)", "[.][.p2][dict]")
+{
+  for (auto line : z::file::lines("data/p2.txt"))
+    REQUIRE(checkSpelling(wordSearch(removeSpaces(line.trim()))) > 50);
+}
 
-    if (!file)
-      throw z::file::unreadable(filename);
-
-    int i = 0;
-    while (std::getline(file, buffer))
-    {
-      zstring p = zstring(buffer).trim();
-      // REQUIRE(wordSearch(removeSpaces(p)) == p);
-      REQUIRE(checkSpelling(wordSearch(removeSpaces(p))) > 50);
-
-      i++;
-    }
-  }
+TEST_CASE("Word Search 3 (large sample size)", "[.][.p3][dict]")
+{
+  for (auto line : z::file::lines("data/p3.txt"))
+    REQUIRE(checkSpelling(wordSearch(removeSpaces(line.trim()))) > 50);
 }

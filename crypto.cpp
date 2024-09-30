@@ -109,6 +109,7 @@ int main(int argc, char **argv)
   else if (program.is_subcommand_used("test"))
   {
     // Test code goes here
+    wordSearch("testingonetwothree");
   }
   else
   {
