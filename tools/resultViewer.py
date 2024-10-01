@@ -15,8 +15,8 @@ for line in stdin:
 print("Displaying data... ", end='', flush=True)
 
 plt.bar(list(scores.keys()), [i/total for i in list(scores.values())])
-plt.title("Result Viewer")
-plt.get_current_fig_manager().set_window_title("Word Search Score Distribution")
+plt.title("Word Search Score Distribution")
+plt.get_current_fig_manager().set_window_title("Result Viewer")
 plt.show()
 
 print("Exited.")
