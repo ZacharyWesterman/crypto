@@ -1,9 +1,9 @@
-import os
+from os import path, getcwd
 from subprocess import Popen, PIPE
 import matplotlib.pyplot as plt
 
-__location__ = os.path.realpath(
-    os.path.join(os.getcwd(), os.path.dirname(__file__)))
+__location__ = path.realpath(
+    path.join(getcwd(), path.dirname(__file__)))
 
 program_path = __location__ + "/wikiAnalyzer"
 
