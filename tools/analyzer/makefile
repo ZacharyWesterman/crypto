@@ -1,4 +1,4 @@
-BIN = wikiAnalyzer
+BINARIES = wikiAnalyzer fishAnalyzer
 
 STD = c++17
 CC = g++
@@ -8,13 +8,15 @@ DIRS = ../../ciphers/ ../../ext/ ../../src/ ../../parser/
 SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
-$(BIN): $(BIN).o $(OBJS)
+all: $(BINARIES)
+
+%: %.o $(OBJS)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 %.o: %.cpp
 	$(CC) -std=$(STD) -Wno-psabi -fPIC -o $@ -c $^
 
 clean:
-	rm -f $(BINARY) *.o
+	rm -f $(BINARIES) *.o
 
-.PHONY: clean
+.PHONY: clean all
