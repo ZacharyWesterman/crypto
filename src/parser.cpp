@@ -86,15 +86,15 @@ zstring getInput(argparse::ArgumentParser &parser)
     return z::core::join(parser.get<std::vector<std::string>>("input"), " ");
 }
 
-zstring getKey(argparse::ArgumentParser &parser, std::string keyFlagName)
+std::string getKey(argparse::ArgumentParser &parser, std::string keyFlagName)
 {
     if (parser["--" + keyFlagName] == true)
         return "";
 
     if (parser.present("--keyfile"))
-        return z::file::read(parser.get("--keyfile"));
+        return z::file::read(parser.get("--keyfile")).cstring();
 
-    return zstring(parser.get("--key").c_str());
+    return parser.get("--key");
 }
 
 void handleOutput(zstring output, argparse::ArgumentParser &parser)
@@ -102,7 +102,6 @@ void handleOutput(zstring output, argparse::ArgumentParser &parser)
     if (parser.present("--outputfile"))
     {
         z::file::write(output, parser.get("--outputfile"));
-        "Written to output file"_u8.writeln(std::cout);
     }
     else
         output.writeln(std::cout);

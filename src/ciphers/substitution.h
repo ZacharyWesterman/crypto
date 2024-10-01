@@ -12,8 +12,7 @@ struct substitutionCrackResult
   zstring summary;
 };
 
-zstring substitutionEncode(zstring input, zstring key);
-zstring substitutionEncode(zstring input);
+zstring substitutionEncode(zstring input, zstring key = "");
 
 zstring substitutionDecode(zstring input, zstring key);
 

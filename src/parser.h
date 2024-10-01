@@ -17,7 +17,7 @@ void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &com
 
 zstring getInput(argparse::ArgumentParser &parser);
 
-zstring getKey(argparse::ArgumentParser &parser, std::string keyFlagName);
+std::string getKey(argparse::ArgumentParser &parser, std::string keyFlagName);
 
 void handleOutput(zstring output, argparse::ArgumentParser &parser);
 

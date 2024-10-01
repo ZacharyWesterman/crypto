@@ -121,7 +121,7 @@ zstring reduceWordIslands(zstring input)
   return join(words, " ");
 }
 
-// TODO: Some of these  conditions need to be accounted for in spellcheck
+// TODO: Some of these conditions need to be accounted for in spellcheck
 zstring fixPunctuation(zstring input)
 {
   array<char> punc = {'.', ',', '\'', ':'};

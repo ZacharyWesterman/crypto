@@ -45,12 +45,8 @@ TEST_CASE("Word Search", "[dict]")
   REQUIRE(wordSearch(removeSpaces(voicePassport)) == voicePassport);
 }
 
-// TODO: In general, come up with a toolset that allows us to analyze and manipulate
-// our sample text as well as our dictionary to be able to figure out where our efficiencies,
-// inefficiencies, and flaws occur. We should be able to add and remove words,
-// and see score distributions for our input text.
+// TODO: Add some tools to add and remove dtata from both our dictionary and wiki files
 
-// Part of the above todo is done; we've implemented wordSearch analysis and visualization
 void testFile(zstring filename, float scoreThreshold = 0)
 {
   for (auto line : z::file::lines(filename))

@@ -52,8 +52,7 @@ struct caesarCrackResult
 };
 
 zstring caesarEncode(zstring input, int offset);
-zstring caesarEncode(zstring input, std::string offset);
-zstring caesarEncode(zstring input);
+zstring caesarEncode(zstring input, std::string offset = "");
 
 zstring caesarDecode(const zstring &input, int offset);
 zstring caesarDecode(const zstring &input, std::string offset);

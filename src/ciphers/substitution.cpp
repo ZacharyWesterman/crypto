@@ -5,13 +5,8 @@
 
 zstring substitutionEncode(zstring input, zstring key)
 {
-  return input.cipher(ALPHABET, key.toLower())
-      .cipher(ALPHABET.upper(), key.upper());
-}
-
-zstring substitutionEncode(zstring input)
-{
-  auto key = randomAlphabet();
+  if (key == "")
+    key = randomAlphabet();
 
   return input.cipher(ALPHABET, key.toLower())
       .cipher(ALPHABET.upper(), key.upper());

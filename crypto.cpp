@@ -34,21 +34,10 @@ zstring processResults(z::core::array<T> results, bool verbose)
   return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
 }
 
-// TODO: Can these be covered by tests?
+// TODO: Can this file be covered by tests?
 
-commandDetails encodeStruct = {
-  mainStub : "encod",
-
-  randomKeyName : "randomkey",
-  randomkeyDescription : "a random key will be used"
-};
-
-commandDetails decodeStruct = {
-  mainStub : "decod",
-
-  randomKeyName : "unknownkey",
-  randomkeyDescription : "the cipher will be cracked"
-};
+commandDetails encodeStruct = {"encod", "randomkey", "a random key will be used"};
+commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracked"};
 
 int main(int argc, char **argv)
 {
@@ -78,22 +67,27 @@ int main(int argc, char **argv)
   }
 
   zstring output;
+  // TODO: Make this pointer stuff work so I can bring things out of loops
+  // OR create a function and a struct for parser args that I can declare here
+  // and update below to pass that struct of relevant info instead of the whole parser
+
+  // argparse::ArgumentParser *parser;
 
   if (program.is_subcommand_used("encode"))
   {
     argparse::ArgumentParser &parser = program.at<argparse::ArgumentParser>("encode");
 
     std::string cipher = parser.get("cipher");
-    std::string key = getKey(parser, "randomkey").cstring();
+    std::string key = getKey(parser, "randomkey");
     zstring input = getInput(parser);
+    bool rsFlag = parser["--removespaces"] == true;
 
     if (cipher == "caesar")
-      output = key == "" ? caesarEncode(input) : caesarEncode(input, key);
+      output = caesarEncode(input, key);
     else if (cipher == "substitution" || cipher == "sub")
-      output = key == "" ? substitutionEncode(input)
-                         : substitutionEncode(input, key);
+      output = substitutionEncode(input, key);
 
-    if (parser["--removespaces"] == true)
+    if (rsFlag)
       output = removeSpaces(output);
 
     handleOutput(output, parser);
@@ -105,22 +99,21 @@ int main(int argc, char **argv)
     argparse::ArgumentParser &parser = program.at<argparse::ArgumentParser>("decode");
 
     std::string cipher = parser.get("cipher");
-    std::string key = getKey(parser, "unknownkey").cstring();
+    std::string key = getKey(parser, "unknownkey");
     zstring input = getInput(parser);
-
+    bool rsFlag = parser["--removespaces"] == true;
     bool verbose = parser["--verbose"] == true;
 
     if (cipher == "caesar")
-      output = key == "" ? processResults<caesarCrackResult>(caesarCrack(input), verbose)
+      output = key == "" ? processResults(caesarCrack(input), verbose)
                          : caesarDecode(input, key);
     else if (cipher == "substitution" || cipher == "sub")
-      output =
-          key == "" ? "Not yet implemented" : substitutionDecode(input, key);
+      output = key == "" ? "Not yet implemented" : substitutionDecode(input, key);
 
     if (!output.contains(" "))
       output = wordSearch(output);
 
-    if (parser["--removespaces"] == true)
+    if (rsFlag)
       output = removeSpaces(output);
 
     handleOutput(output, parser);
