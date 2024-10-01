@@ -31,7 +31,7 @@ void loadDictionary()
   if (dict.length() > 0)
     return;
 
-  dict.read("src/words.txt");
+  dict.read("src/data/words.txt");
 }
 
 float spellCheck(zstring text)

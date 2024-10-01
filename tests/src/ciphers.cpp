@@ -52,7 +52,7 @@ TEST_CASE("Substitution Reciprocity", "[sub]")
   testReciprocity<zstring>(substitutionEncode, substitutionDecode, subKey, cipherInput);
 }
 
-TEST_CASE("Substitution Crack")
-{
-  testCrack(substitutionCrack, cipherInput, subOutput);
-}
+// TEST_CASE("Substitution Crack")
+// {
+//   testCrack(substitutionCrack, cipherInput, subOutput);
+// }

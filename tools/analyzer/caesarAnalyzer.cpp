@@ -1,4 +1,5 @@
 #include "../../src/dictionary.h"
+#include "../../src/ciphers/caesar.h"
 #include "analyzeHelper.h"
 
 #include <z/core/string.hpp>
