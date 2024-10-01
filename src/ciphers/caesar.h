@@ -5,7 +5,7 @@
 #include <z/core/array.hpp>
 #include <iostream>
 
-#include "../src/dictionary.h"
+#include "../dictionary.h"
 
 // TODO: Can this be generalized to the point of there only being one
 //  struct between all the ciphers?

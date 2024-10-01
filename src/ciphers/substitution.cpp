@@ -1,5 +1,5 @@
 #include "substitution.h"
-#include "../src/dictionary.h"
+#include "../dictionary.h"
 
 #include <iostream>
 

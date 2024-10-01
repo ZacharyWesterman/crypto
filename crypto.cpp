@@ -1,6 +1,7 @@
-#include "ciphers/caesar.h"
-#include "ciphers/substitution.h"
 #include "ext/argparse.h"
+
+#include "src/ciphers/caesar.h"
+#include "src/ciphers/substitution.h"
 #include "src/dictionary.h"
 #include "src/parser.h"
 
