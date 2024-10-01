@@ -26,7 +26,7 @@ clean:
 count:
 	@echo "Analyzing files not in ./ext or ./tests/bin"
 	@echo "Total File Count"
-	@find . -type f -not -path "*/.git/*" | wc -l
+	@find . -type f -not -path "*/.git/*" | wc -l | sed 's/^/  /'
 	@echo "Lines of Code (cpp, h, py)"
 	@find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.py" \) ! -path "./ext/*" ! -path "./tests/bin" ! -name pugixml.cpp -exec wc -l {} +
 

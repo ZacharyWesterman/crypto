@@ -113,5 +113,5 @@ parserArgs parse(argparse::ArgumentParser &parser, std::string randKeyName)
 //             output += results[i].summary;
 //     }
 
-//     return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
+//     return output;
 // }

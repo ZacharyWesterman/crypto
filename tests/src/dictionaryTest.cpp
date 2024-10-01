@@ -11,6 +11,7 @@ zstring alphabet = "abcdefghijklmnopqrstuvwxyz";
 zstring alphabet10 = "klmnopqrstuvwxyzabcdefghij";
 
 zstring testingText = "one two three";
+zstring puncText = "one1 .two. -three";
 zstring testingWrongText = "testingg onee twoo threee";
 zstring voicePassport = "my voice is my passport verify me";
 
@@ -34,6 +35,7 @@ TEST_CASE("Shift Alphabet", "[dict]")
 TEST_CASE("Spell Check", "[dict]")
 {
   REQUIRE(spellCheck(testingText) == 100.0);
+  REQUIRE(spellCheck(puncText) == 100.0);
   REQUIRE(spellCheck(testingWrongText) == 0.0);
 }
 
@@ -49,9 +51,6 @@ void testFile(zstring filename, float scoreThreshold = 0)
 {
   for (auto line : z::file::lines(filename))
   {
-    if (line == "")
-      continue; // HACK ?
-
     zstring input = line.trim();
     zstring output = wordSearch(removeSpaces(input));
     float score = spellCheck(output);

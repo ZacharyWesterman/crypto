@@ -12,7 +12,7 @@
 #include <iostream>
 #include <time.h>
 
-// TODO: Can this file be covered by tests?
+// TODO: Can this file be covered by tests? (program.parse_args())
 // TODO: any random encode call will not tell you the key
 
 template <typename T>
@@ -35,7 +35,7 @@ zstring processResults(z::core::array<T> results, bool verbose)
       output += results[i].summary;
   }
 
-  return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
+  return output;
 }
 
 // TODO: Should these keynames really be different...? It'd be a lot nicer if they weren't...
@@ -44,8 +44,10 @@ commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracke
 
 int main(int argc, char **argv)
 {
+  // General Setup
   srand(time(0));
 
+  // Program Setup (argparse, subcommands, etc; see parser.cpp/h)
   argparse::ArgumentParser program("crypto", "0.0.1");
 
   argparse::ArgumentParser encodeCommand("encode");
@@ -58,6 +60,7 @@ int main(int argc, char **argv)
   test.add_description("run our sandbox code");
   program.add_subparser(test);
 
+  // Try to actually get the args from the user
   try
   {
     program.parse_args(argc, argv);
@@ -69,9 +72,9 @@ int main(int argc, char **argv)
     return 1;
   }
 
+  // Main code
   zstring output;
-
-  parserArgs args;
+  parserArgs args; // to hold the re-parsed args from the parser as a nice struct
 
   if (program.is_subcommand_used("encode"))
   {
@@ -108,6 +111,8 @@ int main(int argc, char **argv)
     return 0;
   }
 
+  // If we made it here, we weren't testing or showing the no-args output
+  // So let's clean up the output and put it where the user asked
   if (args.rsFlag)
     output = removeSpaces(output);
 

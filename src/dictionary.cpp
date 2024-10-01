@@ -13,9 +13,7 @@ z::util::dictionary dict;
 
 zstring randomAlphabet()
 {
-  auto output = split(ALPHABET, ""_u8);
-
-  return join(output.shuffled(), "");
+  return join(split(ALPHABET, ""_u8).shuffled(), "");
 }
 
 zstring shiftAlphabet(int offset)
@@ -121,20 +119,6 @@ zstring reduceWordIslands(zstring input)
   return join(words, " ");
 }
 
-// TODO: Some of these conditions need to be accounted for in spellcheck
-zstring fixPunctuation(zstring input)
-{
-  array<char> punc = {'.', ',', '\'', ':'};
-  for (char p : punc)
-    input.replace(" "_u8 + p, p);
-
-  input.replace(" - ", "-");
-  input.replace("( ", "(");
-  input.replace(" )", ")");
-
-  return input;
-}
-
 zstring wordSearch(zstring input)
 {
   loadDictionary();
@@ -142,7 +126,16 @@ zstring wordSearch(zstring input)
   zstring output = greedyFindWords(input);
   output = reduceWordIslands(output);
 
-  return fixPunctuation(output);
+  // fix punctuation
+  array<char> punc = {'.', ',', '\'', ':'};
+  for (char p : punc)
+    output.replace(" "_u8 + p, p);
+
+  output.replace(" - ", "-");
+  output.replace("( ", "(");
+  output.replace(" )", ")");
+
+  return output;
 }
 
 zstring removeSpaces(zstring text)
