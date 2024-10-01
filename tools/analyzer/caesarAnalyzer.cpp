@@ -4,7 +4,7 @@
 #include <z/core/string.hpp>
 #include <iostream>
 
-float evaluator(zstring input)
+float caesarEvaluator(zstring input)
 {
   return spellCheck(wordSearch(removeSpaces(caesarEncode(input))));
 }
@@ -12,5 +12,5 @@ float evaluator(zstring input)
 int main(int argc, char *argv[])
 {
   std::cerr << "Analyzing Caesar..." << std::endl;
-  analyze(evaluator);
+  analyze(caesarEvaluator);
 }

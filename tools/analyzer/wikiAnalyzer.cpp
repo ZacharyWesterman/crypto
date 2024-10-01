@@ -4,7 +4,7 @@
 #include <z/core/string.hpp>
 #include <iostream>
 
-float evaluator(zstring input)
+float wikiEvaluator(zstring input)
 {
   return spellCheck(wordSearch(removeSpaces(input.trim())));
 }
@@ -12,5 +12,5 @@ float evaluator(zstring input)
 int main(int argc, char *argv[])
 {
   std::cerr << "Analyzing Wiki..." << std::endl;
-  analyze(evaluator);
+  analyze(wikiEvaluator);
 }

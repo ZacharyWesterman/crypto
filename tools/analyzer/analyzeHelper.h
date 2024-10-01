@@ -9,13 +9,13 @@ using namespace std;
 void deleteMessage(zstring message, ostream &os)
 {
   for (int i : z::core::range(message.length()))
-    os << '\b' << ' ' << '\b' << flush;
+    os << "\b \b" << flush;
 }
 
 void analyze(std::function<float(zstring)> evaluator)
 {
-  // for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
-  for (auto id : z::core::array<zstring>{"5", "6"})
+  for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
+  // for (auto id : z::core::array<zstring>{"5", "6"})
   {
     zstring message;
     auto lines = z::file::lines("data/wiki"_zs + id + ".txt").collect();
@@ -36,13 +36,13 @@ void analyze(std::function<float(zstring)> evaluator)
         if (!p.count('.'))
           p += ".0";
 
+        // zstring p = zstring::precision(i / total * 100, 1);
+
         message = p + "%";
         message.write(cerr);
       }
 
-      auto input = line.trim();
-
-      result.push(evaluator(input));
+      result.push(evaluator(line.trim()));
     }
 
     deleteMessage(message, cerr);
