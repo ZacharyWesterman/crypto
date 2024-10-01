@@ -10,6 +10,10 @@
 // TODO: Can this be generalized to the point of there only being one
 //  struct between all the ciphers?
 
+// Either all keys would have to be strings by the time they get created,
+// or they would all need an overridden virtual method for returning their
+// typename T into a string
+
 class missingText : public std::runtime_error
 {
 public:

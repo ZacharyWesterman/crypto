@@ -7,8 +7,6 @@
 #include <z/core/split.hpp>
 #include <z/file/lines.hpp>
 
-#include <fstream>
-
 zstring alphabet = "abcdefghijklmnopqrstuvwxyz";
 zstring alphabet10 = "klmnopqrstuvwxyzabcdefghij";
 
@@ -45,7 +43,7 @@ TEST_CASE("Word Search", "[dict]")
   REQUIRE(wordSearch(removeSpaces(voicePassport)) == voicePassport);
 }
 
-// TODO: Add some tools to add and remove dtata from both our dictionary and wiki files
+// TODO: Add some tools to add and remove data from both our dictionary and wiki files
 
 void testFile(zstring filename, float scoreThreshold = 0)
 {

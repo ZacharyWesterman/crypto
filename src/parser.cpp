@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "dictionary.h"
 
 #include <z/core/join.hpp>
 #include <z/core/array.hpp>
@@ -6,29 +7,8 @@
 #include <z/file/read.hpp>
 #include <z/file/write.hpp>
 
-// FIXME: throws some sort of undefined / linker error
-// template <typename T>
-// zstring processResults(z::core::array<T> results, bool verbose)
-// {
-//     if (!verbose)
-//         return results[0].text;
-
-//     zstring output = "";
-
-//     output += "The best solution ("_u8 + results[0].score +
-//               "% confidence with a key of " + results[0].key + ") is:\n  " +
-//               results[0].text + "\n";
-
-//     if (results[0].score < 80)
-//     {
-//         output += "\nLow Confidence! Presenting alternatives...\n\n";
-
-//         for (int i = 1; i < results.length(); i++)
-//             output += results[i].summary;
-//     }
-
-//     return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
-// }
+using std::vector;
+using z::core::join, z::file::read;
 
 void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct)
 {
@@ -78,31 +58,60 @@ void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &com
     program.add_subparser(command);
 }
 
-zstring getInput(argparse::ArgumentParser &parser)
+// Helpers
+
+parserArgs parse(argparse::ArgumentParser &parser, std::string randKeyName)
 {
-    if (parser.present("--inputfile"))
-        return z::file::read(parser.get("--inputfile"));
+    // input
+    zstring input = parser.present("--inputfile")
+                        ? read(parser.get("--inputfile"))
+                        : join(parser.get<vector<std::string>>("input"), " ");
 
-    return z::core::join(parser.get<std::vector<std::string>>("input"), " ");
-}
-
-std::string getKey(argparse::ArgumentParser &parser, std::string keyFlagName)
-{
-    if (parser["--" + keyFlagName] == true)
-        return "";
-
-    if (parser.present("--keyfile"))
-        return z::file::read(parser.get("--keyfile")).cstring();
-
-    return parser.get("--key");
-}
-
-void handleOutput(zstring output, argparse::ArgumentParser &parser)
-{
+    // filename
+    std::string filename = "";
     if (parser.present("--outputfile"))
-    {
-        z::file::write(output, parser.get("--outputfile"));
-    }
+        filename = parser.get("--outputfile");
+
+    // key
+    std::string key;
+
+    if (parser["--" + randKeyName] == true)
+        key = "";
+    else if (parser.present("--keyfile"))
+        key = read(parser.get("--keyfile")).cstring();
     else
-        output.writeln(std::cout);
+        key = parser.get("--key");
+
+    // assemble with the easy stuff and return
+    return parserArgs{
+        parser.get("cipher"),
+        key,
+        input,
+        filename,
+        parser["--removespaces"] == true,
+        parser["--verbose"] == true};
 }
+
+// FIXME: throws some sort of undefined / linker error
+// template <typename T>
+// zstring processResults(z::core::array<T> results, bool verbose)
+// {
+//     if (!verbose)
+//         return results[0].text;
+
+//     zstring output = "";
+
+//     output += "The best solution ("_u8 + results[0].score +
+//               "% confidence with a key of " + results[0].key + ") is:\n  " +
+//               results[0].text + "\n";
+
+//     if (results[0].score < 80)
+//     {
+//         output += "\nLow Confidence! Presenting alternatives...\n\n";
+
+//         for (int i = 1; i < results.length(); i++)
+//             output += results[i].summary;
+//     }
+
+//     return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
+// }

@@ -8,18 +8,23 @@
 struct commandDetails
 {
   std::string mainStub;
-
   std::string randomKeyName;
   std::string randomkeyDescription;
 };
 
+struct parserArgs
+{
+  std::string cipher;
+  std::string key;
+  zstring input;
+  std::string filename;
+  bool rsFlag;
+  bool verbose;
+};
+
 void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct);
 
-zstring getInput(argparse::ArgumentParser &parser);
-
-std::string getKey(argparse::ArgumentParser &parser, std::string keyFlagName);
-
-void handleOutput(zstring output, argparse::ArgumentParser &parser);
+parserArgs parse(argparse::ArgumentParser &parser, std::string keyname);
 
 // template <typename T>
 // zstring processResults(z::core::array<T> results, bool verbose = false);
