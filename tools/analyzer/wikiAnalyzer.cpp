@@ -1,4 +1,4 @@
-#include "../../src/dictionary.h"
+#include "../../src/helpers/dictionary.h"
 #include "analyzeHelper.h"
 
 #include <z/core/string.hpp>

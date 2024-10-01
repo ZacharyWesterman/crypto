@@ -1,4 +1,4 @@
-#include "../../src/dictionary.h"
+#include "../../src/helpers/dictionary.h"
 #include "../../src/ciphers/caesar.h"
 #include "analyzeHelper.h"
 

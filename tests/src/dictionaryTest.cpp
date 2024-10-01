@@ -65,20 +65,20 @@ void testFile(zstring filename, float scoreThreshold = 0)
 
 TEST_CASE("Word Search 1 (large sample size)", "[.][.wiki1][dict]")
 {
-  testFile("src/data/wiki1.txt");
+  testFile("src/data/wiki/wiki1.txt");
 }
 
 TEST_CASE("Word Search 2 (large sample size)", "[.][.wiki2][dict]")
 {
-  testFile("src/data/wiki2.txt");
+  testFile("src/data/wiki/wiki2.txt");
 }
 
 TEST_CASE("Word Search 3 (large sample size)", "[.][.wiki3][dict]")
 {
-  testFile("src/data/wiki3.txt");
+  testFile("src/data/wiki/wiki3.txt");
 }
 
 TEST_CASE("Word Search 4 (large sample size)", "[.][.wiki4][dict]")
 {
-  testFile("src/data/wiki4.txt");
+  testFile("src/data/wiki/wiki4.txt");
 }

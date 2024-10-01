@@ -1,4 +1,4 @@
-#include "../../src/dictionary.h"
+#include "../../src/helpers/dictionary.h"
 
 #include <z/all.hpp>
 #include <iostream>
@@ -17,7 +17,7 @@ void analyze(std::function<float(zstring)> evaluator)
   // for (auto id : z::core::array<zstring>{"5", "6"})
   {
     zstring message;
-    auto lines = z::file::lines("src/data/wiki"_zs + id + ".txt").collect();
+    auto lines = z::file::lines("src/data/wiki/wiki"_zs + id + ".txt").collect();
     double total = lines.length();
 
     ("  Analyzing file "_u8 + id + " (" + total + " paragraphs)" + "... ").write(cerr);
