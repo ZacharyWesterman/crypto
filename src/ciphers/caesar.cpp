@@ -8,13 +8,13 @@ using z::core::range;
 
 #define CHARACTER_LIMIT 100
 
-zstring caesarEncode(zstring input, int offset)
+zstring caesarEncode(const zstring &input, int offset)
 {
   return input.cipher(ALPHABET, shiftAlphabet(offset))
       .cipher(ALPHABET.upper(), shiftAlphabet(offset).upper());
 }
 
-zstring caesarEncode(zstring input, std::string offset)
+zstring caesarEncode(const zstring &input, std::string offset)
 {
   if (offset == "")
     return caesarEncode(input, rand() % 25 + 1);
@@ -33,7 +33,7 @@ zstring caesarDecode(const zstring &input, std::string offset)
   return caesarDecode(input, std::stoi(offset));
 }
 
-z::core::array<caesarCrackResult> caesarCrack(zstring input)
+z::core::array<caesarCrackResult> caesarCrack(const zstring &input)
 {
   caesarCrackResult bestResult;
   z::core::array<caesarCrackResult> results;

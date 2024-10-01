@@ -92,7 +92,7 @@ parserArgs parse(argparse::ArgumentParser &parser, std::string randKeyName)
         parser["--verbose"] == true};
 }
 
-// FIXME: throws some sort of undefined / linker error
+// BUG: throws some sort of undefined / linker error
 // template <typename T>
 // zstring processResults(z::core::array<T> results, bool verbose)
 // {

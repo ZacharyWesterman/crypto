@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-zstring substitutionEncode(zstring input, zstring key)
+zstring substitutionEncode(const zstring &input, zstring key)
 {
   if (key == "")
     key = randomAlphabet();
@@ -12,13 +12,13 @@ zstring substitutionEncode(zstring input, zstring key)
       .cipher(ALPHABET.upper(), key.upper());
 }
 
-zstring substitutionDecode(zstring input, zstring key)
+zstring substitutionDecode(const zstring &input, zstring key)
 {
   return input.cipher(key.toLower(), ALPHABET)
       .cipher(key.upper(), ALPHABET.upper());
 }
 
-z::core::array<substitutionCrackResult> substitutionCrack(zstring input)
+z::core::array<substitutionCrackResult> substitutionCrack(const zstring &input)
 {
   // TODO: Implement
   return z::core::array<substitutionCrackResult>();

@@ -12,10 +12,10 @@ struct substitutionCrackResult
   zstring summary;
 };
 
-zstring substitutionEncode(zstring input, zstring key = "");
+zstring substitutionEncode(const zstring &input, zstring key = "");
 
-zstring substitutionDecode(zstring input, zstring key);
+zstring substitutionDecode(const zstring &input, zstring key);
 
-z::core::array<substitutionCrackResult> substitutionCrack(zstring input);
+z::core::array<substitutionCrackResult> substitutionCrack(const zstring &input);
 
 #endif
