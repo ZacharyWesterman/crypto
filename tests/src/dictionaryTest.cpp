@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "../../src/dictionary.h"
+#include "../../src/helpers/dictionary.h"
 
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>

@@ -1,7 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "../ext/argparse.h"
+#include "../../ext/argparse.h"
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 

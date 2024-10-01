@@ -2,8 +2,8 @@
 
 #include "src/ciphers/caesar.h"
 #include "src/ciphers/substitution.h"
-#include "src/dictionary.h"
-#include "src/parser.h"
+#include "src/helpers/dictionary.h"
+#include "src/helpers/parser.h"
 
 #include <z/core/string.hpp>
 #include <z/file/write.hpp>

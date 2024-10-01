@@ -1,5 +1,5 @@
 #include "caesar.h"
-#include "../dictionary.h"
+#include "../helpers/dictionary.h"
 
 #include <z/core/range.hpp>
 #include <iostream>

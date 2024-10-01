@@ -6,7 +6,7 @@ LFLAGS = -lgcov -ldl -lzed
 SRCS = $(wildcard $(addsuffix *.cpp, src/))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
-PARENT_DIRS =  ../src/ ../src/ciphers/ ../ext/
+PARENT_DIRS =  ../src/ ../src/ciphers/ ../src/helpers/ ../ext/
 PARENT_SRCS = $(wildcard $(addsuffix *.cpp, $(PARENT_DIRS)))
 PARENT_OBJS = $(patsubst %.cpp,%.o,$(PARENT_SRCS))
 

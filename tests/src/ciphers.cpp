@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "../../src/dictionary.h"
+#include "../../src/helpers/dictionary.h"
 
 #include "ciphers.h"
 #include "../../src/ciphers/caesar.h"

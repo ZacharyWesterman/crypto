@@ -4,7 +4,7 @@ LFLAGS = -ldl -lzed
 
 BINARY = crypto
 
-DIRS = src/ src/ciphers/ ext/ 
+DIRS = src/ src/ciphers/ src/helpers/ ext/ 
 SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
@@ -19,6 +19,7 @@ clean:
 
 	cd src &&  rm -f *.o
 	cd src/ciphers && rm -f *.o
+	cd src/helpers && rm -f *.o
 
 	make clean -C tests
 	make clean -C tools
