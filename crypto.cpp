@@ -100,7 +100,10 @@ int main(int argc, char **argv)
   }
   else if (program.is_subcommand_used("test")) // Test code goes here
   {
-    wordSearch("testingonetwothree");
+    // zstring test = "1lfg: MOLECULAR REPLACEMENT SOLUTION OF THE STRUCTURE OF APOLACTOFERRIN, A PROTEIN DISPLAYING LARGE-SCALE CONFORMATIONAL CHANGE";
+    zstring test = "TESTING ONE TWO THREE FOUR";
+
+    wordSearch(removeSpaces(test)).writeln(std::cout);
 
     return 0;
   }

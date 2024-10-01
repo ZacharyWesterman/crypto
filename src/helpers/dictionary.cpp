@@ -68,7 +68,9 @@ zstring greedyFindWords(zstring input)
     {
       zstring word = input.substr(i, k);
 
-      if (dict.isWord(word))
+      zstring testWord = word; // need this to maintain original casing
+
+      if (dict.isWord(testWord.toLower()))
       {
         output.append(" "_u8 + word);
 
