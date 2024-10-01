@@ -38,7 +38,7 @@ zstring processResults(z::core::array<T> results, bool verbose)
   return output;
 }
 
-// TODO: Can we generalize thes rest of these details some way?
+// TODO: Can we generalize the rest of these details some way?
 commandDetails encodeStruct = {"encod", "randomkey", "a random key will be used"};
 commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracked"};
 

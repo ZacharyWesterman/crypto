@@ -1,15 +1,11 @@
-from sys import argv
-import time
-
 from helper import *
+from sys import argv
 
-startTime = time.time()
+timer = Timer()
 
 scoreDict = collateData(argv)
 
-elapsedTime = formatTime(time.time() - startTime)
-
-print(f"That took {elapsedTime}!\n\nDisplaying data... ", end='', flush=True)
+print(f"That took {timer.elapsed()}!\n\nDisplaying data... ", end='', flush=True)
 
 plotData(scoreDict)
 

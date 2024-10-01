@@ -2,22 +2,58 @@ from os import path, getcwd
 from subprocess import Popen, PIPE
 import numpy as np 
 import matplotlib.pyplot as plt
+from time import time
 
-def formatTime(seconds):
-    minutes, seconds = divmod(seconds, 60)
-    hours, minutes = divmod(minutes, 60)
-    days, hours = divmod(hours, 24)
+class Timer:
+    def __init__(self):
+        self.startTime = time()
 
-    if days > 0:
-        return f"{int(days)}d{int(hours)}h{int(minutes)}m{seconds:.2f}s"
-    elif hours > 0:
-        return f"{int(hours)}h{int(minutes)}m{seconds:.2f}s"
-    elif minutes > 0:
-        return f"{int(minutes)}m{seconds:.2f}s"
-    else:
-        return f"{seconds:.2f}s"
+    def formatTime(self, seconds):
+        minutes, seconds = divmod(seconds, 60)
+        hours, minutes = divmod(minutes, 60)
+        days, hours = divmod(hours, 24)
 
-def analyzeOutput(program):
+        output = ""
+
+        if days > 0:
+            output += f"{int(days)}d"
+            # return f"{int(days)}d{int(hours)}h{int(minutes)}m{seconds:.2f}s"
+        if hours > 0:
+        # elif hours > 0:
+            # return f"{int(hours)}h{int(minutes)}m{seconds:.2f}s"
+            output += f"{int(hours)}h"
+        elif minutes > 0:
+        # elif minutes > 0:
+        #     return f"{int(minutes)}m{seconds:.2f}s"
+            output += f"{int(minutes)}"
+
+        output += f"{seconds:.2f}s"
+
+        return output
+
+    def elapsed(self):
+        return self.formatTime(time() - self.startTime)
+
+def collateData(argv):
+    scoreDict = {}
+    analyzers = ["caesar", "wiki", "random"]
+
+    if len(argv) == 1:
+        argv = ["", "wiki"]
+
+    if argv[1] == "all":
+        argv = ["", *analyzers]
+
+    for arg in argv[1:]:
+        if arg not in analyzers:
+            print ("Invalid argument")
+            exit()
+
+        scoreDict[arg] = parseOutput(arg + "Analyzer")
+
+    return scoreDict  
+
+def parseOutput(program):
     __location__ = path.realpath(
         path.join(getcwd(), path.dirname(__file__)))
 
@@ -36,20 +72,6 @@ def analyzeOutput(program):
         numbers += [float(i) for i in line.split(',')]
 
     return numbers
-
-def collateData(argv):
-    scoreDict = {}
-
-    if len(argv) == 1:
-        scoreDict["wiki"] = analyzeOutput("wikiAnalyzer")
-    else:
-        for arg in argv[1:]:
-            if arg == "caesar":
-                scoreDict["caesar"] = analyzeOutput("caesarAnalyzer")
-            elif arg == "wiki":
-                scoreDict["wiki"] = analyzeOutput("wikiAnalyzer")
-
-    return scoreDict  
 
 def genStats(scoreDict):
     statTexts = []
@@ -70,7 +92,7 @@ def plotData(scoreDict):
     plt.legend(loc='upper right')
 
     # Improve how we're doing this
-    plt.gcf().text(0.85, 0.75, genStats(scoreDict), fontsize=10, verticalalignment='center')
+    plt.gcf().text(0.85, 0.65, genStats(scoreDict), fontsize=10, verticalalignment='center')
 
 
     plt.get_current_fig_manager().full_screen_toggle()
