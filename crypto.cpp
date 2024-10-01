@@ -13,7 +13,7 @@
 #include <time.h>
 
 // TODO: Can this file be covered by tests? (program.parse_args())
-// TODO: any random encode call will not tell you the key
+// TODO: any random encode call will not tell you the key (how should we handle this?)
 
 template <typename T>
 zstring processResults(z::core::array<T> results, bool verbose)

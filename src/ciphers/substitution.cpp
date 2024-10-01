@@ -20,6 +20,6 @@ zstring substitutionDecode(const zstring &input, zstring key)
 
 z::core::array<substitutionCrackResult> substitutionCrack(const zstring &input)
 {
-  // TODO: Implement
+  // TODO: Implement (depends on genetic and graphBreeding)
   return z::core::array<substitutionCrackResult>();
 }
