@@ -39,3 +39,5 @@ tmp
 # Temp files for unit tests
 *.gcda
 *.gcno
+
+ext/libzed

@@ -1,5 +1,5 @@
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef PARSER_H
+#define PARSER_H
 
 #include "../ext/argparse.h"
 #include <z/core/string.hpp>

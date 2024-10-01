@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include "../../libs/dictionary.h"
+#include "../../src/dictionary.h"
 
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
@@ -70,22 +70,22 @@ void testFile(zstring filename, float scoreThreshold = 0)
   }
 }
 
-TEST_CASE("Word Search 1 (large sample size)", "[.][.p1][dict]")
+TEST_CASE("Word Search 1 (large sample size)", "[.][.wiki1][dict]")
 {
-  testFile("data/p1.txt");
+  testFile("data/wiki1.txt");
 }
 
-TEST_CASE("Word Search 2 (large sample size)", "[.][.p2][dict]")
+TEST_CASE("Word Search 2 (large sample size)", "[.][.wiki2][dict]")
 {
-  testFile("data/p2.txt");
+  testFile("data/wiki2.txt");
 }
 
-TEST_CASE("Word Search 3 (large sample size)", "[.][.p3][dict]")
+TEST_CASE("Word Search 3 (large sample size)", "[.][.wiki3][dict]")
 {
-  testFile("data/p3.txt");
+  testFile("data/wiki3.txt");
 }
 
-TEST_CASE("Word Search 4 (large sample size)", "[.][.p4][dict]")
+TEST_CASE("Word Search 4 (large sample size)", "[.][.wiki4][dict]")
 {
-  testFile("data/p4.txt");
+  testFile("data/wiki4.txt");
 }

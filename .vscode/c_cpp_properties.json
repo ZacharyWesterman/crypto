@@ -2,7 +2,7 @@
   "configurations": [
     {
       "name": "Win32",
-      "includePath": ["${workspaceFolder}/**", "~/coding/libs/libzed"],
+      "includePath": ["${workspaceFolder}/**", "~/coding/src/libzed"],
       "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
       "windowsSdkVersion": "10.0.22621.0",
       "compilerPath": "cl.exe",
@@ -12,7 +12,7 @@
     },
     {
       "name": "Linux",
-      "includePath": ["${workspaceFolder}/**", "~/coding/libs/libzed"],
+      "includePath": ["${workspaceFolder}/**", "~/coding/src/libzed"],
       "defines": [],
       "compilerPath": "/usr/bin/gcc",
       "cStandard": "c17",

@@ -1,6 +1,7 @@
 #include "dictionary.h"
 
 #include <z/core.hpp>
+#include <z/file/exceptions.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -32,11 +33,7 @@ void loadDictionary()
   if (dict.length() > 0)
     return;
 
-  std::ifstream file("libs/words.txt");
-  timeout time(1'000'000); // 1 second timeout
-
-  while (!dict.read(file, time))
-    time.reset();
+  dict.read("src/words.txt");
 }
 
 float spellCheck(zstring text)

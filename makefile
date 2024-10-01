@@ -6,7 +6,7 @@ LFLAGS = -ldl -lzed
 
 BINARY = crypto
 
-DIRS = ciphers/ ext/ libs/ parser/
+DIRS = ciphers/ ext/ src/ parser/
 SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
@@ -18,18 +18,31 @@ $(BINARY): crypto.o $(OBJS)
 
 clean:
 	rm -f $(BINARY) *.o
+
 	cd ciphers && rm -f *.o
-	cd ext &&  rm -f *.o
-	cd libs &&  rm -f *.o
-	cd parser &&  rm -f *.o
-	
-	cd tests && make clean
+	cd src &&  rm -f *.o
+
+	make clean -C tests
+	make clean -C tools
 
 count:
-	find . -type f \( -name "*.cpp" -o -name "*.h" \) ! -path "./ext/*" ! -path "./tests/*" ! -name pugixml.cpp -exec wc -l {} +
+	@echo "Analyzing files not in ./ext or ./tests/bin"
+	@echo "Total File Count"
+	@find . -type f -not -path "*/.git/*" | wc -l
+	@echo "Lines of Code (cpp, h, py)"
+	@find . -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.py" \) ! -path "./ext/*" ! -path "./tests/bin" ! -name pugixml.cpp -exec wc -l {} +
 
-libzed:
-	cd ../../libs/libzed && make clean && git pull && make -j32 && sudo make install
+ext/libzed/libzed.a: ext/libzed
+	make static dynamic -C ext/libzed -j32
+
+ext/libzed:
+	git clone https://github.com/ZacharyWesterman/libzed.git ext/libzed
+
+fetch: ext/libzed
+	cd $< && git pull
+
+install: ext/libzed/libzed.a
+	make install -C ext/libzed
 
 tests: $(BINARY)
 	$(MAKE) -C tests/
@@ -38,4 +51,4 @@ tests: $(BINARY)
 tools: $(BINARY)
 	$(MAKE) -C tools
 
-.PHONY: clean count libzed tests tools
+.PHONY: clean count libzed tests tools fetch install

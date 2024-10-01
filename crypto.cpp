@@ -1,8 +1,8 @@
 #include "ciphers/caesar.h"
 #include "ciphers/substitution.h"
-#include "libs/dictionary.h"
+#include "src/dictionary.h"
+#include "src/parser.h"
 #include "ext/argparse.h"
-#include "parser/commands.h"
 
 #include <z/core/string.hpp>
 

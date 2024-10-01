@@ -1,20 +1,8 @@
-BIN = wordSearchEvaluator
+SUBDIRS := $(wildcard */.)
 
-STD = c++17
-CC = g++
-LFLAGS = -ldl -lzed
+all: $(SUBDIRS)
 
-DIRS = ../ciphers/ ../ext/ ../libs/ ../parser/
-SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
-OBJS = $(patsubst %.cpp,%.o,$(SRCS))
+$(SUBDIRS):
+	$(MAKE) -C $@
 
-$(BIN): $(BIN).o $(OBJS)
-	$(CC) -o $@ $^ $(LFLAGS)
-
-%.o: %.cpp
-	$(CC) -std=$(STD) -Wno-psabi -fPIC -o $@ -c $^
-
-clean:
-	rm -f $(BINARY) *.o
-
-.PHONY: clean
+.PHONY: all clean $(SUBDIRS)

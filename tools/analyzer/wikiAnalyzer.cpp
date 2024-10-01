@@ -1,4 +1,4 @@
-#include "../libs/dictionary.h"
+#include "../../src/dictionary.h"
 
 #include <z/all.hpp>
 #include <iostream>
@@ -17,10 +17,10 @@ int main(int argc, char *argv[])
   zstring().writeln(cerr);
 
   // for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
-  for (auto id : z::core::array<zstring>{"4"})
+  for (auto id : z::core::array<zstring>{"5", "6"})
   {
     zstring message;
-    auto lines = z::file::lines("data/p"_zs + id + ".txt").collect();
+    auto lines = z::file::lines("data/wiki"_zs + id + ".txt").collect();
     double total = lines.length();
 
     ("Analyzing file "_u8 + id + " (" + total + " paragraphs)" + "... ").write(cerr);

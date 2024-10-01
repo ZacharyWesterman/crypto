@@ -1,5 +1,5 @@
 #include "caesar.h"
-#include "../libs/dictionary.h"
+#include "../src/dictionary.h"
 
 #include <z/core/timer.hpp>
 
