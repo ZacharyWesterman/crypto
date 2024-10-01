@@ -44,7 +44,7 @@ float spellCheck(zstring text)
   array<zstring> words = split(text, zstring(" "));
   float total = float(words.length());
 
-  for (int i = 0; i < words.length(); i++)
+  for (int i : range(words.length()))
   {
     zstring word = words[i].filter({{'a', 'z'}, {'A', 'Z'}}).lower();
 
@@ -55,10 +55,8 @@ float spellCheck(zstring text)
   return round(10'000 * (successes / total)) / 100;
 }
 
-zstring wordSearch(zstring input)
+zstring greedyFindWords(zstring input)
 {
-  loadDictionary();
-
   // First pass, greedy longest-first search for word options
   zstring output = "";
   int i = 0;
@@ -90,17 +88,23 @@ zstring wordSearch(zstring input)
     }
   }
 
-  // Second pass, correct for the greed errors
-  array<zstring> words = split(output.trim(), " "_u8);
+  return output;
+}
 
-  for (int i = 0; i < words.length() - 1; i++)
+zstring reduceWordIslands(zstring input)
+{
+  // Second pass, correct for the greed errors
+  array<zstring> words = split(input.trim(), " "_u8);
+
+  for (int i : range(words.length() - 1))
   {
     if (dict.isWord(words[i]) && !dict.isWord(words[i + 1]))
     {
       zstring combo = words[i] + words[i + 1];
 
       // Try every way of putting a space between these two words until they're both real words
-      for (int j = combo.length() - 1; j >= 1; j--)
+      // Going right-to-left to try to offset the last step's greedy left-to-right search
+      for (int j : range(words.length() - 1, 0, -1))
       {
         zstring subA = combo.substr(0, j);
         zstring subB = combo.substr(j, combo.length() - j);
@@ -114,20 +118,31 @@ zstring wordSearch(zstring input)
     }
   }
 
-  // Fix punctuation
-  zstring result = join(words, " ");
+  return join(words, " ");
+}
 
+// TODO: Some of these  conditions need to be accounted for in spellcheck
+zstring fixPunctuation(zstring input)
+{
   array<char> punc = {'.', ',', '\'', ':'};
   for (char p : punc)
-    result.replace(" "_u8 + p, p);
+    input.replace(" "_u8 + p, p);
 
-  result.replace(" - ", "-");
-  result.replace("( ", "(");
-  result.replace(" )", ")");
+  input.replace(" - ", "-");
+  input.replace("( ", "(");
+  input.replace(" )", ")");
 
-  // TODO: Some of these above conditions need to be accounted for in spellcheck
+  return input;
+}
 
-  return result;
+zstring wordSearch(zstring input)
+{
+  loadDictionary();
+
+  zstring output = greedyFindWords(input);
+  output = reduceWordIslands(output);
+
+  return fixPunctuation(output);
 }
 
 zstring removeSpaces(zstring text)

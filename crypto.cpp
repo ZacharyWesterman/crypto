@@ -36,18 +36,32 @@ zstring processResults(z::core::array<T> results, bool verbose = false)
   return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
 }
 
+commandDetails encodeStruct = {
+  mainStub : "encod",
+
+  randomKeyName : "randomkey",
+  randomkeyDescription : "a random key will be used"
+};
+
+commandDetails decodeStruct = {
+  mainStub : "decod",
+
+  randomKeyName : "unknownkey",
+  randomkeyDescription : "the cipher will be cracked"
+};
+
 int main(int argc, char **argv)
 {
   srand(time(0));
 
   argparse::ArgumentParser program("crypto", "0.0.1");
 
-  argparse::ArgumentParser encode_command("encode");
-  argparse::ArgumentParser decode_command("decode");
+  argparse::ArgumentParser encodeCommand("encode");
+  argparse::ArgumentParser decodeCommand("decode");
   argparse::ArgumentParser test("test");
 
-  addEncodeCommand(program, encode_command);
-  addDecodeCommand(program, decode_command);
+  addCommand(program, encodeCommand, encodeStruct);
+  addCommand(program, decodeCommand, decodeStruct);
 
   test.add_description("run our sandbox code");
   program.add_subparser(test);
@@ -67,36 +81,38 @@ int main(int argc, char **argv)
 
   if (program.is_subcommand_used("encode"))
   {
-    std::string cipher = encode_command.get("cipher");
-    std::string key = getKey(encode_command, "randomkey").cstring();
-    zstring input = getInput(encode_command);
+    argparse::ArgumentParser &parser = program.at<argparse::ArgumentParser>("encode");
+
+    std::string cipher = parser.get("cipher");
+    std::string key = getKey(parser, "randomkey").cstring();
+    zstring input = getInput(parser);
 
     if (cipher == "caesar")
-      output =
-          key == "" ? caesarEncode(input) : caesarEncode(input, std::stoi(key));
+      output = key == "" ? caesarEncode(input) : caesarEncode(input, key);
     else if (cipher == "substitution" || cipher == "sub")
       output = key == "" ? substitutionEncode(input)
                          : substitutionEncode(input, key);
 
-    if (encode_command["--removespaces"] == true)
+    if (parser["--removespaces"] == true)
       output = removeSpaces(output);
 
-    handleOutput(output, encode_command);
+    handleOutput(output, parser);
 
     return 0;
   }
   else if (program.is_subcommand_used("decode"))
   {
-    std::string cipher = decode_command.get("cipher");
-    std::string key = getKey(decode_command, "unknownkey").cstring();
-    zstring input = getInput(decode_command);
+    argparse::ArgumentParser &parser = program.at<argparse::ArgumentParser>("decode");
 
-    bool hadSpaces = input.count(" ") > 0;
-    bool verbose = decode_command["--verbose"] == true;
+    std::string cipher = parser.get("cipher");
+    std::string key = getKey(parser, "unknownkey").cstring();
+    zstring input = getInput(parser);
+
+    bool verbose = parser["--verbose"] == true;
 
     if (cipher == "caesar")
       output = key == "" ? processResults(caesarCrack(input), verbose)
-                         : caesarDecode(input, std::stoi(key));
+                         : caesarDecode(input, key);
     else if (cipher == "substitution" || cipher == "sub")
       output =
           key == "" ? "Not yet implemented" : substitutionDecode(input, key);
@@ -104,10 +120,10 @@ int main(int argc, char **argv)
     if (!output.contains(" "))
       output = wordSearch(output);
 
-    if (!hadSpaces && decode_command["--preservespaces"] == true)
+    if (parser["--removespaces"] == true)
       output = removeSpaces(output);
 
-    handleOutput(output, decode_command);
+    handleOutput(output, parser);
 
     return 0;
   }

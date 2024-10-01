@@ -4,9 +4,15 @@
 #include "../ext/argparse.h"
 #include <z/core/string.hpp>
 
-void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
+struct commandDetails
+{
+  std::string mainStub;
 
-void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command);
+  std::string randomKeyName;
+  std::string randomkeyDescription;
+};
+
+void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct);
 
 zstring getInput(argparse::ArgumentParser &parser);
 

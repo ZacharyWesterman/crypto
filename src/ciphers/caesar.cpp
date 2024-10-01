@@ -1,9 +1,10 @@
 #include "caesar.h"
 #include "../dictionary.h"
 
-#include <z/core/timer.hpp>
-
+#include <z/core/range.hpp>
 #include <iostream>
+
+using z::core::range;
 
 #define CHARACTER_LIMIT 100
 
@@ -11,6 +12,11 @@ zstring caesarEncode(zstring input, int offset)
 {
   return input.cipher(ALPHABET, shiftAlphabet(offset))
       .cipher(ALPHABET.upper(), shiftAlphabet(offset).upper());
+}
+
+zstring caesarEncode(zstring input, std::string offset)
+{
+  return caesarEncode(input, std::stoi(offset));
 }
 
 zstring caesarEncode(zstring input)
@@ -24,6 +30,11 @@ zstring caesarDecode(const zstring &input, int offset)
       .cipher(shiftAlphabet(offset).upper(), ALPHABET.upper());
 }
 
+zstring caesarDecode(const zstring &input, std::string offset)
+{
+  return caesarDecode(input, std::stoi(offset));
+}
+
 z::core::array<caesarCrackResult> caesarCrack(zstring input)
 {
   caesarCrackResult bestResult;
@@ -33,10 +44,13 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
   {
     loadDictionary();
 
-    for (int i = 1; i <= 25; i++)
+    for (int i : range(1, 26))
     {
       zstring output = caesarDecode(input, i);
-      output = output.contains(" ") ? output : wordSearch(output);
+
+      if (!output.contains(" "))
+        output = wordSearch(output);
+
       caesarCrackResult newResult(output, i);
 
       if (newResult.score > bestResult.score || i == 1)
@@ -53,9 +67,7 @@ z::core::array<caesarCrackResult> caesarCrack(zstring input)
   else
   {
     results = caesarCrack(input.substr(0, CHARACTER_LIMIT));
-    auto key = reinterpret_cast<caesarCrackResult &>(results[0]).key;
-
-    results[0].update(caesarDecode(input, key));
+    results[0].update(caesarDecode(input, results[0].key));
 
     return results;
   }

@@ -6,91 +6,50 @@
 
 // TODO: Possibly add all args to both commands and only ignore the irrelevant ones
 
-// Helpers
-void addCipher(argparse::ArgumentParser &command)
+void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct)
 {
+    std::string desc = cStruct.mainStub + "e the input given a certain cipher and key";
+    desc[0] = toupper(desc[0]);
+    command.add_description(desc);
+
+    // add cipher
     command
         .add_argument("cipher")
-        .help("the cipher to use")
+        .help("the cipher to use to " + cStruct.mainStub + "e")
         .choices("caesar", "substitution", "sub");
-}
 
-void addOutput(argparse::ArgumentParser &command)
-{
-    command
-        .add_argument("-O", "--outputfile")
-        .help("the output file name for the result");
-}
-
-void addKey(argparse::ArgumentParser &command, std::string randName, std::string description)
-{
-    auto &group = command.add_mutually_exclusive_group(true);
-    group.add_argument("-k", "--key")
+    // add key
+    auto &keyGroup = command.add_mutually_exclusive_group(true);
+    keyGroup.add_argument("-k", "--key")
         .help("the key to use");
-    group.add_argument("-K", "--keyfile")
+    keyGroup.add_argument("-K", "--keyfile")
         .help("the key file path");
-    group.add_argument("-?", "--" + randName)
+    keyGroup.add_argument("-?", "--" + cStruct.randomKeyName)
         .flag()
-        .help(description);
-}
+        .help(cStruct.randomkeyDescription);
 
-void addDecodeKey(argparse::ArgumentParser &command)
-{
-    auto &group = command.add_mutually_exclusive_group(true);
-    group.add_argument("-k", "--key")
-        .help("the key to use");
-    group.add_argument("-K", "--keyfile")
-        .help("the key file path");
-    group.add_argument("-?", "--unknownkey")
-        .flag()
-        .help("the cipher will be cracked");
-}
-
-void addInput(argparse::ArgumentParser &command)
-{
-    auto &group = command.add_mutually_exclusive_group(true);
-    group.add_argument("-I", "--inputfile")
-        .help("specify the input file to be encoded");
-    group.add_argument("input")
-        .help("the input to be encoded")
-        .remaining();
-}
-
-// Mains
-void addEncodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command)
-{
-    command.add_description("Encode the input given a certain cipher and key");
-
-    addCipher(command);
-    addOutput(command);
-    addKey(command, "randomkey", "a random key will be used");
-
+    // add remove spaces
     command.add_argument("-rs", "--removespaces")
-        .help("remove spaces from the output")
+        .help("removes spaces from the output")
         .flag();
 
-    addInput(command);
-
-    program.add_subparser(command);
-}
-
-void addDecodeCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command)
-{
-    command.add_description("Decode the input given a certain cipher and key");
-
-    addCipher(command);
-    addOutput(command);
-    addKey(command, "unknownkey", "the cipher will be cracked");
-
-    command.add_argument("-ps", "--preservespaces")
-        .help("does not add spaces to the output if they were not in the input")
-        .flag();
-
+    // add verbose
     command.add_argument("-V", "--verbose")
         .help("shows verbose output, if available (crack, for instance)")
         .flag();
 
-    addInput(command);
+    // add output
+    command
+        .add_argument("-O", "--outputfile")
+        .help("the output file name for the result");
+
+    // add input
+    auto &inputGroup = command.add_mutually_exclusive_group(true);
+    inputGroup.add_argument("-I", "--inputfile")
+        .help("specify the input file to be " + cStruct.mainStub + "ed");
+    inputGroup.add_argument("input")
+        .help("the input to be " + cStruct.mainStub + "ed")
+        .remaining();
 
     program.add_subparser(command);
 }
