@@ -1,4 +1,4 @@
-BINARIES = wikiAnalyzer fishAnalyzer
+BINARIES = wikiAnalyzer
 
 STD = c++17
 CC = g++
@@ -10,8 +10,8 @@ OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 
 all: $(BINARIES)
 
-%: %.o $(OBJS)
-	$(CC) -o $@ $^ $(LFLAGS)
+wikiAnalyzer: wikiAnalyzer.o
+	$(CC) -o $@ $^ $(OBJS) $(LFLAGS)
 
 %.o: %.cpp
 	$(CC) -std=$(STD) -Wno-psabi -fPIC -o $@ -c $^

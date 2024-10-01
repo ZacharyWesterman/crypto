@@ -41,3 +41,5 @@ tmp
 *.gcno
 
 ext/libzed
+
+.clang-format

@@ -2,8 +2,6 @@ STD = c++17
 CC = g++
 LFLAGS = -ldl -lzed
 
-# TODO: Install libzed on first make and include some sort of update command
-
 BINARY = crypto
 
 DIRS = ciphers/ ext/ src/ parser/
