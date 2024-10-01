@@ -12,7 +12,7 @@
 #include <iostream>
 #include <time.h>
 
-// TODO: Can this file be covered by tests? (program.parse_args())
+// TODO: Can/should this file be covered by tests? (program.parse_args())
 // TODO: any random encode call will not tell you the key (how should we handle this?)
 
 template <typename T>
@@ -38,7 +38,7 @@ zstring processResults(z::core::array<T> results, bool verbose)
   return output;
 }
 
-// TODO: Should these keynames really be different...? It'd be a lot nicer if they weren't...
+// TODO: Can we generalize thes rest of these details some way?
 commandDetails encodeStruct = {"encod", "randomkey", "a random key will be used"};
 commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracked"};
 

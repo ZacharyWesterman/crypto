@@ -45,3 +45,4 @@ ext/libzed
 .clang-format
 tools/analyzer/caesarAnalyzer
 tools/analyzer/wikiAnalyzer
+tools/analyzer/__pycache__
