@@ -8,16 +8,20 @@ zstring subOutput1 = "Ru sv szw zmbgsrmt xlmurwvmgrzo gl hzb, sv dilgv rg rm xrk
 
 TEST_CASE("Substitution Encode", "[sub]")
 {
+  INFO("key: " << key1);
+  INFO("input: " << subInput);
   REQUIRE(substitutionEncode(subInput, key1) == subOutput1);
 }
 
 TEST_CASE("Substitution Decode", "[sub]")
 {
+  INFO("key: " << key1);
   REQUIRE(substitutionEncode(subOutput1, key1) == subInput);
 }
 
 TEST_CASE("Substitution Reciprocity", "[sub]")
 {
+  INFO("key: " << key1);
   REQUIRE(substitutionDecode(substitutionEncode(subInput, key1), key1) == subInput);
 }
 
