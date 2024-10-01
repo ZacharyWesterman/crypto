@@ -1,4 +1,4 @@
-BINARIES = wikiAnalyzer
+BINARIES = wikiAnalyzer caesarAnalyzer
 
 STD = c++17
 CC = g++
@@ -11,6 +11,9 @@ OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 all: $(BINARIES)
 
 wikiAnalyzer: wikiAnalyzer.o
+	$(CC) -o $@ $^ $(OBJS) $(LFLAGS)
+
+caesarAnalyzer: caesarAnalyzer.o
 	$(CC) -o $@ $^ $(OBJS) $(LFLAGS)
 
 %.o: %.cpp

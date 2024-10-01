@@ -13,7 +13,8 @@
 // TODO: Can these be covered by tests?
 
 template <typename T>
-zstring processResults(z::core::array<T> results, bool verbose = false) {
+zstring processResults(z::core::array<T> results, bool verbose = false)
+{
   if (!verbose)
     return results[0].text;
 
@@ -23,18 +24,19 @@ zstring processResults(z::core::array<T> results, bool verbose = false) {
             "% confidence with a key of " + results[0].key + ") is:\n  " +
             results[0].text + "\n";
 
-  if (results[0].score < 80) {
+  if (results[0].score < 80)
+  {
     output += "\nLow Confidence! Presenting alternatives...\n\n";
 
     for (int i = 1; i < results.length(); i++)
       output += results[i].summary;
   }
 
-  return "\n"_u8 + output.trim() +
-         "\n"; // HACK: What are the actual newline locations?
+  return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   srand(time(0));
 
   argparse::ArgumentParser program("crypto", "0.0.1");
@@ -49,17 +51,21 @@ int main(int argc, char **argv) {
   test.add_description("run our sandbox code");
   program.add_subparser(test);
 
-  try {
+  try
+  {
     program.parse_args(argc, argv);
-  } catch (const std::exception &err) {
+  }
+  catch (const std::exception &err)
+  {
     std::cerr << err.what() << std::endl;
     std::cerr << program;
     return 1;
   }
 
-  zstring output = "";
+  zstring output;
 
-  if (program.is_subcommand_used("encode")) {
+  if (program.is_subcommand_used("encode"))
+  {
     std::string cipher = encode_command.get("cipher");
     std::string key = getKey(encode_command, "randomkey").cstring();
     zstring input = getInput(encode_command);
@@ -77,7 +83,9 @@ int main(int argc, char **argv) {
     handleOutput(output, encode_command);
 
     return 0;
-  } else if (program.is_subcommand_used("decode")) {
+  }
+  else if (program.is_subcommand_used("decode"))
+  {
     std::string cipher = decode_command.get("cipher");
     std::string key = getKey(decode_command, "unknownkey").cstring();
     zstring input = getInput(decode_command);
@@ -101,12 +109,15 @@ int main(int argc, char **argv) {
     handleOutput(output, decode_command);
 
     return 0;
-  } else if (program.is_subcommand_used("test")) // Test code goes here
+  }
+  else if (program.is_subcommand_used("test")) // Test code goes here
   {
     wordSearch("testingonetwothree");
 
     return 0;
-  } else {
+  }
+  else
+  {
     std::cout << program << std::endl;
 
     return 0;

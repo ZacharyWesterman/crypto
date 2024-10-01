@@ -6,11 +6,11 @@
 
 float evaluator(zstring input)
 {
-  return spellCheck(wordSearch(removeSpaces(input.trim())));
+  return spellCheck(wordSearch(removeSpaces(caesarEncode(input))));
 }
 
 int main(int argc, char *argv[])
 {
-  std::cerr << "Analyzing Wiki..." << std::endl;
+  std::cerr << "Analyzing Caesar..." << std::endl;
   analyze(evaluator);
 }

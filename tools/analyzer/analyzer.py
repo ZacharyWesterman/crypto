@@ -1,36 +1,46 @@
 from os import path, getcwd
 from subprocess import Popen, PIPE
 import matplotlib.pyplot as plt
+from sys import argv
 
-__location__ = path.realpath(
-    path.join(getcwd(), path.dirname(__file__)))
+def analyzeOutput(program):
+  __location__ = path.realpath(
+      path.join(getcwd(), path.dirname(__file__)))
 
-program_path = __location__ + "/wikiAnalyzer"
+  program_path = __location__ + "/" + program
 
-p = Popen([program_path], stdout=PIPE)
+  p = Popen([program_path], stdout=PIPE)
 
-scores: dict = {}
+  numbers = []
 
-total = 0
+  while True:
+    line = p.stdout.readline().strip().decode()
 
-while True:
-  line = p.stdout.readline().strip().decode()
+    if line == '':
+      break
 
-  if line == '':
-    break
+    numbers += [float(i) for i in line.split(',')]
+    
+  return numbers
 
-  numbers = [float(i) for i in line.split(',')]
-  
-  for n in numbers:
-    total += 1
-    n = int(n*10) / 10.0
-    scores[n] = scores.get(n, 0) + 1
+scoreDict = {}
 
-print(f"Displaying data ({total} values)... ", end='', flush=True)
+if len(argv) == 1:
+  scoreDict["wiki"] = analyzeOutput("wikiAnalyzer")
+else:
+  for arg in argv[1:]:
+    if arg == "caesar":
+      scoreDict["caesar"] = analyzeOutput("caesarAnalyzer")
+    elif arg == "wiki":
+      scoreDict["wiki"] = analyzeOutput("wikiAnalyzer")
 
-plt.bar(list(scores.keys()), [i/total for i in list(scores.values())])
-plt.title("Word Search Score Distribution")
+print(f"Displaying data... ", end='', flush=True)
+
+plt.hist(list(scoreDict.values()), bins=50, label=list(scoreDict.keys()), edgecolor='black')
+plt.title(" vs ".join(scoreDict.keys()) + " Score Distribution")
 plt.get_current_fig_manager().set_window_title("Analyzer")
+plt.legend(loc='upper right')
+
 plt.show()
 
 print("Exited.")
