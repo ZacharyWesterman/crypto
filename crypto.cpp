@@ -11,10 +11,8 @@
 #include <iostream>
 #include <time.h>
 
-// TODO: Can these be covered by tests?
-
 template <typename T>
-zstring processResults(z::core::array<T> results, bool verbose = false)
+zstring processResults(z::core::array<T> results, bool verbose)
 {
   if (!verbose)
     return results[0].text;
@@ -35,6 +33,8 @@ zstring processResults(z::core::array<T> results, bool verbose = false)
 
   return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
 }
+
+// TODO: Can these be covered by tests?
 
 commandDetails encodeStruct = {
   mainStub : "encod",
@@ -111,7 +111,7 @@ int main(int argc, char **argv)
     bool verbose = parser["--verbose"] == true;
 
     if (cipher == "caesar")
-      output = key == "" ? processResults(caesarCrack(input), verbose)
+      output = key == "" ? processResults<caesarCrackResult>(caesarCrack(input), verbose)
                          : caesarDecode(input, key);
     else if (cipher == "substitution" || cipher == "sub")
       output =

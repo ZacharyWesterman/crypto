@@ -1,10 +1,34 @@
 #include "parser.h"
 
 #include <z/core/join.hpp>
+#include <z/core/array.hpp>
+#include <z/core/string.hpp>
 #include <z/file/read.hpp>
 #include <z/file/write.hpp>
 
-// TODO: Possibly add all args to both commands and only ignore the irrelevant ones
+// FIXME: throws some sort of undefined / linker error
+// template <typename T>
+// zstring processResults(z::core::array<T> results, bool verbose)
+// {
+//     if (!verbose)
+//         return results[0].text;
+
+//     zstring output = "";
+
+//     output += "The best solution ("_u8 + results[0].score +
+//               "% confidence with a key of " + results[0].key + ") is:\n  " +
+//               results[0].text + "\n";
+
+//     if (results[0].score < 80)
+//     {
+//         output += "\nLow Confidence! Presenting alternatives...\n\n";
+
+//         for (int i = 1; i < results.length(); i++)
+//             output += results[i].summary;
+//     }
+
+//     return "\n"_u8 + output.trim() + "\n"; // HACK: What are the actual newline locations?
+// }
 
 void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct)
 {

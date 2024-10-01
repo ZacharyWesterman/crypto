@@ -3,6 +3,7 @@
 
 #include "../ext/argparse.h"
 #include <z/core/string.hpp>
+#include <z/core/array.hpp>
 
 struct commandDetails
 {
@@ -19,5 +20,8 @@ zstring getInput(argparse::ArgumentParser &parser);
 zstring getKey(argparse::ArgumentParser &parser, std::string keyFlagName);
 
 void handleOutput(zstring output, argparse::ArgumentParser &parser);
+
+// template <typename T>
+// zstring processResults(z::core::array<T> results, bool verbose = false);
 
 #endif
