@@ -55,6 +55,7 @@ void testFile(zstring filename, float scoreThreshold = 0)
     zstring output = wordSearch(removeSpaces(input));
     float score = spellCheck(output);
 
+    INFO("filename: " << filename << "\n")
     INFO("input: " << input << "\n");
     INFO("output: " << output << "\n");
     INFO("score: " << score << "\n");
