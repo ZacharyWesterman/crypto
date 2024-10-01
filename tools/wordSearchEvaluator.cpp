@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
 {
   zstring().writeln(cerr);
 
-  for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
+  // for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
+  for (auto id : z::core::array<zstring>{"4"})
   {
     zstring message;
     auto lines = z::file::lines("data/p"_zs + id + ".txt").collect();

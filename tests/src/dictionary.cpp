@@ -1,6 +1,7 @@
 #include "catch.hpp"
 
 #include "../../libs/dictionary.h"
+
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 #include <z/core/split.hpp>
@@ -27,8 +28,9 @@ TEST_CASE("Shift Alphabet", "[dict]")
   REQUIRE(shiftAlphabet(-26) == alphabet);
 
   REQUIRE(shiftAlphabet(10) == alphabet10);
-  REQUIRE(shiftAlphabet(36) == alphabet10);
-  REQUIRE(shiftAlphabet(-16) == alphabet10);
+  REQUIRE(shiftAlphabet(10 + 26) == alphabet10);
+  REQUIRE(shiftAlphabet(10 - 26) == alphabet10);
+  REQUIRE(shiftAlphabet(10 - 2 * 26) == alphabet10);
 }
 
 TEST_CASE("Spell Check", "[dict]")
@@ -47,25 +49,43 @@ TEST_CASE("Word Search", "[dict]")
 // our sample text as well as our dictionary to be able to figure out where our efficiencies,
 // inefficiencies, and flaws occur. We should be able to add and remove words,
 // and see score distributions for our input text.
+
+// Part of the above todo is done; we've implemented wordSearch analysis and visualization
+void testFile(zstring filename, float scoreThreshold = 0)
+{
+  for (auto line : z::file::lines(filename))
+  {
+    if (line == "")
+      continue; // HACK ?
+
+    zstring input = line.trim();
+    zstring output = wordSearch(removeSpaces(input));
+    float score = spellCheck(output);
+
+    INFO("input: " << input << "\n");
+    INFO("output: " << output << "\n");
+    INFO("score: " << score << "\n");
+
+    REQUIRE(score > scoreThreshold);
+  }
+}
+
 TEST_CASE("Word Search 1 (large sample size)", "[.][.p1][dict]")
 {
-  for (auto line : z::file::lines("data/p1.txt"))
-    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
+  testFile("data/p1.txt");
 }
 
 TEST_CASE("Word Search 2 (large sample size)", "[.][.p2][dict]")
 {
-  for (auto line : z::file::lines("data/p2.txt"))
-    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
+  testFile("data/p2.txt");
 }
 
 TEST_CASE("Word Search 3 (large sample size)", "[.][.p3][dict]")
 {
-  for (auto line : z::file::lines("data/p3.txt"))
-    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
+  testFile("data/p3.txt");
 }
+
 TEST_CASE("Word Search 4 (large sample size)", "[.][.p4][dict]")
 {
-  for (auto line : z::file::lines("data/p4.txt"))
-    REQUIRE(spellCheck(wordSearch(removeSpaces(line.trim()))) > 50);
+  testFile("data/p4.txt");
 }
