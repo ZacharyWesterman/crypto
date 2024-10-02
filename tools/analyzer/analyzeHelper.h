@@ -45,6 +45,7 @@ zstring getProgress(zstring message, float progress = 1)
   // FIXME: Maybe we can wrap it into the loading bar and make it something cool
   // zstring p = zstring::precision(i / total * 100, 1);
 
+  // FIXME: Also, some of the percentages seem off
   message = loadingBar(progress) + p;
 
   return message;
