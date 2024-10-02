@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 
+__location__ = path.realpath(
+    path.join(getcwd(), path.dirname(__file__)))
+
 # Simple Timer
 class Timer:
     def __init__(self):
@@ -51,8 +54,6 @@ def collateData(argv):
 
 # Actually listen to and return the output from a given script
 def parseOutput(program):
-    __location__ = path.realpath(
-        path.join(getcwd(), path.dirname(__file__)))
 
     program_path = __location__ + "/" + program
 
@@ -87,12 +88,15 @@ def genStats(scoreDict):
 
 # Plot it all in matplotlib
 def plotData(scoreDict):
-    plt.title(" vs ".join(scoreDict.keys()) + " Score Distribution")
+    title = " vs ".join(scoreDict.keys()) 
+    plt.title(title+ " Score Distribution")
     plt.hist(list(scoreDict.values()), bins=50, label=list(scoreDict.keys()), edgecolor='black')
     plt.legend(loc='upper right')
 
     # Improve how we're doing this
     plt.gcf().text(0.85, 0.65, genStats(scoreDict), fontsize=10, verticalalignment='center')
+    plt.gcf().set_size_inches(21, 13)
 
     plt.get_current_fig_manager().full_screen_toggle()
+    plt.savefig(__location__ + f"/output/{title}.png", dpi=100)
     plt.show()
