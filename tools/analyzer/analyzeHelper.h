@@ -12,6 +12,7 @@ void deleteMessage(zstring message, ostream &os)
 }
 
 // TODO: Can this read the screen width and do some math?
+// TODO: Move this into a class, hopefully libzed
 zstring loadingBar(float progress, int size = 102)
 {
   size -= 2;
@@ -57,8 +58,8 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 
   if (random)
   {
-    // float total = 2000;
-    float total = 31603;
+    float total = 2000;
+    // float total = 31603;
     z::core::array<zstring> result;
 
     ("  Generating "_zs + total + " random paragraphs... ").write(cerr);
@@ -81,8 +82,8 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
     return;
   }
 
-  for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
-  // for (auto id : z::core::array<zstring>{"5", "6"})
+  // for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
+  for (auto id : z::core::array<zstring>{"5", "6"})
   {
     message = "";
     auto lines = z::file::lines("src/data/wiki/wiki"_zs + id + ".txt").collect();

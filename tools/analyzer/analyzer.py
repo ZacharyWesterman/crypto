@@ -123,7 +123,7 @@ def plotData(scoreDict):
     colors = [analyzers[key] if key in analyzers else 'gray' for key in scoreDict.keys()]
 
     plt.title(title + " Score Distribution")
-    plt.hist(list(scoreDict.values()), bins=50, label=list(scoreDict.keys()), color=colors, edgecolor='black')
+    plt.hist(list(scoreDict.values()), bins=50, label=list(scoreDict.keys()), color=colors, histtype="stepfilled", edgecolor='black') # TODO: decide a histtype
     plt.legend(loc='upper right')
 
     plt.gcf().text(0.85, 0.65, genStats(scoreDict), fontsize=10, verticalalignment='center')
