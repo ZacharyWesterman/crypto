@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from time import time
 
+# Simple Timer
 class Timer:
     def __init__(self):
         self.startTime = time()
@@ -29,9 +30,10 @@ class Timer:
     def elapsed(self):
         return self.formatTime(time() - self.startTime)
 
+# Get all the data from the cpp scripts we're running
 def collateData(argv):
     scoreDict = {}
-    analyzers = ["caesar", "wiki", "random"]
+    analyzers = ["random", "caesar", "wiki"]
 
     if len(argv) == 1:
         argv = ["", "wiki"]
@@ -47,6 +49,7 @@ def collateData(argv):
 
     return scoreDict  
 
+# Actually listen to and return the output from a given script
 def parseOutput(program):
     __location__ = path.realpath(
         path.join(getcwd(), path.dirname(__file__)))
@@ -67,6 +70,7 @@ def parseOutput(program):
 
     return numbers
 
+# Get sume of the statistical values from the data set
 def genStats(scoreDict):
     statTexts = []
 
@@ -76,11 +80,12 @@ def genStats(scoreDict):
         stddev = np.std(data_np)
         min_val = np.min(data_np)
         max_val = np.max(data_np)
-        
+
         statTexts.append(f"{label}:\nMean: {mean:.2f}\nStddev: {stddev:.2f}\nMin: {min_val:.2f}\nMax: {max_val:.2f}\n")
 
     return "\n".join(statTexts)
 
+# Plot it all in matplotlib
 def plotData(scoreDict):
     plt.title(" vs ".join(scoreDict.keys()) + " Score Distribution")
     plt.hist(list(scoreDict.values()), bins=50, label=list(scoreDict.keys()), edgecolor='black')

@@ -24,13 +24,39 @@ zstring loadingBar(float progress, int size = 102)
   return bar + "]";
 }
 
-// FIXME: This needs to be cleaned up
-void analyze(std::function<float(zstring)> evaluator, bool skipRead = false)
+zstring getProgress(zstring message, float progress = 1)
 {
-  if (skipRead)
+  deleteMessage(message, cerr);
+
+  zstring p = " ";
+  if (progress == 1)
   {
-    zstring message;
-    // float total = 200;
+    p += "Done!";
+  }
+  else
+  {
+    p += zstring(((int)(progress * 1000)) / 10.0);
+    if (!p.count('.'))
+      p += ".0";
+
+    p += "%";
+  }
+
+  // FIXME: Maybe we can wrap it into the loading bar and make it something cool
+  // zstring p = zstring::precision(i / total * 100, 1);
+
+  message = loadingBar(progress) + p;
+
+  return message;
+}
+
+void analyze(std::function<float(zstring)> evaluator, bool random = false)
+{
+  zstring message;
+
+  if (random)
+  {
+    // float total = 2000;
     float total = 31603;
     z::core::array<zstring> result;
 
@@ -40,37 +66,24 @@ void analyze(std::function<float(zstring)> evaluator, bool skipRead = false)
     {
       if (i % 50 == 0 || i == total)
       {
-        deleteMessage(message, cerr);
-
-        float progress = i / total;
-        zstring p = zstring(((int)(progress * 1000)) / 10.0);
-        if (!p.count('.'))
-          p += ".0";
-
-        // FIXME: Maybe we can wrap it into the loading bar and make it something cool
-        // zstring p = zstring::precision(i / total * 100, 1);
-
-        message = loadingBar(progress) + " " + p + "%";
+        message = getProgress(message, i / total);
         message.write(cerr);
       }
 
       result.push(evaluator(""));
     }
 
-    deleteMessage(message, cerr);
-
-    cerr << loadingBar(1) + " Done!" << endl;
+    getProgress(message).writeln(cerr);
 
     z::core::join(result, ',').writeln(cout);
 
-    cerr << endl;
     return;
   }
 
   for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
   // for (auto id : z::core::array<zstring>{"5", "6"})
   {
-    zstring message;
+    message = "";
     auto lines = z::file::lines("src/data/wiki/wiki"_zs + id + ".txt").collect();
     double total = lines.length();
 
@@ -81,29 +94,19 @@ void analyze(std::function<float(zstring)> evaluator, bool skipRead = false)
 
     for (auto line : lines)
     {
-      if (++i % 50 == 0 || i == total)
+      if (i % 50 == 0 || i == total)
       {
-        deleteMessage(message, cerr);
-
-        float progress = i / total;
-        zstring p = zstring(((int)(progress * 1000)) / 10.0);
-        if (!p.count('.'))
-          p += ".0";
-
-        // zstring p = zstring::precision(i / total * 100, 1);
-
-        message = loadingBar(progress) + " " + p + "%";
+        message = getProgress(message, i / total);
         message.write(cerr);
       }
+
+      i++;
 
       result.push(evaluator(line.trim()));
     }
 
-    deleteMessage(message, cerr);
-
-    cerr << loadingBar(1) + " Done!" << endl;
+    getProgress(message).writeln(cerr);
 
     z::core::join(result, ',').writeln(cout);
   }
-  cerr << endl;
 }
