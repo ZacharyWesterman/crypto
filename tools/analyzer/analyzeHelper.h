@@ -52,14 +52,19 @@ zstring getProgress(zstring message, float progress = 1)
   return message;
 }
 
+#define TESTING
+
 void analyze(std::function<float(zstring)> evaluator, bool random = false)
 {
   zstring message;
 
   if (random)
   {
+#ifdef TESTING
     float total = 2000;
-    // float total = 31603;
+#else
+    float total = 31603;
+#endif
     z::core::array<zstring> result;
 
     ("  Generating "_zs + total + " random paragraphs... ").write(cerr);
@@ -82,8 +87,11 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
     return;
   }
 
-  // for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
+#ifdef TESTING
   for (auto id : z::core::array<zstring>{"5", "6"})
+#else
+  for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
+#endif
   {
     message = "";
     auto lines = z::file::lines("src/data/wiki/wiki"_zs + id + ".txt").collect();

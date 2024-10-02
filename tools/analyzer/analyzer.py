@@ -46,7 +46,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Plot score distributions from analyzers.")
     
-    group = parser.add_mutually_exclusive_group(required=True)
+    group = parser.add_mutually_exclusive_group()
     
     group.add_argument('--save', action='store_true', help="Save the plot as an image")
     group.add_argument('--show', action='store_true', help="Show the plot")
@@ -55,6 +55,9 @@ def main():
     parser.add_argument('analyzers', nargs='*', help="List of analyzers to use (default: 'wiki'). Use 'all' to include all analyzers.")
     
     args = parser.parse_args()
+
+    if not (args.save or args.stats or args.show):
+        args.show = True
     
     if not args.analyzers:
         args.analyzers = ['wiki']
@@ -121,9 +124,10 @@ def genStats(scoreDict):
 def plotData(scoreDict):
     title = " vs ".join(sorted(scoreDict.keys())) 
     colors = [analyzers[key] if key in analyzers else 'gray' for key in scoreDict.keys()]
+    values, labels = list(scoreDict.values()), list(scoreDict.keys())
 
     plt.title(title + " Score Distribution")
-    plt.hist(list(scoreDict.values()), bins=50, label=list(scoreDict.keys()), color=colors, histtype="stepfilled", edgecolor='black') # TODO: decide a histtype
+    plt.hist(values, bins=50, label=labels, color=colors, histtype="stepfilled", edgecolor='black', alpha=0.5) # TODO: decide a histtype, try opacity
     plt.legend(loc='upper right')
 
     plt.gcf().text(0.85, 0.65, genStats(scoreDict), fontsize=10, verticalalignment='center')
