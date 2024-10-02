@@ -31,7 +31,6 @@
 *.out
 *.app
 crypto
-wordSearchEvaluator
 
 # Test and temp files
 tmp
@@ -43,6 +42,8 @@ tmp
 ext/libzed
 
 .clang-format
+
+tools/analyzer/randomAnalyzer
 tools/analyzer/caesarAnalyzer
 tools/analyzer/wikiAnalyzer
 tools/analyzer/__pycache__
