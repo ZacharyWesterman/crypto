@@ -17,14 +17,9 @@ class Timer:
 
         if days > 0:
             output += f"{int(days)}d"
-            # return f"{int(days)}d{int(hours)}h{int(minutes)}m{seconds:.2f}s"
         if hours > 0:
-        # elif hours > 0:
-            # return f"{int(hours)}h{int(minutes)}m{seconds:.2f}s"
             output += f"{int(hours)}h"
         elif minutes > 0:
-        # elif minutes > 0:
-        #     return f"{int(minutes)}m{seconds:.2f}s"
             output += f"{int(minutes)}"
 
         output += f"{seconds:.2f}s"
@@ -40,8 +35,7 @@ def collateData(argv):
 
     if len(argv) == 1:
         argv = ["", "wiki"]
-
-    if argv[1] == "all":
+    elif argv[1] == "all":
         argv = ["", *analyzers]
 
     for arg in argv[1:]:
@@ -82,6 +76,7 @@ def genStats(scoreDict):
         stddev = np.std(data_np)
         min_val = np.min(data_np)
         max_val = np.max(data_np)
+        
         statTexts.append(f"{label}:\nMean: {mean:.2f}\nStddev: {stddev:.2f}\nMin: {min_val:.2f}\nMax: {max_val:.2f}\n")
 
     return "\n".join(statTexts)
@@ -93,7 +88,6 @@ def plotData(scoreDict):
 
     # Improve how we're doing this
     plt.gcf().text(0.85, 0.65, genStats(scoreDict), fontsize=10, verticalalignment='center')
-
 
     plt.get_current_fig_manager().full_screen_toggle()
     plt.show()
