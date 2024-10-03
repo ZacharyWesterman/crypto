@@ -91,27 +91,3 @@ parserArgs parse(argparse::ArgumentParser &parser, std::string randKeyName)
         parser["--removespaces"] == true,
         parser["--verbose"] == true};
 }
-
-// BUG: throws some sort of undefined / linker error
-// template <typename T>
-// zstring processResults(z::core::array<T> results, bool verbose)
-// {
-//     if (!verbose)
-//         return results[0].text;
-
-//     zstring output = "";
-
-//     output += "The best solution ("_u8 + results[0].score +
-//               "% confidence with a key of " + results[0].key + ") is:\n  " +
-//               results[0].text + "\n";
-
-//     if (results[0].score < 80)
-//     {
-//         output += "\nLow Confidence! Presenting alternatives...\n\n";
-
-//         for (int i = 1; i < results.length(); i++)
-//             output += results[i].summary;
-//     }
-
-//     return output;
-// }

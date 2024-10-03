@@ -13,35 +13,8 @@
 #include <time.h>
 
 // TODO: Can/should this file be covered by tests? (program.parse_args())
-// TODO: any random encode call will not tell you the key (how should we handle this?)
+// TODO: any random encode call will not tell you the key (how should we handle this? verbose flag?)
 // TODO: look into morphologica
-
-template <typename T>
-zstring processResults(z::core::array<T> results, bool verbose)
-{
-  if (!verbose)
-    return results[0].text;
-
-  zstring output = "";
-
-  output += "The best solution ("_u8 + results[0].score +
-            "% confidence with a key of " + results[0].key + ") is:\n  " +
-            results[0].text + "\n";
-
-  if (results[0].score < 80)
-  {
-    output += "\nLow Confidence! Presenting alternatives...\n\n";
-
-    for (int i = 1; i < results.length(); i++)
-      output += results[i].summary;
-  }
-
-  return output;
-}
-
-// TODO: Can we generalize the rest of these details some way?
-commandDetails encodeStruct = {"encod", "randomkey", "a random key will be used"};
-commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracked"};
 
 int main(int argc, char **argv)
 {
@@ -54,6 +27,12 @@ int main(int argc, char **argv)
   argparse::ArgumentParser encodeCommand("encode");
   argparse::ArgumentParser decodeCommand("decode");
   argparse::ArgumentParser test("test");
+
+  // TODO: Can we generalize the rest of these details some way?
+  // Make the `--key` group optional and use logic to see if they didn't provide a key
+  // TODO: Encode and decode are close to not neededing to be subcommands
+  commandDetails encodeStruct = {"encod", "randomkey", "a random key will be used"};
+  commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracked"};
 
   addCommand(program, encodeCommand, encodeStruct);
   addCommand(program, decodeCommand, decodeStruct);
@@ -101,10 +80,7 @@ int main(int argc, char **argv)
   }
   else if (program.is_subcommand_used("test")) // Test code goes here
   {
-    // zstring test = "1lfg: MOLECULAR REPLACEMENT SOLUTION OF THE STRUCTURE OF APOLACTOFERRIN, A PROTEIN DISPLAYING LARGE-SCALE CONFORMATIONAL CHANGE";
-    zstring test = "TESTING ONE TWO THREE FOUR";
-
-    wordSearch(removeSpaces(test)).writeln(std::cout);
+    "No current test code."_zs.writeln(std::cout);
 
     return 0;
   }
