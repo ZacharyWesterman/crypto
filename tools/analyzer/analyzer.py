@@ -45,6 +45,8 @@ def main():
     timer = Timer()
 
     parser = argparse.ArgumentParser(description="Plot score distributions from analyzers.")
+
+    # TODO: Add option to generate all sub-comparisons of the request
     
     group = parser.add_mutually_exclusive_group()
     
@@ -127,7 +129,7 @@ def plotData(scoreDict):
     values, labels = list(scoreDict.values()), list(scoreDict.keys())
 
     plt.title(title + " Score Distribution")
-    plt.hist(values, bins=50, label=labels, color=colors, histtype="stepfilled", edgecolor='black', alpha=0.5) # TODO: decide a histtype, try opacity
+    plt.hist(values, bins=50, label=labels, color=colors, histtype="stepfilled", edgecolor='black', alpha=0.5)
     plt.legend(loc='upper right')
 
     plt.gcf().text(0.85, 0.65, genStats(scoreDict), fontsize=10, verticalalignment='center')

@@ -5,59 +5,77 @@
 
 using namespace std;
 
-void deleteMessage(zstring message, ostream &os)
+struct LoadingBar
 {
-  for (int i : z::core::range(message.length()))
-    os << "\b \b" << flush;
-}
+  int length;
+  bool showPercent;
+  ostream &os;
+  zstring message;
 
-// TODO: Can this read the screen width and do some math?
-// TODO: Move this into a class, hopefully libzed
-zstring loadingBar(float progress, int size = 102)
-{
-  size -= 2;
+  LoadingBar(int _length = 102, ostream &_os = cout, bool _showPercent = true) : length(_length - 2), showPercent(_showPercent), os(_os), message("") {};
 
-  zstring bar = "[";
-
-  for (int i : z::core::range(size))
-    bar += i < progress * size ? "#" : " ";
-
-  return bar + "]";
-}
-
-zstring getProgress(zstring message, float progress = 1)
-{
-  deleteMessage(message, cerr);
-
-  zstring p = " ";
-  if (progress == 1)
+  void clear()
   {
-    p += "Done!";
-  }
-  else
-  {
-    p += zstring(((int)(progress * 1000)) / 10.0);
-    if (!p.count('.'))
-      p += ".0";
-
-    p += "%";
+    for (int i : z::core::range(message.length()))
+      os << "\b \b" << flush;
   }
 
-  // FIXME: Maybe we can wrap it into the loading bar and make it something cool
-  // zstring p = zstring::precision(i / total * 100, 1);
+  zstring getBar(float progress)
+  {
+    zstring bar = "[";
 
-  // FIXME: Also, some of the percentages seem off
-  message = loadingBar(progress) + p;
+    for (int i : z::core::range(length))
+      bar += i < progress * length ? "#" : " ";
 
-  return message;
-}
+    return bar + "]";
+  }
 
-#define TESTING
+  zstring getPercentage(float progress)
+  {
+    zstring p;
+
+    if (progress == 1)
+    {
+      p += "Done!";
+    }
+    else
+    {
+      p += zstring(((int)(progress * 1000)) / 10.0);
+
+      if (!p.count('.'))
+        p += ".0";
+
+      p += "%";
+    }
+
+    return p;
+  }
+
+  void update(float progress = 1)
+  {
+    clear();
+
+    message = getBar(progress);
+
+    if (showPercent)
+      message += " "_zs + getPercentage(progress);
+
+    message.write(os);
+  }
+
+  void finish()
+  {
+    update();
+    message = "";
+    os << endl;
+  }
+};
 
 void analyze(std::function<float(zstring)> evaluator, bool random = false)
 {
-  zstring message;
+  LoadingBar loadingBar(102, cerr);
 
+#define TESTING
   if (random)
   {
 #ifdef TESTING
@@ -71,16 +89,13 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 
     for (int i : z::core::range(total)) // roughly the number of paragraphs
     {
-      if (i % 50 == 0 || i == total)
-      {
-        message = getProgress(message, i / total);
-        message.write(cerr);
-      }
-
       result.push(evaluator(""));
+
+      if (i % 50 == 0)
+        loadingBar.update(i / total);
     }
 
-    getProgress(message).writeln(cerr);
+    loadingBar.finish();
 
     z::core::join(result, ',').writeln(cout);
 
@@ -93,7 +108,6 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
   for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
 #endif
   {
-    message = "";
     auto lines = z::file::lines("src/data/wiki/wiki"_zs + id + ".txt").collect();
     double total = lines.length();
 
@@ -104,18 +118,15 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 
     for (auto line : lines)
     {
-      if (i % 50 == 0 || i == total)
-      {
-        message = getProgress(message, i / total);
-        message.write(cerr);
-      }
+      result.push(evaluator(line.trim()));
+
+      if (i % 50 == 0)
+        loadingBar.update(i / total);
 
       i++;
-
-      result.push(evaluator(line.trim()));
     }
 
-    getProgress(message).writeln(cerr);
+    loadingBar.finish();
 
     z::core::join(result, ',').writeln(cout);
   }
