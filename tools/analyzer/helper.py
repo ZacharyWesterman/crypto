@@ -90,7 +90,7 @@ def genStats(scoreDict):
     return "\n".join(statTexts)
 
 # Plot it all in matplotlib
-def plotData(d):
+def plotData(d, save):
     title = " vs ".join(sorted(d.keys())) 
     colors = [analyzers[key] if key in analyzers else 'gray' for key in d.keys()]
     values, labels = list(d.values()), list(d.keys())
@@ -102,20 +102,19 @@ def plotData(d):
     plt.gcf().text(0.85, 0.65, genStats(d), fontsize=10, verticalalignment='center')
     plt.gcf().set_size_inches(21, 13)
 
-# display the output as requested by the user
-def displayOutput(d, args):
-    if not args.text: 
-            plotData(d)
-
-    # Save or show the plot based on flags
-    title = " vs ".join(d.keys())
-    if args.save:
+    if save:
         print("Saving data... ", end='', flush=True)
         plt.savefig(__location__ + f"/output/{title}.png", dpi=100)
         print("Done!")
-    elif args.view:
+    else:
         print("Displaying data... ", end='', flush=True)
         plt.show()
         print("Closed!")
-    elif args.text:
+
+# display the output as requested by the user
+def displayOutput(d, args):
+    if args.text: 
         print(genStats(d))
+    else:
+      plotData(d, True if args.save else False)
+        
