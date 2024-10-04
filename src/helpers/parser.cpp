@@ -68,7 +68,7 @@ programArgs parse(argparse::ArgumentParser &program)
     else if (program.present("input"))
         input = join(program.get<vector<std::string>>("input"), " ");
     else if (program["--piped"] == true)
-        input.readln(std::cin);
+        input.readall(std::cin);
 
     // filename
     std::string filename = "";
