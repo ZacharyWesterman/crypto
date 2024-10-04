@@ -23,7 +23,12 @@ add_library(helpers
 set(LIBZED_DIR "${CMAKE_SOURCE_DIR}/libs/libzed/libzed.a")
 
 add_subdirectory(tools/analyzer)
+add_subdirectory(tests)
 
 add_executable(crypto crypto.cpp)
+
+add_custom_target(test
+    COMMAND ./tests/bin/run_tests  # Replace with your command
+)
 
 target_link_libraries(crypto PRIVATE ciphers helpers ${LIBZED_DIR})

@@ -51,5 +51,7 @@ tools/analyzer/__pycache__
 
 /build/
 /bin/
+/tests/bin/
+/tools/analyzer/bin/
 CMakeCache.txt
 CMakeFiles/

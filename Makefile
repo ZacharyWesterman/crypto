@@ -156,6 +156,19 @@ crypto/fast:
 .PHONY : crypto/fast
 
 #=============================================================================
+# Target rules for targets named test
+
+# Build rule for target.
+test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test
+.PHONY : test
+
+# fast build rule for target.
+test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
+.PHONY : test/fast
+
+#=============================================================================
 # Target rules for targets named randomAnalyzer
 
 # Build rule for target.
@@ -193,6 +206,19 @@ wikiAnalyzer: cmake_check_build_system
 wikiAnalyzer/fast:
 	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build
 .PHONY : wikiAnalyzer/fast
+
+#=============================================================================
+# Target rules for targets named run_tests
+
+# Build rule for target.
+run_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_tests
+.PHONY : run_tests
+
+# fast build rule for target.
+run_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/run_tests.dir/build.make tests/CMakeFiles/run_tests.dir/build
+.PHONY : run_tests/fast
 
 crypto.o: crypto.cpp.o
 .PHONY : crypto.o
@@ -322,11 +348,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... caesarAnalyzer"
 	@echo "... ciphers"
 	@echo "... crypto"
 	@echo "... helpers"
 	@echo "... randomAnalyzer"
+	@echo "... run_tests"
 	@echo "... wikiAnalyzer"
 	@echo "... crypto.o"
 	@echo "... crypto.i"
