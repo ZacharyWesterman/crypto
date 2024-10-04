@@ -34,7 +34,7 @@ add_custom_target(test
 )
 
 add_custom_target(update_libzed
-    COMMAND cd libs/libzed/ && make clean && git pull && make -j32
+    COMMAND cd libs/libzed/ && make clean && git pull && make -j32 static
 )
 
 target_link_libraries(crypto PRIVATE ciphers helpers ${LIBZED_DIR})

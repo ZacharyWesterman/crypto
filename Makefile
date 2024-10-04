@@ -182,19 +182,6 @@ update_libzed/fast:
 .PHONY : update_libzed/fast
 
 #=============================================================================
-# Target rules for targets named count
-
-# Build rule for target.
-count: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 count
-.PHONY : count
-
-# fast build rule for target.
-count/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/count.dir/build.make CMakeFiles/count.dir/build
-.PHONY : count/fast
-
-#=============================================================================
 # Target rules for targets named randomAnalyzer
 
 # Build rule for target.
@@ -374,7 +361,6 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... count"
 	@echo "... test"
 	@echo "... update_libzed"
 	@echo "... caesarAnalyzer"
