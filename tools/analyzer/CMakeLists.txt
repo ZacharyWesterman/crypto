@@ -1,3 +1,5 @@
+# tools
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tools/analyzer/bin)
 
 add_executable(randomAnalyzer randomAnalyzer.cpp)

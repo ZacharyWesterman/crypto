@@ -1,8 +1,10 @@
+# root
+
 cmake_minimum_required(VERSION 3.15...3.30)
 
 project(crypto VERSION 1.0
-                  DESCRIPTION "A cryptography program"
-                  LANGUAGES CXX)
+               DESCRIPTION "A cryptography program"
+               LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -28,7 +30,11 @@ add_subdirectory(tests)
 add_executable(crypto crypto.cpp)
 
 add_custom_target(test
-    COMMAND ./tests/bin/run_tests  # Replace with your command
+    COMMAND ./tests/bin/run_tests
+)
+
+add_custom_target(update_libzed
+    COMMAND cd libs/libzed/ && make clean && git pull && make -j32
 )
 
 target_link_libraries(crypto PRIVATE ciphers helpers ${LIBZED_DIR})

@@ -169,6 +169,32 @@ test/fast:
 .PHONY : test/fast
 
 #=============================================================================
+# Target rules for targets named update_libzed
+
+# Build rule for target.
+update_libzed: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 update_libzed
+.PHONY : update_libzed
+
+# fast build rule for target.
+update_libzed/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/update_libzed.dir/build.make CMakeFiles/update_libzed.dir/build
+.PHONY : update_libzed/fast
+
+#=============================================================================
+# Target rules for targets named count
+
+# Build rule for target.
+count: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 count
+.PHONY : count
+
+# fast build rule for target.
+count/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/count.dir/build.make CMakeFiles/count.dir/build
+.PHONY : count/fast
+
+#=============================================================================
 # Target rules for targets named randomAnalyzer
 
 # Build rule for target.
@@ -348,7 +374,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... count"
 	@echo "... test"
+	@echo "... update_libzed"
 	@echo "... caesarAnalyzer"
 	@echo "... ciphers"
 	@echo "... crypto"
