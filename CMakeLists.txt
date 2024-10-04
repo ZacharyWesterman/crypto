@@ -1,12 +1,13 @@
 # root
 
+# Top level stuff
 cmake_minimum_required(VERSION 3.15...3.30)
 
 project(crypto VERSION 1.0
                DESCRIPTION "A cryptography program"
                LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+# My stuff
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)     # For binaries
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)   # For shared libraries
@@ -34,7 +35,6 @@ add_custom_target(test
 )
 
 add_custom_target(install_libzed
-    COMMAND mkdir libs/libzed
     COMMAND cd libs && git clone https://github.com/ZacharyWesterman/libzed.git && cd libzed && make -j32 static
 )
 

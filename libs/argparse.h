@@ -905,7 +905,10 @@ namespace argparse
 
     auto &store_into(bool &var)
     {
-      flag();
+      if ((!m_default_value.has_value()) && (!m_implicit_value.has_value()))
+      {
+        flag();
+      }
       if (m_default_value.has_value())
       {
         var = std::any_cast<bool>(m_default_value);
@@ -1199,27 +1202,29 @@ namespace argparse
     }
 
     template <typename Iterator>
-    void find_value_in_choices_or_throw(Iterator it) const
+    bool is_value_in_choices(Iterator option_it) const
     {
 
       const auto &choices = m_choices.value();
 
-      if (std::find(choices.begin(), choices.end(), *it) == choices.end())
-      {
-        // provided arg not in list of allowed choices
-        // report error
+      return (std::find(choices.begin(), choices.end(), *option_it) !=
+              choices.end());
+    }
 
-        std::string choices_as_csv =
-            std::accumulate(choices.begin(), choices.end(), std::string(),
-                            [](const std::string &a, const std::string &b)
-                            {
-                              return a + (a.empty() ? "" : ", ") + b;
-                            });
+    template <typename Iterator>
+    void throw_invalid_arguments_error(Iterator option_it) const
+    {
+      const auto &choices = m_choices.value();
+      const std::string choices_as_csv = std::accumulate(
+          choices.begin(), choices.end(), std::string(),
+          [](const std::string &option_a, const std::string &option_b)
+          {
+            return option_a + (option_a.empty() ? "" : ", ") + option_b;
+          });
 
-        throw std::runtime_error(std::string{"Invalid argument "} +
-                                 details::repr(*it) + " - allowed options: {" +
-                                 choices_as_csv + "}");
-      }
+      throw std::runtime_error(std::string{"Invalid argument "} +
+                               details::repr(*option_it) +
+                               " - allowed options: {" + choices_as_csv + "}");
     }
 
     /* The dry_run parameter can be set to true to avoid running the actions,
@@ -1237,24 +1242,34 @@ namespace argparse
       }
       m_used_name = used_name;
 
+      std::size_t passed_options = 0;
+
       if (m_choices.has_value())
       {
         // Check each value in (start, end) and make sure
         // it is in the list of allowed choices/options
-        std::size_t i = 0;
-        auto max_number_of_args = m_num_args_range.get_max();
+        const auto max_number_of_args = m_num_args_range.get_max();
+        const auto min_number_of_args = m_num_args_range.get_min();
         for (auto it = start; it != end; ++it)
         {
-          if (i == max_number_of_args)
+          if (is_value_in_choices(it))
+          {
+            passed_options += 1;
+            continue;
+          }
+
+          if ((passed_options >= min_number_of_args) &&
+              (passed_options <= max_number_of_args))
           {
             break;
           }
-          find_value_in_choices_or_throw(it);
-          i += 1;
+
+          throw_invalid_arguments_error(it);
         }
       }
 
-      const auto num_args_max = m_num_args_range.get_max();
+      const auto num_args_max =
+          (m_choices.has_value()) ? passed_options : m_num_args_range.get_max();
       const auto num_args_min = m_num_args_range.get_min();
       std::size_t dist = 0;
       if (num_args_max == 0)
@@ -1288,7 +1303,6 @@ namespace argparse
                                      std::string(m_used_name) + "'.");
           }
         }
-
         struct ActionApply
         {
           void operator()(valued_action &f)

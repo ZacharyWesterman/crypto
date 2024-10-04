@@ -14,7 +14,6 @@
 
 // TODO: Can/should this file be covered by tests? (program.parse_args())
 // TODO: any random encode call will not tell you the key (how should we handle this? verbose flag?)
-// TODO: look into morphologica
 
 int main(int argc, char **argv)
 {
