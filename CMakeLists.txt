@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15...3.30)
 
 project(crypto VERSION 1.0
-                  DESCRIPTION "Hello, World!"
+                  DESCRIPTION "A cryptography program"
                   LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -21,6 +21,8 @@ add_library(helpers
 )
 
 set(LIBZED_DIR "${CMAKE_SOURCE_DIR}/libs/libzed/libzed.a")
+
+add_subdirectory(tools/analyzer)
 
 add_executable(crypto crypto.cpp)
 

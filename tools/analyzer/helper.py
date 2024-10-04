@@ -51,7 +51,7 @@ def getSubDicts(original_dict):
 
 # Actually listen to and return the output from a given script
 def parseOutput(program):
-    program_path = path.join(__location__, program)
+    program_path = path.join(__location__, "../../bin/", program)
     p = Popen([program_path], stdout=PIPE)
 
     numbers = []

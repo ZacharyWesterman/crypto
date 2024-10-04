@@ -155,6 +155,45 @@ crypto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/build
 .PHONY : crypto/fast
 
+#=============================================================================
+# Target rules for targets named randomAnalyzer
+
+# Build rule for target.
+randomAnalyzer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 randomAnalyzer
+.PHONY : randomAnalyzer
+
+# fast build rule for target.
+randomAnalyzer/fast:
+	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/randomAnalyzer.dir/build.make tools/analyzer/CMakeFiles/randomAnalyzer.dir/build
+.PHONY : randomAnalyzer/fast
+
+#=============================================================================
+# Target rules for targets named caesarAnalyzer
+
+# Build rule for target.
+caesarAnalyzer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 caesarAnalyzer
+.PHONY : caesarAnalyzer
+
+# fast build rule for target.
+caesarAnalyzer/fast:
+	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/caesarAnalyzer.dir/build.make tools/analyzer/CMakeFiles/caesarAnalyzer.dir/build
+.PHONY : caesarAnalyzer/fast
+
+#=============================================================================
+# Target rules for targets named wikiAnalyzer
+
+# Build rule for target.
+wikiAnalyzer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wikiAnalyzer
+.PHONY : wikiAnalyzer
+
+# fast build rule for target.
+wikiAnalyzer/fast:
+	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build
+.PHONY : wikiAnalyzer/fast
+
 crypto.o: crypto.cpp.o
 .PHONY : crypto.o
 
@@ -283,9 +322,12 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... caesarAnalyzer"
 	@echo "... ciphers"
 	@echo "... crypto"
 	@echo "... helpers"
+	@echo "... randomAnalyzer"
+	@echo "... wikiAnalyzer"
 	@echo "... crypto.o"
 	@echo "... crypto.i"
 	@echo "... crypto.s"
