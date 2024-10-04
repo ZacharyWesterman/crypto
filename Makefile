@@ -169,6 +169,19 @@ test/fast:
 .PHONY : test/fast
 
 #=============================================================================
+# Target rules for targets named install_libzed
+
+# Build rule for target.
+install_libzed: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 install_libzed
+.PHONY : install_libzed
+
+# fast build rule for target.
+install_libzed/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/install_libzed.dir/build.make CMakeFiles/install_libzed.dir/build
+.PHONY : install_libzed/fast
+
+#=============================================================================
 # Target rules for targets named update_libzed
 
 # Build rule for target.
@@ -361,6 +374,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... install_libzed"
 	@echo "... test"
 	@echo "... update_libzed"
 	@echo "... caesarAnalyzer"

@@ -33,6 +33,11 @@ add_custom_target(test
     COMMAND ./tests/bin/run_tests
 )
 
+add_custom_target(install_libzed
+    COMMAND mkdir libs/libzed
+    COMMAND cd libs && git clone https://github.com/ZacharyWesterman/libzed.git && cd libzed && make -j32 static
+)
+
 add_custom_target(update_libzed
     COMMAND cd libs/libzed/ && make clean && git pull && make -j32 static
 )
