@@ -117,6 +117,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ciphers
+
+# Build rule for target.
+ciphers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ciphers
+.PHONY : ciphers
+
+# fast build rule for target.
+ciphers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/build
+.PHONY : ciphers/fast
+
+#=============================================================================
+# Target rules for targets named helpers
+
+# Build rule for target.
+helpers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 helpers
+.PHONY : helpers
+
+# fast build rule for target.
+helpers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/build
+.PHONY : helpers/fast
+
+#=============================================================================
 # Target rules for targets named crypto
 
 # Build rule for target.
@@ -128,149 +154,6 @@ crypto: cmake_check_build_system
 crypto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/build
 .PHONY : crypto/fast
-
-#=============================================================================
-# Target rules for targets named fetch
-
-# Build rule for target.
-fetch: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 fetch
-.PHONY : fetch
-
-# fast build rule for target.
-fetch/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/fetch.dir/build.make CMakeFiles/fetch.dir/build
-.PHONY : fetch/fast
-
-#=============================================================================
-# Target rules for targets named build_libzed
-
-# Build rule for target.
-build_libzed: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 build_libzed
-.PHONY : build_libzed
-
-# fast build rule for target.
-build_libzed/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/build_libzed.dir/build.make CMakeFiles/build_libzed.dir/build
-.PHONY : build_libzed/fast
-
-#=============================================================================
-# Target rules for targets named install_libzed
-
-# Build rule for target.
-install_libzed: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 install_libzed
-.PHONY : install_libzed
-
-# fast build rule for target.
-install_libzed/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/install_libzed.dir/build.make CMakeFiles/install_libzed.dir/build
-.PHONY : install_libzed/fast
-
-#=============================================================================
-# Target rules for targets named clean_crypto
-
-# Build rule for target.
-clean_crypto: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean_crypto
-.PHONY : clean_crypto
-
-# fast build rule for target.
-clean_crypto/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/clean_crypto.dir/build.make CMakeFiles/clean_crypto.dir/build
-.PHONY : clean_crypto/fast
-
-#=============================================================================
-# Target rules for targets named count_files
-
-# Build rule for target.
-count_files: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 count_files
-.PHONY : count_files
-
-# fast build rule for target.
-count_files/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/count_files.dir/build.make CMakeFiles/count_files.dir/build
-.PHONY : count_files/fast
-
-#=============================================================================
-# Target rules for targets named build_tests
-
-# Build rule for target.
-build_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 build_tests
-.PHONY : build_tests
-
-# fast build rule for target.
-build_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/build_tests.dir/build.make CMakeFiles/build_tests.dir/build
-.PHONY : build_tests/fast
-
-#=============================================================================
-# Target rules for targets named run_tests
-
-# Build rule for target.
-run_tests: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 run_tests
-.PHONY : run_tests
-
-# fast build rule for target.
-run_tests/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
-.PHONY : run_tests/fast
-
-#=============================================================================
-# Target rules for targets named build_tools
-
-# Build rule for target.
-build_tools: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 build_tools
-.PHONY : build_tools
-
-# fast build rule for target.
-build_tools/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/build_tools.dir/build.make CMakeFiles/build_tools.dir/build
-.PHONY : build_tools/fast
-
-#=============================================================================
-# Target rules for targets named wikiAnalyzer
-
-# Build rule for target.
-wikiAnalyzer: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wikiAnalyzer
-.PHONY : wikiAnalyzer
-
-# fast build rule for target.
-wikiAnalyzer/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/build
-.PHONY : wikiAnalyzer/fast
-
-#=============================================================================
-# Target rules for targets named randomAnalyzer
-
-# Build rule for target.
-randomAnalyzer: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 randomAnalyzer
-.PHONY : randomAnalyzer
-
-# fast build rule for target.
-randomAnalyzer/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/build
-.PHONY : randomAnalyzer/fast
-
-#=============================================================================
-# Target rules for targets named caesarAnalyzer
-
-# Build rule for target.
-caesarAnalyzer: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 caesarAnalyzer
-.PHONY : caesarAnalyzer
-
-# fast build rule for target.
-caesarAnalyzer/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/build
-.PHONY : caesarAnalyzer/fast
 
 crypto.o: crypto.cpp.o
 .PHONY : crypto.o
@@ -301,10 +184,7 @@ src/ciphers/caesar.o: src/ciphers/caesar.cpp.o
 
 # target to build an object file
 src/ciphers/caesar.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/ciphers/caesar.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/ciphers/caesar.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/ciphers/caesar.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/ciphers/caesar.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/caesar.cpp.o
 .PHONY : src/ciphers/caesar.cpp.o
 
 src/ciphers/caesar.i: src/ciphers/caesar.cpp.i
@@ -312,10 +192,7 @@ src/ciphers/caesar.i: src/ciphers/caesar.cpp.i
 
 # target to preprocess a source file
 src/ciphers/caesar.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/ciphers/caesar.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/ciphers/caesar.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/ciphers/caesar.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/ciphers/caesar.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/caesar.cpp.i
 .PHONY : src/ciphers/caesar.cpp.i
 
 src/ciphers/caesar.s: src/ciphers/caesar.cpp.s
@@ -323,10 +200,7 @@ src/ciphers/caesar.s: src/ciphers/caesar.cpp.s
 
 # target to generate assembly for a file
 src/ciphers/caesar.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/ciphers/caesar.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/ciphers/caesar.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/ciphers/caesar.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/ciphers/caesar.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/caesar.cpp.s
 .PHONY : src/ciphers/caesar.cpp.s
 
 src/ciphers/substitution.o: src/ciphers/substitution.cpp.o
@@ -334,10 +208,7 @@ src/ciphers/substitution.o: src/ciphers/substitution.cpp.o
 
 # target to build an object file
 src/ciphers/substitution.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/ciphers/substitution.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/ciphers/substitution.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/ciphers/substitution.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/ciphers/substitution.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/substitution.cpp.o
 .PHONY : src/ciphers/substitution.cpp.o
 
 src/ciphers/substitution.i: src/ciphers/substitution.cpp.i
@@ -345,10 +216,7 @@ src/ciphers/substitution.i: src/ciphers/substitution.cpp.i
 
 # target to preprocess a source file
 src/ciphers/substitution.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/ciphers/substitution.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/ciphers/substitution.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/ciphers/substitution.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/ciphers/substitution.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/substitution.cpp.i
 .PHONY : src/ciphers/substitution.cpp.i
 
 src/ciphers/substitution.s: src/ciphers/substitution.cpp.s
@@ -356,10 +224,7 @@ src/ciphers/substitution.s: src/ciphers/substitution.cpp.s
 
 # target to generate assembly for a file
 src/ciphers/substitution.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/ciphers/substitution.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/ciphers/substitution.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/ciphers/substitution.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/ciphers/substitution.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/substitution.cpp.s
 .PHONY : src/ciphers/substitution.cpp.s
 
 src/helpers/dictionary.o: src/helpers/dictionary.cpp.o
@@ -367,10 +232,7 @@ src/helpers/dictionary.o: src/helpers/dictionary.cpp.o
 
 # target to build an object file
 src/helpers/dictionary.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/helpers/dictionary.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/helpers/dictionary.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/helpers/dictionary.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/helpers/dictionary.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/src/helpers/dictionary.cpp.o
 .PHONY : src/helpers/dictionary.cpp.o
 
 src/helpers/dictionary.i: src/helpers/dictionary.cpp.i
@@ -378,10 +240,7 @@ src/helpers/dictionary.i: src/helpers/dictionary.cpp.i
 
 # target to preprocess a source file
 src/helpers/dictionary.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/helpers/dictionary.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/helpers/dictionary.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/helpers/dictionary.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/helpers/dictionary.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/src/helpers/dictionary.cpp.i
 .PHONY : src/helpers/dictionary.cpp.i
 
 src/helpers/dictionary.s: src/helpers/dictionary.cpp.s
@@ -389,10 +248,7 @@ src/helpers/dictionary.s: src/helpers/dictionary.cpp.s
 
 # target to generate assembly for a file
 src/helpers/dictionary.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/helpers/dictionary.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/helpers/dictionary.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/helpers/dictionary.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/helpers/dictionary.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/src/helpers/dictionary.cpp.s
 .PHONY : src/helpers/dictionary.cpp.s
 
 src/helpers/parser.o: src/helpers/parser.cpp.o
@@ -400,10 +256,7 @@ src/helpers/parser.o: src/helpers/parser.cpp.o
 
 # target to build an object file
 src/helpers/parser.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/helpers/parser.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/helpers/parser.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/helpers/parser.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/helpers/parser.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/src/helpers/parser.cpp.o
 .PHONY : src/helpers/parser.cpp.o
 
 src/helpers/parser.i: src/helpers/parser.cpp.i
@@ -411,10 +264,7 @@ src/helpers/parser.i: src/helpers/parser.cpp.i
 
 # target to preprocess a source file
 src/helpers/parser.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/helpers/parser.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/helpers/parser.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/helpers/parser.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/helpers/parser.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/src/helpers/parser.cpp.i
 .PHONY : src/helpers/parser.cpp.i
 
 src/helpers/parser.s: src/helpers/parser.cpp.s
@@ -422,83 +272,8 @@ src/helpers/parser.s: src/helpers/parser.cpp.s
 
 # target to generate assembly for a file
 src/helpers/parser.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/helpers/parser.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/src/helpers/parser.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/src/helpers/parser.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/src/helpers/parser.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/helpers.dir/build.make CMakeFiles/helpers.dir/src/helpers/parser.cpp.s
 .PHONY : src/helpers/parser.cpp.s
-
-tools/analyzer/caesarAnalyzer.o: tools/analyzer/caesarAnalyzer.cpp.o
-.PHONY : tools/analyzer/caesarAnalyzer.o
-
-# target to build an object file
-tools/analyzer/caesarAnalyzer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/tools/analyzer/caesarAnalyzer.cpp.o
-.PHONY : tools/analyzer/caesarAnalyzer.cpp.o
-
-tools/analyzer/caesarAnalyzer.i: tools/analyzer/caesarAnalyzer.cpp.i
-.PHONY : tools/analyzer/caesarAnalyzer.i
-
-# target to preprocess a source file
-tools/analyzer/caesarAnalyzer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/tools/analyzer/caesarAnalyzer.cpp.i
-.PHONY : tools/analyzer/caesarAnalyzer.cpp.i
-
-tools/analyzer/caesarAnalyzer.s: tools/analyzer/caesarAnalyzer.cpp.s
-.PHONY : tools/analyzer/caesarAnalyzer.s
-
-# target to generate assembly for a file
-tools/analyzer/caesarAnalyzer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/caesarAnalyzer.dir/build.make CMakeFiles/caesarAnalyzer.dir/tools/analyzer/caesarAnalyzer.cpp.s
-.PHONY : tools/analyzer/caesarAnalyzer.cpp.s
-
-tools/analyzer/randomAnalyzer.o: tools/analyzer/randomAnalyzer.cpp.o
-.PHONY : tools/analyzer/randomAnalyzer.o
-
-# target to build an object file
-tools/analyzer/randomAnalyzer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/tools/analyzer/randomAnalyzer.cpp.o
-.PHONY : tools/analyzer/randomAnalyzer.cpp.o
-
-tools/analyzer/randomAnalyzer.i: tools/analyzer/randomAnalyzer.cpp.i
-.PHONY : tools/analyzer/randomAnalyzer.i
-
-# target to preprocess a source file
-tools/analyzer/randomAnalyzer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/tools/analyzer/randomAnalyzer.cpp.i
-.PHONY : tools/analyzer/randomAnalyzer.cpp.i
-
-tools/analyzer/randomAnalyzer.s: tools/analyzer/randomAnalyzer.cpp.s
-.PHONY : tools/analyzer/randomAnalyzer.s
-
-# target to generate assembly for a file
-tools/analyzer/randomAnalyzer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/randomAnalyzer.dir/build.make CMakeFiles/randomAnalyzer.dir/tools/analyzer/randomAnalyzer.cpp.s
-.PHONY : tools/analyzer/randomAnalyzer.cpp.s
-
-tools/analyzer/wikiAnalyzer.o: tools/analyzer/wikiAnalyzer.cpp.o
-.PHONY : tools/analyzer/wikiAnalyzer.o
-
-# target to build an object file
-tools/analyzer/wikiAnalyzer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/tools/analyzer/wikiAnalyzer.cpp.o
-.PHONY : tools/analyzer/wikiAnalyzer.cpp.o
-
-tools/analyzer/wikiAnalyzer.i: tools/analyzer/wikiAnalyzer.cpp.i
-.PHONY : tools/analyzer/wikiAnalyzer.i
-
-# target to preprocess a source file
-tools/analyzer/wikiAnalyzer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/tools/analyzer/wikiAnalyzer.cpp.i
-.PHONY : tools/analyzer/wikiAnalyzer.cpp.i
-
-tools/analyzer/wikiAnalyzer.s: tools/analyzer/wikiAnalyzer.cpp.s
-.PHONY : tools/analyzer/wikiAnalyzer.s
-
-# target to generate assembly for a file
-tools/analyzer/wikiAnalyzer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/wikiAnalyzer.dir/build.make CMakeFiles/wikiAnalyzer.dir/tools/analyzer/wikiAnalyzer.cpp.s
-.PHONY : tools/analyzer/wikiAnalyzer.cpp.s
 
 # Help Target
 help:
@@ -508,18 +283,9 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... build_libzed"
-	@echo "... build_tests"
-	@echo "... build_tools"
-	@echo "... clean_crypto"
-	@echo "... count_files"
-	@echo "... fetch"
-	@echo "... install_libzed"
-	@echo "... run_tests"
-	@echo "... caesarAnalyzer"
+	@echo "... ciphers"
 	@echo "... crypto"
-	@echo "... randomAnalyzer"
-	@echo "... wikiAnalyzer"
+	@echo "... helpers"
 	@echo "... crypto.o"
 	@echo "... crypto.i"
 	@echo "... crypto.s"
@@ -535,15 +301,6 @@ help:
 	@echo "... src/helpers/parser.o"
 	@echo "... src/helpers/parser.i"
 	@echo "... src/helpers/parser.s"
-	@echo "... tools/analyzer/caesarAnalyzer.o"
-	@echo "... tools/analyzer/caesarAnalyzer.i"
-	@echo "... tools/analyzer/caesarAnalyzer.s"
-	@echo "... tools/analyzer/randomAnalyzer.o"
-	@echo "... tools/analyzer/randomAnalyzer.i"
-	@echo "... tools/analyzer/randomAnalyzer.s"
-	@echo "... tools/analyzer/wikiAnalyzer.o"
-	@echo "... tools/analyzer/wikiAnalyzer.i"
-	@echo "... tools/analyzer/wikiAnalyzer.s"
 .PHONY : help
 
 

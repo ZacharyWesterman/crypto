@@ -4,7 +4,7 @@ STD = c++17
 CC = g++
 LFLAGS = -ldl -lzed
 
-DIRS =  ../../src/ ../../src/ciphers/  ../../src/helpers/ ../../ext/ ../../src/
+DIRS =  ../../src/ ../../src/ciphers/  ../../src/helpers/ ../../libs/ ../../src/
 SRCS = $(wildcard $(addsuffix *.cpp, $(DIRS)))
 OBJS = $(patsubst %.cpp,%.o,$(SRCS))
 

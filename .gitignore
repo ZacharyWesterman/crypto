@@ -39,7 +39,7 @@ tmp
 *.gcda
 *.gcno
 
-ext/libzed
+libs/libzed
 
 .vscode/
 
