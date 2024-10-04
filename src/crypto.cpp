@@ -22,24 +22,8 @@ int main(int argc, char **argv)
 
   // Program Setup (argparse, subcommands, etc; see parser.cpp/h)
   argparse::ArgumentParser program("crypto", "0.0.1");
+  setupProgram(program);
 
-  argparse::ArgumentParser encodeCommand("encode");
-  argparse::ArgumentParser decodeCommand("decode");
-  argparse::ArgumentParser test("test");
-
-  // TODO: Can we generalize the rest of these details some way?
-  // Make the `--key` group optional and use logic to see if they didn't provide a key
-  // TODO: Encode and decode are close to not neededing to be subcommands
-  commandDetails encodeStruct = {"encod", "randomkey", "a random key will be used"};
-  commandDetails decodeStruct = {"decod", "unknownkey", "the cipher will be cracked"};
-
-  addCommand(program, encodeCommand, encodeStruct);
-  addCommand(program, decodeCommand, decodeStruct);
-
-  test.add_description("run our sandbox code");
-  program.add_subparser(test);
-
-  // Try to actually get the args from the user
   try
   {
     program.parse_args(argc, argv);
@@ -53,21 +37,17 @@ int main(int argc, char **argv)
 
   // Main code
   zstring output;
-  parserArgs args; // to hold the re-parsed args from the parser as a nice struct
+  programArgs args = parse(program); // to hold the re-parsed args from the parser as a nice struct
 
-  if (program.is_subcommand_used("encode"))
+  if (args.encoding)
   {
-    args = parse(program.at<argparse::ArgumentParser>("encode"), "randomkey");
-
     if (args.cipher == "caesar")
       output = caesarEncode(args.input, args.key);
     else if (args.cipher == "substitution" || args.cipher == "sub")
       output = substitutionEncode(args.input, args.key);
   }
-  else if (program.is_subcommand_used("decode"))
+  else if (!args.encoding)
   {
-    args = parse(program.at<argparse::ArgumentParser>("decode"), "unknownkey");
-
     if (args.cipher == "caesar")
       output = args.key == "" ? processResults(caesarCrack(args.input), args.verbose)
                               : caesarDecode(args.input, args.key);
@@ -77,25 +57,13 @@ int main(int argc, char **argv)
     if (!output.contains(" "))
       output = wordSearch(output);
   }
-  else if (program.is_subcommand_used("test")) // Test code goes here
-  {
-    "No current test code."_zs.writeln(std::cout);
-
-    return 0;
-  }
-  else
-  {
-    std::cout << program << std::endl;
-
-    return 0;
-  }
 
   // If we made it here, we weren't testing or showing the no-args output
   // So let's clean up the output and put it where the user asked
   if (args.rsFlag)
     output = removeSpaces(output);
 
-  if (args.filename != "")
+  if (args.filename.length() > 0)
     z::file::write(output, args.filename);
   else
     output.writeln(std::cout);

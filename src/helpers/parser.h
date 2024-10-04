@@ -8,26 +8,25 @@
 // TODO: Allow for piped in input to be treating as the rest of of inputs?
 // remember though, this wouldn't be cases for things like `cat file | ./crypto` because we already have file read support for input
 
-struct commandDetails
+struct programArgs
 {
-  std::string mainStub;
-  std::string randomKeyName;
-  std::string randomkeyDescription;
-};
-
-struct parserArgs
-{
+  bool failed;
+  bool encoding;
   std::string cipher;
   std::string key;
   zstring input;
   std::string filename;
   bool rsFlag;
   bool verbose;
+
+  programArgs(bool _failed) : failed(_failed), encoding(false), cipher(""), key(""), input(""), filename(""), rsFlag(false), verbose(false) {};
+
+  programArgs(bool _failed, bool _encoding, std::string _cipher, std::string _key, zstring _input, std::string _filename, bool _rsFlag, bool _verbose) : failed(_failed), encoding(_encoding), cipher(_cipher), key(_key), input(_input), filename(_filename), rsFlag(_rsFlag), verbose(_verbose) {};
 };
 
-void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct);
+void setupProgram(argparse::ArgumentParser &program);
 
-parserArgs parse(argparse::ArgumentParser &parser, std::string keyname);
+programArgs parse(argparse::ArgumentParser &program);
 
 template <typename T>
 zstring processResults(z::core::array<T> results, bool verbose)

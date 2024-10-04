@@ -10,84 +10,81 @@
 using std::vector;
 using z::core::join, z::file::read;
 
-void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &command, commandDetails cStruct)
+void setupProgram(argparse::ArgumentParser &program)
 {
-    std::string desc = cStruct.mainStub + "e the input given a certain cipher and key";
-    desc[0] = toupper(desc[0]);
-    command.add_description(desc);
+    program.add_description("a cryptography program");
+
+    program
+        .add_argument("mode")
+        .help("whether we're encoding or decoding")
+        .choices("encode", "decode");
 
     // add cipher
-    command
+    program
         .add_argument("cipher")
-        .help("the cipher to use to " + cStruct.mainStub + "e")
+        .help("the cipher to use to")
         .choices("caesar", "substitution", "sub");
 
     // add key
-    auto &keyGroup = command.add_mutually_exclusive_group(true);
+    auto &keyGroup = program.add_mutually_exclusive_group();
     keyGroup.add_argument("-k", "--key")
         .help("the key to use (if no key is used, encode will use a random key and decode will crack the code)");
     keyGroup.add_argument("-K", "--keyfile")
-        .help("the key file path");
-    keyGroup.add_argument("-?", "--" + cStruct.randomKeyName)
-        .flag()
-        .help(cStruct.randomkeyDescription);
+        .help("the path to the file containing the key");
 
     // add remove spaces
-    command.add_argument("-rs", "--removespaces")
+    program.add_argument("-rs", "--removespaces")
         .help("removes spaces from the output")
         .flag();
 
     // add verbose
-    command.add_argument("-V", "--verbose")
+    program.add_argument("-V", "--verbose")
         .help("shows verbose output, if available (crack, for instance)")
         .flag();
 
     // add output
-    command
+    program
         .add_argument("-O", "--outputfile")
         .help("the output file name for the result");
 
     // add input
-    auto &inputGroup = command.add_mutually_exclusive_group(true);
+    auto &inputGroup = program.add_mutually_exclusive_group(true);
     inputGroup.add_argument("-I", "--inputfile")
-        .help("specify the input file to be " + cStruct.mainStub + "ed");
+        .help("specify the input file");
     inputGroup.add_argument("input")
-        .help("the input to be " + cStruct.mainStub + "ed")
+        .help("the input (if a file isn't specified)")
         .remaining();
-
-    program.add_subparser(command);
 }
 
-// Helpers
-
-parserArgs parse(argparse::ArgumentParser &parser, std::string randKeyName)
+programArgs parse(argparse::ArgumentParser &program)
 {
     // input
-    zstring input = parser.present("--inputfile")
-                        ? read(parser.get("--inputfile"))
-                        : join(parser.get<vector<std::string>>("input"), " ");
+    zstring input = program.present("--inputfile")
+                        ? read(program.get("--inputfile"))
+                        : join(program.get<vector<std::string>>("input"), " ");
 
     // filename
     std::string filename = "";
-    if (parser.present("--outputfile"))
-        filename = parser.get("--outputfile");
+    if (program.present("--outputfile"))
+        filename = program.get("--outputfile");
 
     // key
     std::string key;
 
-    if (parser["--" + randKeyName] == true)
-        key = "";
-    else if (parser.present("--keyfile"))
-        key = read(parser.get("--keyfile")).cstring();
+    if (program.present("--keyfile"))
+        key = read(program.get("--keyfile")).cstring();
+    else if (program.present("--key"))
+        key = program.get("--key");
     else
-        key = parser.get("--key");
+        key = "";
 
     // assemble with the easy stuff and return
-    return parserArgs{
-        parser.get("cipher"),
-        key,
-        input,
-        filename,
-        parser["--removespaces"] == true,
-        parser["--verbose"] == true};
+    return programArgs{false,
+                       program.get("mode") == "encode",
+                       program.get("cipher"),
+                       key,
+                       input,
+                       filename,
+                       program["--removespaces"] == true,
+                       program["--verbose"] == true};
 }
