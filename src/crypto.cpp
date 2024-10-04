@@ -1,9 +1,9 @@
-#include "libs/argparse.h"
+#include "../libs/argparse.h"
 
-#include "src/ciphers/caesar.h"
-#include "src/ciphers/substitution.h"
-#include "src/helpers/dictionary.h"
-#include "src/helpers/parser.h"
+#include "ciphers/caesar.h"
+#include "ciphers/substitution.h"
+#include "helpers/dictionary.h"
+#include "helpers/parser.h"
 
 #include <z/core/string.hpp>
 #include <z/file/write.hpp>

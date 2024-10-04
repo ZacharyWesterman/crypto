@@ -25,7 +25,7 @@ void addCommand(argparse::ArgumentParser &program, argparse::ArgumentParser &com
     // add key
     auto &keyGroup = command.add_mutually_exclusive_group(true);
     keyGroup.add_argument("-k", "--key")
-        .help("the key to use");
+        .help("the key to use (if no key is used, encode will use random key and decode will crack the code)");
     keyGroup.add_argument("-K", "--keyfile")
         .help("the key file path");
     keyGroup.add_argument("-?", "--" + cStruct.randomKeyName)

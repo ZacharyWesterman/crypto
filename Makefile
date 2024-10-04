@@ -246,30 +246,6 @@ run_tests/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/run_tests.dir/build.make tests/CMakeFiles/run_tests.dir/build
 .PHONY : run_tests/fast
 
-crypto.o: crypto.cpp.o
-.PHONY : crypto.o
-
-# target to build an object file
-crypto.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/crypto.cpp.o
-.PHONY : crypto.cpp.o
-
-crypto.i: crypto.cpp.i
-.PHONY : crypto.i
-
-# target to preprocess a source file
-crypto.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/crypto.cpp.i
-.PHONY : crypto.cpp.i
-
-crypto.s: crypto.cpp.s
-.PHONY : crypto.s
-
-# target to generate assembly for a file
-crypto.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/crypto.cpp.s
-.PHONY : crypto.cpp.s
-
 src/ciphers/caesar.o: src/ciphers/caesar.cpp.o
 .PHONY : src/ciphers/caesar.o
 
@@ -317,6 +293,30 @@ src/ciphers/substitution.s: src/ciphers/substitution.cpp.s
 src/ciphers/substitution.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/ciphers.dir/build.make CMakeFiles/ciphers.dir/src/ciphers/substitution.cpp.s
 .PHONY : src/ciphers/substitution.cpp.s
+
+src/crypto.o: src/crypto.cpp.o
+.PHONY : src/crypto.o
+
+# target to build an object file
+src/crypto.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/crypto.cpp.o
+.PHONY : src/crypto.cpp.o
+
+src/crypto.i: src/crypto.cpp.i
+.PHONY : src/crypto.i
+
+# target to preprocess a source file
+src/crypto.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/crypto.cpp.i
+.PHONY : src/crypto.cpp.i
+
+src/crypto.s: src/crypto.cpp.s
+.PHONY : src/crypto.s
+
+# target to generate assembly for a file
+src/crypto.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/crypto.dir/build.make CMakeFiles/crypto.dir/src/crypto.cpp.s
+.PHONY : src/crypto.cpp.s
 
 src/helpers/dictionary.o: src/helpers/dictionary.cpp.o
 .PHONY : src/helpers/dictionary.o
@@ -384,15 +384,15 @@ help:
 	@echo "... randomAnalyzer"
 	@echo "... run_tests"
 	@echo "... wikiAnalyzer"
-	@echo "... crypto.o"
-	@echo "... crypto.i"
-	@echo "... crypto.s"
 	@echo "... src/ciphers/caesar.o"
 	@echo "... src/ciphers/caesar.i"
 	@echo "... src/ciphers/caesar.s"
 	@echo "... src/ciphers/substitution.o"
 	@echo "... src/ciphers/substitution.i"
 	@echo "... src/ciphers/substitution.s"
+	@echo "... src/crypto.o"
+	@echo "... src/crypto.i"
+	@echo "... src/crypto.s"
 	@echo "... src/helpers/dictionary.o"
 	@echo "... src/helpers/dictionary.i"
 	@echo "... src/helpers/dictionary.s"

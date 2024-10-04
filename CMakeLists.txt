@@ -28,7 +28,7 @@ set(LIBZED_DIR "${CMAKE_SOURCE_DIR}/libs/libzed/libzed.a")
 add_subdirectory(tools/analyzer)
 add_subdirectory(tests)
 
-add_executable(crypto crypto.cpp)
+add_executable(crypto src/crypto.cpp)
 
 add_custom_target(test
     COMMAND ./tests/bin/run_tests
