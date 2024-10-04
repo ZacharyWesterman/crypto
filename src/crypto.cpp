@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     }
 
     if (args.verbose)
-      output += " Key="_zs + args.key;
+      output += " key="_zs + args.key;
   }
   else if (!args.encoding)
   {

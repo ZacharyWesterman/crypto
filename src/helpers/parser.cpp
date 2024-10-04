@@ -51,6 +51,9 @@ void setupProgram(argparse::ArgumentParser &program)
     auto &inputGroup = program.add_mutually_exclusive_group(true);
     inputGroup.add_argument("-I", "--inputfile")
         .help("specify the input file");
+    inputGroup.add_argument("-p", "--piped")
+        .help("accept piped input")
+        .flag();
     inputGroup.add_argument("input")
         .help("the input (if a file isn't specified)")
         .remaining();
@@ -59,9 +62,13 @@ void setupProgram(argparse::ArgumentParser &program)
 programArgs parse(argparse::ArgumentParser &program)
 {
     // input
-    zstring input = program.present("--inputfile")
-                        ? read(program.get("--inputfile"))
-                        : join(program.get<vector<std::string>>("input"), " ");
+    zstring input;
+    if (program.present("--inputfile"))
+        input = read(program.get("--inputfile"));
+    else if (program.present("input"))
+        input = join(program.get<vector<std::string>>("input"), " ");
+    else if (program["--piped"] == true)
+        input.readln(std::cin);
 
     // filename
     std::string filename = "";

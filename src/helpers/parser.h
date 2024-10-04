@@ -5,9 +5,6 @@
 #include <z/core/string.hpp>
 #include <z/core/array.hpp>
 
-// TODO: Allow for piped in input to be treating as the rest of of inputs?
-// remember though, this wouldn't be cases for things like `cat file | ./crypto` because we already have file read support for input
-
 struct programArgs
 {
   bool failed;
@@ -25,6 +22,8 @@ struct programArgs
 };
 
 void setupProgram(argparse::ArgumentParser &program);
+
+zstring getInput();
 
 programArgs parse(argparse::ArgumentParser &program);
 
