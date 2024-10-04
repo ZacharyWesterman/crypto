@@ -13,7 +13,6 @@
 #include <time.h>
 
 // TODO: Can/should this file be covered by tests? (program.parse_args())
-// TODO: any random encode call will not tell you the key (how should we handle this? verbose flag?)
 
 int main(int argc, char **argv)
 {
@@ -42,9 +41,18 @@ int main(int argc, char **argv)
   if (args.encoding)
   {
     if (args.cipher == "caesar")
+    {
+      args.key = std::to_string(rand() % 25 + 1);
       output = caesarEncode(args.input, args.key);
+    }
     else if (args.cipher == "substitution" || args.cipher == "sub")
+    {
+      args.key = randomAlphabet().cstring();
       output = substitutionEncode(args.input, args.key);
+    }
+
+    if (args.verbose)
+      output += " Key="_zs + args.key;
   }
   else if (!args.encoding)
   {

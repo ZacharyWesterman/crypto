@@ -5,9 +5,6 @@
 
 zstring substitutionEncode(const zstring &input, zstring key)
 {
-  if (key == "")
-    key = randomAlphabet();
-
   return input.cipher(ALPHABET, key.toLower())
       .cipher(ALPHABET.upper(), key.upper());
 }

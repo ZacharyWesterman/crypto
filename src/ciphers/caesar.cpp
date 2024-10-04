@@ -16,9 +16,6 @@ zstring caesarEncode(const zstring &input, int offset)
 
 zstring caesarEncode(const zstring &input, std::string offset)
 {
-  if (offset == "")
-    return caesarEncode(input, rand() % 25 + 1);
-
   return caesarEncode(input, std::stoi(offset));
 }
 
