@@ -23,9 +23,7 @@ struct programArgs
 
 void setupProgram(argparse::ArgumentParser &program);
 
-zstring getInput();
-
-programArgs parse(argparse::ArgumentParser &program);
+programArgs parse(argparse::ArgumentParser &program, int argc, char *argv[]);
 
 template <typename T>
 zstring processResults(z::core::array<T> results, bool verbose)

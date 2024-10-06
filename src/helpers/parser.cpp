@@ -7,6 +7,8 @@
 #include <z/file/read.hpp>
 #include <z/file/write.hpp>
 
+#include <fstream>
+
 using std::vector;
 using z::core::join, z::file::read;
 
@@ -59,8 +61,19 @@ void setupProgram(argparse::ArgumentParser &program)
         .remaining();
 }
 
-programArgs parse(argparse::ArgumentParser &program)
+programArgs parse(argparse::ArgumentParser &program, int argc, char *argv[])
 {
+    try // TODO: Fold this into parse()
+    {
+        program.parse_args(argc, argv);
+    }
+    catch (const std::exception &err)
+    {
+        std::cerr << err.what() << std::endl;
+        std::cerr << program;
+        return programArgs({true});
+    }
+
     // input
     zstring input;
     if (program.present("--inputfile"))

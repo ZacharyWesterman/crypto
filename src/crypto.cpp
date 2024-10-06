@@ -12,8 +12,6 @@
 #include <iostream>
 #include <time.h>
 
-// TODO: Can/should this file be covered by tests? (program.parse_args())
-
 int main(int argc, char **argv)
 {
   // General Setup
@@ -23,31 +21,23 @@ int main(int argc, char **argv)
   argparse::ArgumentParser program("crypto", "0.0.1");
   setupProgram(program);
 
-  try
-  {
-    program.parse_args(argc, argv);
-  }
-  catch (const std::exception &err)
-  {
-    std::cerr << err.what() << std::endl;
-    std::cerr << program;
-    return 1;
-  }
-
   // Main code
   zstring output;
-  programArgs args = parse(program); // to hold the re-parsed args from the parser as a nice struct
+  programArgs args = parse(program, argc, argv); // to hold the re-parsed args from the parser as a nice struct
+
+  if (args.failed)
+    return 1;
 
   if (args.encoding)
   {
     if (args.cipher == "caesar")
     {
-      args.key = std::to_string(rand() % 25 + 1);
+      args.key = args.key == "" ? std::to_string(rand() % 25 + 1) : args.key;
       output = caesarEncode(args.input, args.key);
     }
     else if (args.cipher == "substitution" || args.cipher == "sub")
     {
-      args.key = randomAlphabet().cstring();
+      args.key = args.key == "" ? randomAlphabet().cstring() : args.key;
       output = substitutionEncode(args.input, args.key);
     }
 
@@ -66,8 +56,6 @@ int main(int argc, char **argv)
       output = wordSearch(output);
   }
 
-  // If we made it here, we weren't testing or showing the no-args output
-  // So let's clean up the output and put it where the user asked
   if (args.rsFlag)
     output = removeSpaces(output);
 
