@@ -19,7 +19,7 @@ int main(int argc, char **argv)
   // General Setup
   srand(time(0));
 
-  // Program Setup (argparse, subcommands, etc; see parser.cpp/h)
+  // Program Setup (see parser.cpp/h)
   argparse::ArgumentParser program("crypto", "0.0.1");
   setupProgram(program);
 

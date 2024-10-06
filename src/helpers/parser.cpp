@@ -77,7 +77,6 @@ programArgs parse(argparse::ArgumentParser &program)
 
     // key
     std::string key;
-
     if (program.present("--keyfile"))
         key = read(program.get("--keyfile")).cstring();
     else if (program.present("--key"))
