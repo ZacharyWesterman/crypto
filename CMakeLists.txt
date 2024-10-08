@@ -25,6 +25,8 @@ add_library(helpers
 
 set(LIBZED_DIR "${CMAKE_SOURCE_DIR}/libs/libzed/libzed.a")
 
+include_directories(libs/libzed)
+
 add_subdirectory(tools/analyzer)
 add_subdirectory(tests)
 
