@@ -63,7 +63,7 @@ void setupProgram(argparse::ArgumentParser &program)
 
 programArgs parse(argparse::ArgumentParser &program, int argc, char *argv[])
 {
-    try // TODO: Fold this into parse()
+    try
     {
         program.parse_args(argc, argv);
     }
