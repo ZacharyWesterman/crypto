@@ -7,11 +7,11 @@ using namespace std;
 
 void analyze(std::function<float(zstring)> evaluator, bool random = false)
 {
-// #define TESTING
+#define TESTING
   if (random)
   {
 #ifdef TESTING
-    float total = 2000;
+    float total = 1000;
 #else
     float total = 31603;
 #endif
@@ -29,7 +29,7 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
   }
 
 #ifdef TESTING
-  for (auto id : z::core::array<zstring>{"5", "6"})
+  for (auto id : z::core::array<zstring>{"Short"})
 #else
   for (auto id : z::core::array<zstring>{"1", "2", "3", "4"})
 #endif

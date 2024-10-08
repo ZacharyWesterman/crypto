@@ -92,6 +92,8 @@ def genStats(scoreDict):
 
 # Plot it all in matplotlib
 def plotData(d, save):
+    plt.clf()
+
     title = " vs ".join(sorted(d.keys())) 
     colors = [analyzers[key] if key in analyzers else 'gray' for key in d.keys()]
     values, labels = list(d.values()), list(d.keys())
