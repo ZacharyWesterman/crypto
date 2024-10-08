@@ -7,7 +7,8 @@
 
 float caesarEvaluator(zstring input)
 {
-  return spellCheck(wordSearch(removeSpaces(caesarEncode(input))));
+  int key = rand() % 25 + 1;
+  return spellCheck(wordSearch(removeSpaces(caesarEncode(input, key))));
 }
 
 int main(int argc, char *argv[])

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+// TODO: Split wiki into wordSearch and spellCheck
+
 struct LoadingBar
 {
   int length;
@@ -75,7 +77,7 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 {
   LoadingBar loadingBar(102, cerr);
 
-  // #define TESTING
+#define TESTING
   if (random)
   {
 #ifdef TESTING

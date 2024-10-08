@@ -234,6 +234,19 @@ wikiAnalyzer/fast:
 .PHONY : wikiAnalyzer/fast
 
 #=============================================================================
+# Target rules for targets named update_dict
+
+# Build rule for target.
+update_dict: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 update_dict
+.PHONY : update_dict
+
+# fast build rule for target.
+update_dict/fast:
+	$(MAKE) $(MAKESILENT) -f tools/update_dict/CMakeFiles/update_dict.dir/build.make tools/update_dict/CMakeFiles/update_dict.dir/build
+.PHONY : update_dict/fast
+
+#=============================================================================
 # Target rules for targets named run_tests
 
 # Build rule for target.
@@ -383,6 +396,7 @@ help:
 	@echo "... helpers"
 	@echo "... randomAnalyzer"
 	@echo "... run_tests"
+	@echo "... update_dict"
 	@echo "... wikiAnalyzer"
 	@echo "... src/ciphers/caesar.o"
 	@echo "... src/ciphers/caesar.i"

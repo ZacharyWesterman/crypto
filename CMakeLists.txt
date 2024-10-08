@@ -28,6 +28,7 @@ set(LIBZED_DIR "${CMAKE_SOURCE_DIR}/libs/libzed/libzed.a")
 include_directories(libs/libzed)
 
 add_subdirectory(tools/analyzer)
+add_subdirectory(tools/update_dict)
 add_subdirectory(tests)
 
 add_executable(crypto src/crypto.cpp)
