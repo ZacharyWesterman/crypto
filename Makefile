@@ -221,17 +221,30 @@ caesarAnalyzer/fast:
 .PHONY : caesarAnalyzer/fast
 
 #=============================================================================
-# Target rules for targets named wikiAnalyzer
+# Target rules for targets named wordSearchAnalyzer
 
 # Build rule for target.
-wikiAnalyzer: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wikiAnalyzer
-.PHONY : wikiAnalyzer
+wordSearchAnalyzer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 wordSearchAnalyzer
+.PHONY : wordSearchAnalyzer
 
 # fast build rule for target.
-wikiAnalyzer/fast:
-	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build
-.PHONY : wikiAnalyzer/fast
+wordSearchAnalyzer/fast:
+	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build
+.PHONY : wordSearchAnalyzer/fast
+
+#=============================================================================
+# Target rules for targets named spellCheckAnalyzer
+
+# Build rule for target.
+spellCheckAnalyzer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 spellCheckAnalyzer
+.PHONY : spellCheckAnalyzer
+
+# fast build rule for target.
+spellCheckAnalyzer/fast:
+	$(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build.make tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build
+.PHONY : spellCheckAnalyzer/fast
 
 #=============================================================================
 # Target rules for targets named update_dict
@@ -396,8 +409,9 @@ help:
 	@echo "... helpers"
 	@echo "... randomAnalyzer"
 	@echo "... run_tests"
+	@echo "... spellCheckAnalyzer"
 	@echo "... update_dict"
-	@echo "... wikiAnalyzer"
+	@echo "... wordSearchAnalyzer"
 	@echo "... src/ciphers/caesar.o"
 	@echo "... src/ciphers/caesar.i"
 	@echo "... src/ciphers/caesar.s"

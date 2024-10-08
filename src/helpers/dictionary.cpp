@@ -7,6 +7,8 @@
 #include <iostream>
 #include <cmath>
 
+// TODO: use more references instead of full objects
+
 using namespace z::core;
 
 z::util::dictionary dict;

@@ -145,18 +145,32 @@ caesarAnalyzer/fast:
 .PHONY : caesarAnalyzer/fast
 
 # Convenience name for target.
-tools/analyzer/CMakeFiles/wikiAnalyzer.dir/rule:
-	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tools/analyzer/CMakeFiles/wikiAnalyzer.dir/rule
-.PHONY : tools/analyzer/CMakeFiles/wikiAnalyzer.dir/rule
+tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/rule:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/rule
+.PHONY : tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/rule
 
 # Convenience name for target.
-wikiAnalyzer: tools/analyzer/CMakeFiles/wikiAnalyzer.dir/rule
-.PHONY : wikiAnalyzer
+wordSearchAnalyzer: tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/rule
+.PHONY : wordSearchAnalyzer
 
 # fast build rule for target.
-wikiAnalyzer/fast:
-	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build
-.PHONY : wikiAnalyzer/fast
+wordSearchAnalyzer/fast:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build
+.PHONY : wordSearchAnalyzer/fast
+
+# Convenience name for target.
+tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/rule:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/rule
+.PHONY : tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/rule
+
+# Convenience name for target.
+spellCheckAnalyzer: tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/rule
+.PHONY : spellCheckAnalyzer
+
+# fast build rule for target.
+spellCheckAnalyzer/fast:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build.make tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build
+.PHONY : spellCheckAnalyzer/fast
 
 caesarAnalyzer.o: caesarAnalyzer.cpp.o
 .PHONY : caesarAnalyzer.o
@@ -206,29 +220,53 @@ randomAnalyzer.cpp.s:
 	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/randomAnalyzer.dir/build.make tools/analyzer/CMakeFiles/randomAnalyzer.dir/randomAnalyzer.cpp.s
 .PHONY : randomAnalyzer.cpp.s
 
-wikiAnalyzer.o: wikiAnalyzer.cpp.o
-.PHONY : wikiAnalyzer.o
+spellCheckAnalyzer.o: spellCheckAnalyzer.cpp.o
+.PHONY : spellCheckAnalyzer.o
 
 # target to build an object file
-wikiAnalyzer.cpp.o:
-	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/wikiAnalyzer.cpp.o
-.PHONY : wikiAnalyzer.cpp.o
+spellCheckAnalyzer.cpp.o:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build.make tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/spellCheckAnalyzer.cpp.o
+.PHONY : spellCheckAnalyzer.cpp.o
 
-wikiAnalyzer.i: wikiAnalyzer.cpp.i
-.PHONY : wikiAnalyzer.i
+spellCheckAnalyzer.i: spellCheckAnalyzer.cpp.i
+.PHONY : spellCheckAnalyzer.i
 
 # target to preprocess a source file
-wikiAnalyzer.cpp.i:
-	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/wikiAnalyzer.cpp.i
-.PHONY : wikiAnalyzer.cpp.i
+spellCheckAnalyzer.cpp.i:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build.make tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/spellCheckAnalyzer.cpp.i
+.PHONY : spellCheckAnalyzer.cpp.i
 
-wikiAnalyzer.s: wikiAnalyzer.cpp.s
-.PHONY : wikiAnalyzer.s
+spellCheckAnalyzer.s: spellCheckAnalyzer.cpp.s
+.PHONY : spellCheckAnalyzer.s
 
 # target to generate assembly for a file
-wikiAnalyzer.cpp.s:
-	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wikiAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wikiAnalyzer.dir/wikiAnalyzer.cpp.s
-.PHONY : wikiAnalyzer.cpp.s
+spellCheckAnalyzer.cpp.s:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/build.make tools/analyzer/CMakeFiles/spellCheckAnalyzer.dir/spellCheckAnalyzer.cpp.s
+.PHONY : spellCheckAnalyzer.cpp.s
+
+wordSearchAnalyzer.o: wordSearchAnalyzer.cpp.o
+.PHONY : wordSearchAnalyzer.o
+
+# target to build an object file
+wordSearchAnalyzer.cpp.o:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/wordSearchAnalyzer.cpp.o
+.PHONY : wordSearchAnalyzer.cpp.o
+
+wordSearchAnalyzer.i: wordSearchAnalyzer.cpp.i
+.PHONY : wordSearchAnalyzer.i
+
+# target to preprocess a source file
+wordSearchAnalyzer.cpp.i:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/wordSearchAnalyzer.cpp.i
+.PHONY : wordSearchAnalyzer.cpp.i
+
+wordSearchAnalyzer.s: wordSearchAnalyzer.cpp.s
+.PHONY : wordSearchAnalyzer.s
+
+# target to generate assembly for a file
+wordSearchAnalyzer.cpp.s:
+	cd /home/joe/coding/projects/crypto && $(MAKE) $(MAKESILENT) -f tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/build.make tools/analyzer/CMakeFiles/wordSearchAnalyzer.dir/wordSearchAnalyzer.cpp.s
+.PHONY : wordSearchAnalyzer.cpp.s
 
 # Help Target
 help:
@@ -240,16 +278,20 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... caesarAnalyzer"
 	@echo "... randomAnalyzer"
-	@echo "... wikiAnalyzer"
+	@echo "... spellCheckAnalyzer"
+	@echo "... wordSearchAnalyzer"
 	@echo "... caesarAnalyzer.o"
 	@echo "... caesarAnalyzer.i"
 	@echo "... caesarAnalyzer.s"
 	@echo "... randomAnalyzer.o"
 	@echo "... randomAnalyzer.i"
 	@echo "... randomAnalyzer.s"
-	@echo "... wikiAnalyzer.o"
-	@echo "... wikiAnalyzer.i"
-	@echo "... wikiAnalyzer.s"
+	@echo "... spellCheckAnalyzer.o"
+	@echo "... spellCheckAnalyzer.i"
+	@echo "... spellCheckAnalyzer.s"
+	@echo "... wordSearchAnalyzer.o"
+	@echo "... wordSearchAnalyzer.i"
+	@echo "... wordSearchAnalyzer.s"
 .PHONY : help
 
 

@@ -6,7 +6,7 @@ def reprocessArgs(args):
         args.view = True
 
     if not args.analyzers:
-        args.analyzers = ['wiki']
+        args.analyzers = ['wordSearch']
     elif 'all' in args.analyzers:
         args.analyzers = list(analyzers.keys())
 
@@ -26,7 +26,7 @@ def main():
     
     parser.add_argument('-r', '--recursive', action='store_true', help="Display all subsets of the input as well")
 
-    parser.add_argument('analyzers', nargs='*', help="List of analyzers to use (default: 'wiki'). Use 'all' to include all analyzers.")
+    parser.add_argument('analyzers', nargs='*', help="List of analyzers to use (default: 'wordSearch'). Use 'all' to include all analyzers.")
     
     args = reprocessArgs(parser.parse_args())
     

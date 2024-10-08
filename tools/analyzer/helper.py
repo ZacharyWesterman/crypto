@@ -11,7 +11,8 @@ __location__ = path.realpath(
 analyzers = {
     "random": "red",
     "caesar": "blue",
-    "wiki": "green"
+    "wordSearch": "green",
+    "spellCheck": "yellow"
 }
 
 # Simple Timer

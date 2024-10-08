@@ -5,11 +5,9 @@
 
 using namespace std;
 
-// TODO: Split wiki into wordSearch and spellCheck
-
 void analyze(std::function<float(zstring)> evaluator, bool random = false)
 {
-#define TESTING
+// #define TESTING
   if (random)
   {
 #ifdef TESTING
@@ -17,10 +15,9 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 #else
     float total = 31603;
 #endif
-    z::core::array<zstring> result;
-
     ("  Generating "_zs + total + " random paragraphs... ").write(cerr);
 
+    z::core::array<zstring> result;
     z::util::progress loadingBar;
     for (int i : z::core::range(total))
     {
@@ -44,15 +41,12 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 
     ("  Analyzing file "_u8 + id + " (" + total + " paragraphs)" + "... ").write(cerr);
 
-    int i = 0;
     z::core::array<zstring> result;
-
     z::util::progress loadingBar;
-    for (auto line : lines)
+    for (int i=0; i < lines.length(); i++)
     {
-      result.push(evaluator(line.trim()));
+      result.push(evaluator(lines[i].trim()));
       loadingBar.set(std::cerr, i, total);
-      i++;
     }
 
     z::core::join(result, ',').writeln(cout);
