@@ -7,7 +7,7 @@ using namespace std;
 
 void analyze(std::function<float(zstring)> evaluator, bool random = false)
 {
-#define TESTING
+// #define TESTING
   if (random)
   {
 #ifdef TESTING
@@ -42,7 +42,7 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
     for (int i=0; i < lines.length(); i++)
     {
       result.push(evaluator(lines[i].trim()));
-      loadingBar.set(std::cerr, i, total, "  Analyzing file "_u8 + id + " (" + total + " paragraphs)" + "... ");
+      loadingBar.set(std::cerr, i, total, "  Analyzing file wiki"_u8 + id + " (" + total + " paragraphs)" + "... ");
     }
 
     z::core::join(result, ',').writeln(cout);

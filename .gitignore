@@ -47,6 +47,7 @@ tools/analyzer/randomAnalyzer
 tools/analyzer/caesarAnalyzer
 tools/analyzer/wikiAnalyzer
 tools/analyzer/output/
+tools/analyzer/output*/
 tools/analyzer/__pycache__
 
 /build/
