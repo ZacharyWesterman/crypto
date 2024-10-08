@@ -2,6 +2,9 @@
 
 z::util::dictionary dict;
 
+// TODO: Do more here
+// TODO: Also we need tools that allow us to find problems, like showing the worst performing paragraphs
+
 int main(int argc, char *argv[])
 {
   dict.read("src/data/words.txt");

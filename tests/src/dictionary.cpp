@@ -45,8 +45,6 @@ TEST_CASE("Word Search", "[dict]")
   REQUIRE(wordSearch(removeSpaces(voicePassport)) == voicePassport);
 }
 
-// TODO: Add some tools to add and remove data from both our dictionary and wiki files
-
 void testFile(zstring filename, float scoreThreshold = 0)
 {
   for (auto line : z::file::lines(filename))
