@@ -15,14 +15,12 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
 #else
     float total = 31603;
 #endif
-    ("  Generating "_zs + total + " random paragraphs... ").write(cerr);
-
     z::core::array<zstring> result;
     z::util::progress loadingBar;
     for (int i : z::core::range(total))
     {
       result.push(evaluator(""));
-      loadingBar.set(std::cerr, i, total);
+      loadingBar.set(std::cerr, i, total, "  Generating "_zs + total + " random paragraphs... ");
     }
 
     z::core::join(result, ',').writeln(cout);
@@ -39,14 +37,12 @@ void analyze(std::function<float(zstring)> evaluator, bool random = false)
     auto lines = z::file::lines("src/data/wiki/wiki"_zs + id + ".txt").collect();
     double total = lines.length();
 
-    ("  Analyzing file "_u8 + id + " (" + total + " paragraphs)" + "... ").write(cerr);
-
     z::core::array<zstring> result;
     z::util::progress loadingBar;
     for (int i=0; i < lines.length(); i++)
     {
       result.push(evaluator(lines[i].trim()));
-      loadingBar.set(std::cerr, i, total);
+      loadingBar.set(std::cerr, i, total, "  Analyzing file "_u8 + id + " (" + total + " paragraphs)" + "... ");
     }
 
     z::core::join(result, ',').writeln(cout);
